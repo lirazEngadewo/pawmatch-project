@@ -1,32 +1,8 @@
+import { useState, useEffect } from 'react';
 import pets from '../data/pets.js';
 import Footer from '../components/Footer.jsx';
-
-const SAMPLE_REQUESTS = [
-  {
-    id: 1,
-    petName: 'Luna',
-    petId: 'luna',
-    type: 'Meeting Request',
-    date: 'May 12, 2026',
-    status: 'Pending Approval',
-  },
-  {
-    id: 2,
-    petName: 'Simba',
-    petId: 'simba',
-    type: 'Adoption Application',
-    date: 'May 10, 2026',
-    status: 'Approved',
-  },
-  {
-    id: 3,
-    petName: 'Milo',
-    petId: 'milo',
-    type: 'Meeting Request',
-    date: 'May 7, 2026',
-    status: 'Message from Shelter',
-  },
-];
+import MatchingQuizModal from '../components/MatchingQuizModal.jsx';
+import { supabase } from '../lib/supabaseClient.js';
 
 const SAMPLE_MESSAGES = [
   {
@@ -52,34 +28,92 @@ const SAMPLE_MESSAGES = [
   },
 ];
 
-const STATUS_STYLES = {
-  'Pending Approval': { background: '#FEF3C7', color: '#92400E' },
-  'Approved':         { background: '#D1FAE5', color: '#065F46' },
-  'Message from Shelter': { background: '#DBEAFE', color: '#1E40AF' },
+const STATUS_DISPLAY = {
+  pending: { label: 'Pending Approval', background: '#FEF3C7', color: '#92400E' },
+  approved: { label: 'Approved', background: '#D1FAE5', color: '#065F46' },
+  rejected: { label: 'Rejected', background: '#FEE2E2', color: '#991B1B' },
 };
 
 function UserProfilePage({ currentUser, favorites, onNavigate }) {
+  const [userPreferences, setUserPreferences] = useState(null);
+  const [prefsLoaded, setPrefsLoaded] = useState(false);
+  const [showQuizModal, setShowQuizModal] = useState(false);
+
+  const refreshPreferences = () => {
+    if (!currentUser) return;
+    supabase
+      .from('user_preferences')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        setUserPreferences(data ?? null);
+        setPrefsLoaded(true);
+      });
+  };
+
+  useEffect(() => {
+    refreshPreferences();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
+
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    console.log('UserProfilePage: fetching adoption requests for user_id =', currentUser?.id);
+
+    const query = currentUser
+      ? supabase
+          .from('adoption_requests')
+          .select('*')
+          .eq('user_id', currentUser.id)
+          .order('created_at', { ascending: false })
+      : Promise.resolve({ data: [], error: null });
+
+    query.then(({ data, error }) => {
+      console.log('UserProfilePage: adoption requests query result', { data, error });
+      if (error) {
+        console.error('UserProfilePage: failed to load adoption requests', error);
+      }
+      setRequests(data ?? []);
+    });
+  }, [currentUser]);
+
+  const hasCompletedQuiz = Boolean(userPreferences?.completed);
+
   const favoritePets = (favorites || [])
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
 
-  const initials = ((currentUser?.firstName?.[0] || '') + (currentUser?.lastName?.[0] || '')).toUpperCase();
+  const initials = ((currentUser?.user_metadata?.first_name?.[0] || '') + (currentUser?.user_metadata?.last_name?.[0] || '')).toUpperCase();
 
   return (
     <main className="page up-page">
 
       {/* ── Greeting ── */}
       <div className="up-greeting">
-        <h1 className="up-greeting-title">Hello, {currentUser?.firstName}</h1>
+        <h1 className="up-greeting-title">Hello, {currentUser?.user_metadata?.first_name}</h1>
         <p className="up-greeting-sub">Welcome back to your PawMatch dashboard.</p>
       </div>
+
+      {/* ── Matching Quiz Banner ── */}
+      {prefsLoaded && !hasCompletedQuiz && (
+        <div className="up-quiz-banner card">
+          <p className="up-quiz-banner-text">
+            Complete your matching quiz for personalized recommendations.
+          </p>
+          <button className="button button-primary" onClick={() => setShowQuizModal(true)}>
+            Take the Quiz
+          </button>
+        </div>
+      )}
 
       {/* ── User Details ── */}
       <section className="up-section">
         <div className="up-details-card card">
           <div className="up-details-avatar">{initials || '?'}</div>
           <div className="up-details-body">
-            <h2 className="up-details-name">{currentUser?.firstName} {currentUser?.lastName}</h2>
+            <h2 className="up-details-name">{currentUser?.user_metadata?.first_name} {currentUser?.user_metadata?.last_name}</h2>
             <div className="up-details-grid">
               <div className="up-detail-item">
                 <span className="up-detail-label">Email</span>
@@ -97,6 +131,21 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
           </div>
         </div>
       </section>
+
+      {/* ── Matching Preferences ── */}
+      {hasCompletedQuiz && (
+        <section className="up-section">
+          <h2 className="up-section-title">Your Matching Preferences</h2>
+          <div className="up-prefs-card card">
+            <p className="up-quiz-banner-text">
+              You've completed the matching quiz. Update your answers anytime to refine your pet recommendations.
+            </p>
+            <button className="button button-primary" onClick={() => setShowQuizModal(true)}>
+              Edit Preferences
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* ── Favorite Pets ── */}
       <section className="up-section">
@@ -133,26 +182,40 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
       {/* ── Requests ── */}
       <section className="up-section">
         <h2 className="up-section-title">Your Requests</h2>
-        <div className="up-requests-list">
-          {SAMPLE_REQUESTS.map((req) => {
-            const reqPet = pets.find((p) => p.id === req.petId);
-            return (
-              <div key={req.id} className="up-request-card card">
-                {reqPet && (
-                  <img src={reqPet.image} alt={req.petName} className="up-request-img" />
-                )}
-                <div className="up-request-info">
-                  <h4 className="up-request-pet">{req.petName}</h4>
-                  <p className="up-request-type">{req.type}</p>
-                  <p className="up-request-date">Submitted: {req.date}</p>
+        {requests.length === 0 ? (
+          <div className="up-empty card">
+            <p className="up-empty-text">No requests yet. Browse pets and reach out to get started!</p>
+            <button className="button button-primary" onClick={() => onNavigate('home')}>
+              Browse Pets
+            </button>
+          </div>
+        ) : (
+          <div className="up-requests-list">
+            {requests.map((req) => {
+              const reqPet = pets.find((p) => p.id === req.pet_id);
+              const requestTypeLabel = (req.message || '').split('\n')[0] || 'Request';
+              const submittedDate = new Date(req.created_at).toLocaleDateString('en-US', {
+                month: 'long', day: 'numeric', year: 'numeric',
+              });
+              const statusInfo = STATUS_DISPLAY[req.status] || { label: req.status, background: '#E5E7EB', color: '#374151' };
+              return (
+                <div key={req.id} className="up-request-card card">
+                  {reqPet && (
+                    <img src={reqPet.image} alt={reqPet.name} className="up-request-img" />
+                  )}
+                  <div className="up-request-info">
+                    <h4 className="up-request-pet">{reqPet?.name || 'Unknown pet'}</h4>
+                    <p className="up-request-type">{requestTypeLabel}</p>
+                    <p className="up-request-date">Submitted: {submittedDate}</p>
+                  </div>
+                  <span className="up-status-badge" style={{ background: statusInfo.background, color: statusInfo.color }}>
+                    {statusInfo.label}
+                  </span>
                 </div>
-                <span className="up-status-badge" style={STATUS_STYLES[req.status]}>
-                  {req.status}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* ── Shelter Messages ── */}
@@ -178,6 +241,15 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
       </section>
 
       <Footer />
+
+      {showQuizModal && (
+        <MatchingQuizModal
+          currentUser={currentUser}
+          initialPreferences={userPreferences}
+          onClose={() => setShowQuizModal(false)}
+          onComplete={() => { setShowQuizModal(false); refreshPreferences(); }}
+        />
+      )}
     </main>
   );
 }

@@ -2,10 +2,14 @@ import { useState } from 'react';
 import pets from '../data/pets.js';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
+import useUserPreferences from '../hooks/useUserPreferences.js';
+import { calculateMatchPercent } from '../utils/matching.js';
 
-function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration }) {
+function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
   const pet = pets.find((p) => p.id === selectedPetId) || pets[0];
   const [activeImage, setActiveImage] = useState(pet.image);
+  const userPreferences = useUserPreferences(currentUser);
+  const matchPercent = calculateMatchPercent(pet, userPreferences);
 
   const allImages = [pet.image, ...pet.galleryImages];
   const isFavorite = favorites?.includes(pet.id);
@@ -42,10 +46,17 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
 
       {/* ── Hero ── */}
       <div className="pp-hero">
-        <h1 className="pp-hero-name">{pet.name}</h1>
-        <p className="pp-hero-subtitle">
-          {pet.age} &middot; {pet.gender} &middot; {pet.breed}
-        </p>
+        <div className="pp-hero-top">
+          <div>
+            <h1 className="pp-hero-name">{pet.name}</h1>
+            <p className="pp-hero-subtitle">
+              {pet.age} &middot; {pet.gender} &middot; {pet.breed}
+            </p>
+          </div>
+          {matchPercent !== null && (
+            <span className="match-pill">{matchPercent}% match</span>
+          )}
+        </div>
       </div>
 
       {/* ── Two-column layout ── */}

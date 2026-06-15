@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import pets from '../data/pets.js';
+import { supabase } from '../lib/supabaseClient.js';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 
@@ -7,8 +8,15 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const REQUIRED = <span className="rq-required">*</span>;
 
-function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistration }) {
-  const pet = pets.find((p) => p.id === selectedPetId) || pets[0];
+function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistration, favorites, currentUser }) {
+  const favoritePets = (favorites || [])
+    .map((id) => pets.find((p) => p.id === id))
+    .filter(Boolean);
+
+  const [formPetId, setFormPetId] = useState(
+    favoritePets.some((p) => p.id === selectedPetId) ? selectedPetId : (favoritePets[0]?.id || '')
+  );
+  const selectedFavoritePet = favoritePets.find((p) => p.id === formPetId);
 
   const [requestType, setRequestType] = useState('meeting');
   const [form, setForm] = useState({
@@ -38,6 +46,8 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }));
   };
 
+  const isMeeting = requestType === 'meeting';
+
   const validate = () => {
     const e = {};
     if (!form.fullName.trim()) e.fullName = 'Full name is required.';
@@ -58,14 +68,46 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
     return e;
   };
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+
+    const messageLines = [isMeeting ? 'Meeting Request' : 'Adoption Application'];
+    messageLines.push(`Full Name: ${form.fullName}`);
+    messageLines.push(`Email: ${form.email}`);
+    messageLines.push(`Phone: ${form.phone}`);
+    if (isMeeting) {
+      messageLines.push(`Preferred Date: ${form.date}`);
+      messageLines.push(`Message: ${form.message}`);
+    } else {
+      messageLines.push(`Address: ${form.address}`);
+      messageLines.push(`Housing Type: ${form.housingType}`);
+      messageLines.push(`Other Pets: ${form.otherPets}`);
+      messageLines.push(`Why Adopt: ${form.whyAdopt}`);
+      messageLines.push(`Pet Experience: ${form.petExperience}`);
+      if (form.additionalNotes.trim()) messageLines.push(`Additional Notes: ${form.additionalNotes}`);
+    }
+
+    const insertPayload = {
+      user_id: currentUser?.id,
+      pet_id: formPetId || null,
+      message: messageLines.join('\n'),
+    };
+    console.log('RequestsPage: inserting adoption request', insertPayload);
+
+    const { data, error } = await supabase.from('adoption_requests').insert(insertPayload).select();
+
+    console.log('RequestsPage: insert result', { data, error });
+
+    if (error) {
+      console.error('RequestsPage: failed to submit adoption request', error);
+      alert(`Failed to submit request: ${error.message}`);
+      return;
+    }
+
     setSubmitted(true);
   };
-
-  const isMeeting = requestType === 'meeting';
 
   return (
     <main className="page page-requests">
@@ -74,16 +116,6 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
       <div className="rq-header">
         <p className="eyebrow">Adoption request</p>
         <h1 className="rq-title">Start Your Adoption Journey</h1>
-      </div>
-
-      {/* Pet summary card */}
-      <div className="rq-pet-card card">
-        <img src={pet.image} alt={pet.name} className="rq-pet-img" />
-        <div className="rq-pet-info">
-          <h3 className="rq-pet-name">{pet.name}</h3>
-          <p className="rq-pet-meta">{pet.age} &middot; {pet.gender} &middot; {pet.breed}</p>
-          <p className="rq-pet-location">📍 {pet.location}</p>
-        </div>
       </div>
 
       {/* Option selector */}
@@ -115,6 +147,43 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
             {isMeeting ? 'Meeting Request Details' : 'Adoption Application Details'}
           </h2>
           <form className="rq-form" onSubmit={handleSubmit} noValidate>
+
+            {/* Select a pet (from favorites) */}
+            <div className="rq-field">
+              <label className="rq-label">Select a pet {REQUIRED}</label>
+              {favoritePets.length === 0 ? (
+                <div className="rq-no-favorites">
+                  <p className="rq-no-favorites-text">
+                    You haven't added any favorites yet. Browse pets and like some first!
+                  </p>
+                  <button
+                    type="button"
+                    className="button button-secondary"
+                    onClick={() => onNavigate('home')}
+                  >
+                    Browse Pets
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <select
+                    className="rq-input"
+                    value={formPetId}
+                    onChange={(e) => setFormPetId(e.target.value)}
+                  >
+                    {favoritePets.map((fp) => (
+                      <option key={fp.id} value={fp.id}>{fp.name}</option>
+                    ))}
+                  </select>
+                  {selectedFavoritePet && (
+                    <div className="rq-pet-preview">
+                      <img src={selectedFavoritePet.image} alt={selectedFavoritePet.name} className="rq-pet-preview-img" />
+                      <span className="rq-pet-preview-name">{selectedFavoritePet.name}</span>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
 
             {/* Shared: Full Name */}
             <div className="rq-field">

@@ -1,7 +1,8 @@
-// This is frontend-only demo authentication for prototype purposes.
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from './lib/supabaseClient.js';
 import AppHeader from './components/AppHeader.jsx';
 import RegistrationModal from './components/RegistrationModal.jsx';
+import MatchingQuizModal from './components/MatchingQuizModal.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
@@ -16,14 +17,22 @@ function App() {
   const [page, setPage] = useState('landing');
   const [selectedPetId, setSelectedPetId] = useState(pets[0]?.id);
   const [showModal, setShowModal] = useState(false);
+  const [showQuizModal, setShowQuizModal] = useState(false);
 
-  // Initialize auth from localStorage
-  const [currentUser, setCurrentUser] = useState(() => {
-    try {
-      const stored = localStorage.getItem('currentUser');
-      return stored ? JSON.parse(stored) : null;
-    } catch { return null; }
-  });
+  // Current user from Supabase Auth session
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Initialize favorites from localStorage
   const [favorites, setFavorites] = useState(() => {
@@ -41,17 +50,9 @@ function App() {
     window.scrollTo(0, 0);
   };
 
-  const handleLogin = (user) => {
-    setCurrentUser(user);
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    localStorage.setItem('isLoggedIn', 'true');
-  };
-
-  const handleLogout = () => {
-    setCurrentUser(null);
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     setFavorites([]);
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('favoritePets');
     handleNavigate('landing');
   };
@@ -84,6 +85,7 @@ function App() {
         <LandingPage
           onSelectPet={(id) => handleNavigate('profile', id)}
           onNavigate={handleNavigate}
+          currentUser={currentUser}
         />
       )}
 
@@ -94,11 +96,12 @@ function App() {
           favorites={favorites}
           toggleFavorite={toggleFavorite}
           requireRegistration={requireRegistration}
+          currentUser={currentUser}
         />
       )}
 
       {page === 'register' && (
-        <RegisterPage onNavigate={handleNavigate} onLogin={handleLogin} />
+        <RegisterPage onNavigate={handleNavigate} onSignUpSuccess={() => setShowQuizModal(true)} />
       )}
 
       {page === 'profile' && (
@@ -109,6 +112,7 @@ function App() {
           favorites={favorites}
           toggleFavorite={toggleFavorite}
           requireRegistration={requireRegistration}
+          currentUser={currentUser}
         />
       )}
 
@@ -125,6 +129,8 @@ function App() {
           onNavigate={handleNavigate}
           isLoggedIn={isLoggedIn}
           requireRegistration={requireRegistration}
+          favorites={favorites}
+          currentUser={currentUser}
         />
       )}
 
@@ -142,6 +148,14 @@ function App() {
         <RegistrationModal
           onClose={() => setShowModal(false)}
           onNavigate={handleNavigate}
+        />
+      )}
+
+      {showQuizModal && currentUser && (
+        <MatchingQuizModal
+          currentUser={currentUser}
+          onClose={() => setShowQuizModal(false)}
+          onComplete={() => setShowQuizModal(false)}
         />
       )}
     </div>

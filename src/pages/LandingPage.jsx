@@ -4,10 +4,14 @@ import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import pets from '../data/pets.js';
+import useUserPreferences from '../hooks/useUserPreferences.js';
+import { calculateMatchPercent } from '../utils/matching.js';
 
-function LandingPage({ onSelectPet, onNavigate }) {
+function LandingPage({ onSelectPet, onNavigate, currentUser }) {
   const [heroIndex, setHeroIndex] = useState(0);
   const heroPet = pets[heroIndex];
+  const userPreferences = useUserPreferences(currentUser);
+  console.log('LandingPage debug:', { currentUser, userPreferences });
 
   const handleHeroNext = () => setHeroIndex((prev) => (prev + 1) % pets.length);
   const handleHeroPrev = () => setHeroIndex((prev) => (prev - 1 + pets.length) % pets.length);
@@ -191,9 +195,18 @@ function LandingPage({ onSelectPet, onNavigate }) {
           <h2>Pets who are ready to meet you.</h2>
         </div>
         <div className="grid-list">
-          {pets.filter((pet) => pet.id !== 'bella').map((pet) => (
-            <PetCard key={pet.id} pet={pet} onSelect={onSelectPet} />
-          ))}
+          {pets.filter((pet) => pet.id !== 'bella').map((pet) => {
+            const matchPercent = calculateMatchPercent(pet, userPreferences);
+            console.log('LandingPage matchPercent:', pet.name, matchPercent);
+            return (
+              <PetCard
+                key={pet.id}
+                pet={pet}
+                onSelect={onSelectPet}
+                matchPercent={matchPercent}
+              />
+            );
+          })}
         </div>
       </section>
 

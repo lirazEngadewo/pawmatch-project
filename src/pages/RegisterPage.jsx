@@ -1,15 +1,16 @@
-// This is frontend-only demo authentication for prototype purposes.
 import { useState } from 'react';
+import { supabase } from '../lib/supabaseClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function RegisterPage({ onNavigate, onLogin }) {
+function RegisterPage({ onNavigate, onSignUpSuccess }) {
   const [authMode, setAuthMode] = useState('signin'); // 'signin' | 'signup'
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const validate = () => {
     if (authMode === 'signup') {
@@ -23,46 +24,52 @@ function RegisterPage({ onNavigate, onLogin }) {
     return null;
   };
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     const err = validate();
     if (err) { setError(err); return; }
 
-    const users = JSON.parse(localStorage.getItem('pawmatch_users') || '[]');
-    const found = users.find(
-      (u) => u.email === email.toLowerCase() && u.password === password
-    );
+    setError('');
+    setLoading(true);
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email: email.toLowerCase(),
+      password,
+    });
+    setLoading(false);
 
-    if (!found) {
-      setError('Email or password is incorrect.');
+    if (authError) {
+      setError(authError.message);
       return;
     }
 
-    onLogin(found);
     onNavigate('home');
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     const err = validate();
     if (err) { setError(err); return; }
 
-    const users = JSON.parse(localStorage.getItem('pawmatch_users') || '[]');
-    if (users.find((u) => u.email === email.toLowerCase())) {
-      setError('An account with this email already exists. Sign in instead.');
+    setError('');
+    setLoading(true);
+    const { error: authError } = await supabase.auth.signUp({
+      email: email.toLowerCase(),
+      password,
+      options: {
+        data: {
+          first_name: firstName.trim(),
+          last_name: lastName.trim(),
+        },
+      },
+    });
+    setLoading(false);
+
+    if (authError) {
+      setError(authError.message);
       return;
     }
 
-    const user = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      email: email.toLowerCase(),
-      password,
-    };
-
-    users.push(user);
-    localStorage.setItem('pawmatch_users', JSON.stringify(users));
-    onLogin(user);
+    onSignUpSuccess?.();
     onNavigate('home');
   };
 
@@ -142,8 +149,10 @@ function RegisterPage({ onNavigate, onLogin }) {
 
               {error && <p className="form-error">{error}</p>}
 
-              <button type="submit" className="button button-primary register-submit">
-                {authMode === 'signin' ? 'Sign In' : 'Create Account'}
+              <button type="submit" className="button button-primary register-submit" disabled={loading}>
+                {loading
+                  ? (authMode === 'signin' ? 'Signing in…' : 'Creating account…')
+                  : (authMode === 'signin' ? 'Sign In' : 'Create Account')}
               </button>
             </form>
 

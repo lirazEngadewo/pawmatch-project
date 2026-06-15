@@ -1,4 +1,5 @@
-function PetCard({ pet, onSelect }) {
+function PetCard({ pet, onSelect, matchPercent }) {
+  console.log('PetCard received:', pet.name, 'matchPercent =', matchPercent, typeof matchPercent);
   return (
     <article className="card pet-card">
       <img src={pet.image} alt={pet.name} className="pet-card-image" />
@@ -10,7 +11,9 @@ function PetCard({ pet, onSelect }) {
           <p className="pet-description">{pet.description}</p>
         </div>
         <div className="pet-footer">
-          <span className="match-pill">{pet.matchPercent}% match</span>
+          {matchPercent !== null && matchPercent !== undefined && (
+            <span className="match-pill">{matchPercent}% match</span>
+          )}
           <button className="button button-secondary" onClick={() => onSelect(pet.id)}>
             View profile
           </button>

@@ -2,10 +2,15 @@ import { useState } from 'react';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import pets from '../data/pets.js';
+import useUserPreferences from '../hooks/useUserPreferences.js';
+import { calculateMatchPercent } from '../utils/matching.js';
 
-function HomePage({ onSelectPet, isLoggedIn, favorites, toggleFavorite, requireRegistration }) {
+function HomePage({ onSelectPet, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const pet = pets[currentIndex];
+  const userPreferences = useUserPreferences(currentUser);
+  const matchPercent = calculateMatchPercent(pet, userPreferences);
+  console.log('HomePage debug:', { currentUser, userPreferences, pet: pet.id, matchPercent });
 
   const handleNext = () => setCurrentIndex((p) => (p + 1) % pets.length);
   const handlePrev = () => setCurrentIndex((p) => (p - 1 + pets.length) % pets.length);
@@ -58,7 +63,12 @@ function HomePage({ onSelectPet, isLoggedIn, favorites, toggleFavorite, requireR
 
             {/* Info side */}
             <div className="hm-info">
-              <h2 className="hm-pet-name">{pet.name}</h2>
+              <div className="hm-name-row">
+                <h2 className="hm-pet-name">{pet.name}</h2>
+                {matchPercent !== null && (
+                  <span className="match-pill">{matchPercent}% match</span>
+                )}
+              </div>
 
               <div className="hm-details-grid">
                 <div className="hm-detail">
@@ -103,7 +113,7 @@ function HomePage({ onSelectPet, isLoggedIn, favorites, toggleFavorite, requireR
 
           {/* Skip / Like */}
           <div className="hm-actions">
-            <button className="hm-skip-btn">
+            <button className="hm-skip-btn" onClick={handleNext}>
               <span>✕</span> Skip
             </button>
             <button

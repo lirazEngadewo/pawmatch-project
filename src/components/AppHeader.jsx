@@ -1,4 +1,3 @@
-// This is frontend-only demo authentication for prototype purposes.
 import { useState, useRef, useEffect } from 'react';
 
 function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, onLogout }) {
@@ -52,8 +51,8 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, onLogout 
 
   const getInitials = () => {
     if (!currentUser) return '?';
-    const first = currentUser.firstName?.[0] || '';
-    const last = currentUser.lastName?.[0] || '';
+    const first = currentUser.user_metadata?.first_name?.[0] || '';
+    const last = currentUser.user_metadata?.last_name?.[0] || '';
     return (first + last).toUpperCase();
   };
 
@@ -108,7 +107,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, onLogout 
               {dropdownOpen && (
                 <div className="user-dropdown">
                   <p className="dropdown-name">
-                    {currentUser.firstName} {currentUser.lastName}
+                    {currentUser.user_metadata?.first_name} {currentUser.user_metadata?.last_name}
                   </p>
                   <button
                     className="dropdown-item"
