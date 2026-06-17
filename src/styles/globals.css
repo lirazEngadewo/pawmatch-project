@@ -2519,6 +2519,14 @@ h3 {
   opacity: 0.88;
 }
 
+.user-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
 .user-dropdown {
   position: absolute;
   top: calc(100% + 12px);
@@ -3074,6 +3082,13 @@ h3 {
   padding: 32px;
 }
 
+.up-avatar-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
 .up-details-avatar {
   width: 80px;
   height: 80px;
@@ -3087,6 +3102,48 @@ h3 {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.up-avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.up-avatar-camera {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.up-avatar-camera:hover:not(:disabled) {
+  background: #6b4730;
+}
+
+.up-avatar-camera:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.up-avatar-error {
+  font-size: 0.78rem;
+  color: #991B1B;
+  margin: 4px 0 8px;
 }
 
 .up-details-body {

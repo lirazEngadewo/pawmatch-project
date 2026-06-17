@@ -20,6 +20,7 @@ function App() {
 
   // Current user from Supabase Auth session
   const [currentUser, setCurrentUser] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
   const [sessionExpiredMessage, setSessionExpiredMessage] = useState('');
   const [toast, setToast] = useState(null);
   const isManualLogout = useRef(false);
@@ -46,6 +47,7 @@ function App() {
       if (event === 'SIGNED_OUT' && !isManualLogout.current) {
         // Session expired automatically — redirect with message
         setCurrentUser(null);
+        setAvatarUrl(null);
         setFavorites([]);
         localStorage.removeItem('favoritePets');
         setSessionExpiredMessage('Your session expired. Please log in again.');
@@ -72,9 +74,20 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  useEffect(() => {
+    if (!currentUser) { setAvatarUrl(null); return; }
+    supabase
+      .from('profiles')
+      .select('avatar_url')
+      .eq('user_id', currentUser.id)
+      .maybeSingle()
+      .then(({ data }) => setAvatarUrl(data?.avatar_url ?? null));
+  }, [currentUser]);
+
   const handleLogout = async () => {
     isManualLogout.current = true;
     await supabase.auth.signOut();
+    setAvatarUrl(null);
     setFavorites([]);
     localStorage.removeItem('favoritePets');
     handleNavigate('landing');
@@ -104,6 +117,7 @@ function App() {
         onNavigate={handleNavigate}
         isLoggedIn={isLoggedIn}
         currentUser={currentUser}
+        avatarUrl={avatarUrl}
         onLogout={handleLogout}
       />
 
@@ -163,6 +177,7 @@ function App() {
           currentUser={currentUser}
           favorites={favorites}
           onNavigate={handleNavigate}
+          onAvatarChange={setAvatarUrl}
         />
       )}
 

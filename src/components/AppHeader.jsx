@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, onLogout }) {
+function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -101,7 +101,10 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, onLogout 
                 onClick={() => setDropdownOpen((o) => !o)}
                 aria-label="User menu"
               >
-                {getInitials()}
+                {avatarUrl
+                  ? <img src={avatarUrl} alt="avatar" className="user-avatar-img" />
+                  : getInitials()
+                }
               </button>
 
               {dropdownOpen && (

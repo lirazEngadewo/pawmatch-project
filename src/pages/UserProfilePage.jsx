@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import pets from '../data/pets.js';
 import Footer from '../components/Footer.jsx';
 import MatchingQuizModal from '../components/MatchingQuizModal.jsx';
@@ -34,8 +34,11 @@ const STATUS_DISPLAY = {
   rejected: { label: 'Rejected', background: '#FEE2E2', color: '#991B1B' },
 };
 
-function UserProfilePage({ currentUser, favorites, onNavigate }) {
+function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange }) {
   const [profile, setProfile] = useState(null);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [avatarError, setAvatarError] = useState('');
+  const fileInputRef = useRef(null);
   const [userPreferences, setUserPreferences] = useState(null);
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -96,6 +99,45 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
 
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarError('');
+
+    if (!file.type.startsWith('image/')) {
+      setAvatarError('Please upload an image file.');
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setAvatarError('File too large. Maximum size is 2MB.');
+      return;
+    }
+
+    setAvatarUploading(true);
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(`${currentUser.id}/avatar`, file, { upsert: true });
+
+    if (uploadError) {
+      setAvatarUploading(false);
+      setAvatarError('Upload failed. Please try again.');
+      return;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from('avatars')
+      .getPublicUrl(`${currentUser.id}/avatar`);
+
+    const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+
+    await supabase
+      .from('profiles')
+      .upsert({ user_id: currentUser.id, avatar_url: publicUrl }, { onConflict: 'user_id' });
+    setProfile((prev) => ({ ...prev, avatar_url: publicUrl }));
+    onAvatarChange?.(publicUrl);
+    setAvatarUploading(false);
+  };
+
   const displayName = profile?.full_name || `${currentUser?.user_metadata?.first_name ?? ''} ${currentUser?.user_metadata?.last_name ?? ''}`.trim();
   const initials = displayName.split(' ').map((w) => w[0] || '').slice(0, 2).join('').toUpperCase();
 
@@ -123,9 +165,31 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
       {/* ── User Details ── */}
       <section className="up-section">
         <div className="up-details-card card">
-          <div className="up-details-avatar">{initials || '?'}</div>
+          <div className="up-avatar-wrap">
+            {profile?.avatar_url
+              ? <img src={profile.avatar_url} alt="Profile" className="up-avatar-img" />
+              : <div className="up-details-avatar">{initials || '?'}</div>
+            }
+            <button
+              type="button"
+              className="up-avatar-camera"
+              aria-label="Change profile picture"
+              disabled={avatarUploading}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {avatarUploading ? '…' : '📷'}
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleAvatarChange}
+            />
+          </div>
           <div className="up-details-body">
             <h2 className="up-details-name">{displayName || '—'}</h2>
+            {avatarError && <p className="up-avatar-error">{avatarError}</p>}
             <div className="up-details-grid">
               <div className="up-detail-item">
                 <span className="up-detail-label">Email</span>
