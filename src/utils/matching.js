@@ -43,9 +43,29 @@ function sizeScore(preferredSize, size) {
   return preferredSize.toLowerCase() === size.toLowerCase() ? 10 : 0;
 }
 
-function locationScore(preferredLocation, location) {
-  if (!preferredLocation || !location) return 0;
-  return preferredLocation === location ? 10 : 0;
+const CITY_TO_REGION = {
+  'תל אביב':      'מרכז',
+  'רמת גן':       'מרכז',
+  'הרצליה':       'השרון',
+  'הוד השרון':    'השרון',
+  'ראשון לציון':  'שפלה',
+  'רחובות':       'שפלה',
+  'חיפה':         'חיפה והקריות',
+  'קריית ביאליק': 'חיפה והקריות',
+  'טבריה':        'גליל תחתון',
+  'נצרת':         'גליל תחתון',
+  'צפת':          'גליל עליון',
+  'קריית שמונה':  'גליל עליון',
+  'ירושלים':      'ירושלים',
+  'בית שמש':      'ירושלים',
+  'באר שבע':      'דרום',
+  'אילת':         'דרום',
+};
+
+function locationScore(preferredRegion, city) {
+  if (!preferredRegion || !city) return 0;
+  const region = CITY_TO_REGION[city] ?? city;
+  return region === preferredRegion ? 10 : 0;
 }
 
 export function calculateMatchPercent(pet, userPreferences) {

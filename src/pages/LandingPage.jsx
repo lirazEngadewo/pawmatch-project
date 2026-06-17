@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PetCard from '../components/PetCard.jsx';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
+import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import pets from '../data/pets.js';
@@ -211,6 +212,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       </section>
 
       <HowItWorksSection />
+      <IsraelMap />
       <TrustFeaturesSection />
       <Footer onNavigate={onNavigate} />
     </main>
