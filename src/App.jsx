@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from './lib/supabaseClient.js';
 import AppHeader from './components/AppHeader.jsx';
 import RegistrationModal from './components/RegistrationModal.jsx';
@@ -21,26 +21,49 @@ function App() {
 
   // Current user from Supabase Auth session
   const [currentUser, setCurrentUser] = useState(null);
+  const [sessionExpiredMessage, setSessionExpiredMessage] = useState('');
+  const [toast, setToast] = useState(null);
+  const isManualLogout = useRef(false);
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setCurrentUser(session?.user ?? null);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setCurrentUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  // Initialize favorites from localStorage
+  // Favorites must be declared before the auth effect that calls setFavorites
   const [favorites, setFavorites] = useState(() => {
     try {
       const stored = localStorage.getItem('favoritePets');
       return stored ? JSON.parse(stored) : [];
     } catch { return []; }
   });
+
+  const showToast = (message) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' && !isManualLogout.current) {
+        // Session expired automatically — redirect with message
+        setCurrentUser(null);
+        setFavorites([]);
+        localStorage.removeItem('favoritePets');
+        setSessionExpiredMessage('Your session expired. Please log in again.');
+        setPage('register');
+        window.scrollTo(0, 0);
+      } else {
+        setCurrentUser(session?.user ?? null);
+      }
+      if (event === 'SIGNED_OUT') isManualLogout.current = false;
+      // Clear the session-expired banner once the user successfully signs in
+      if (event === 'SIGNED_IN') {
+        Promise.resolve().then(() => setSessionExpiredMessage(''));
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const isLoggedIn = currentUser !== null;
 
@@ -51,6 +74,7 @@ function App() {
   };
 
   const handleLogout = async () => {
+    isManualLogout.current = true;
     await supabase.auth.signOut();
     setFavorites([]);
     localStorage.removeItem('favoritePets');
@@ -58,13 +82,16 @@ function App() {
   };
 
   const toggleFavorite = (petId) => {
-    setFavorites((prev) => {
-      const next = prev.includes(petId)
-        ? prev.filter((id) => id !== petId)
-        : [...prev, petId];
+    const next = favorites.includes(petId)
+      ? favorites.filter((id) => id !== petId)
+      : [...favorites, petId];
+    try {
       localStorage.setItem('favoritePets', JSON.stringify(next));
-      return next;
-    });
+    } catch {
+      showToast('Could not save favorite. Please try again.');
+      return;
+    }
+    setFavorites(next);
   };
 
   const requireRegistration = () => {
@@ -101,7 +128,11 @@ function App() {
       )}
 
       {page === 'register' && (
-        <RegisterPage onNavigate={handleNavigate} onSignUpSuccess={() => setShowQuizModal(true)} />
+        <RegisterPage
+          onNavigate={handleNavigate}
+          onSignUpSuccess={() => setShowQuizModal(true)}
+          sessionExpiredMessage={sessionExpiredMessage}
+        />
       )}
 
       {page === 'profile' && (
@@ -150,6 +181,8 @@ function App() {
           onNavigate={handleNavigate}
         />
       )}
+
+      {toast && <div className="app-toast">{toast}</div>}
 
       {showQuizModal && currentUser && (
         <MatchingQuizModal

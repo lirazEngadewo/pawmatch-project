@@ -29,6 +29,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   if (!isLoggedIn) {
     requireRegistration();
@@ -70,6 +71,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
+    setSubmitError('');
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
 
@@ -102,7 +104,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
 
     if (error) {
       console.error('RequestsPage: failed to submit adoption request', error);
-      alert(`Failed to submit request: ${error.message}`);
+      setSubmitError(`Something went wrong. Please try again. (${error.message})`);
       return;
     }
 
@@ -341,6 +343,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
             <button type="submit" className="button button-primary rq-submit-btn">
               {isMeeting ? 'Request Meeting' : 'Submit Adoption Application'}
             </button>
+            {submitError && <p className="rq-submit-error">{submitError}</p>}
           </form>
         </div>
       ) : (

@@ -3,7 +3,31 @@ import { supabase } from '../lib/supabaseClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function RegisterPage({ onNavigate, onSignUpSuccess }) {
+function mapAuthError(error, mode) {
+  const msg = error?.message ?? '';
+  if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('network')) {
+    return 'Connection error. Please try again.';
+  }
+  if (mode === 'signin') {
+    if (msg.includes('Invalid login credentials') || msg.includes('invalid_credentials')) {
+      return 'Incorrect email or password.';
+    }
+    if (msg.includes('Email not confirmed')) {
+      return 'Please verify your email before signing in.';
+    }
+  }
+  if (mode === 'signup') {
+    if (msg.includes('User already registered') || msg.includes('already been registered')) {
+      return 'An account with this email already exists.';
+    }
+    if (msg.includes('Password should be at least') || msg.includes('weak_password')) {
+      return 'Password must be at least 6 characters.';
+    }
+  }
+  return msg || 'Something went wrong. Please try again.';
+}
+
+function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
   const [authMode, setAuthMode] = useState('signin'); // 'signin' | 'signup'
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -38,7 +62,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess }) {
     setLoading(false);
 
     if (authError) {
-      setError(authError.message);
+      setError(mapAuthError(authError, 'signin'));
       return;
     }
 
@@ -65,7 +89,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess }) {
     setLoading(false);
 
     if (authError) {
-      setError(authError.message);
+      setError(mapAuthError(authError, 'signup'));
       return;
     }
 
@@ -99,6 +123,10 @@ function RegisterPage({ onNavigate, onSignUpSuccess }) {
                 ? 'Sign in to continue your PawMatch journey.'
                 : 'Join PawMatch to save pets, like profiles, and send adoption requests.'}
             </p>
+
+            {sessionExpiredMessage && (
+              <p className="form-session-banner">{sessionExpiredMessage}</p>
+            )}
 
             <form
               className="register-form"
