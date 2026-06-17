@@ -639,6 +639,57 @@ h3 {
   color: rgba(255, 255, 255, 0.72);
 }
 
+.footer-link {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.18s;
+  text-align: left;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.18s;
+}
+
+.footer-social-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.contact-success {
+  background: var(--color-success);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 0.97rem;
+  margin-top: 4px;
+}
+
+.contact-field-error {
+  color: #c0392b;
+  font-size: 0.84rem;
+  margin: 4px 0 0;
+}
+
 .footer-social {
   display: flex;
   gap: 12px;

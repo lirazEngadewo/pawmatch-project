@@ -240,7 +240,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
         </div>
       </section>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
 
       {showQuizModal && (
         <MatchingQuizModal

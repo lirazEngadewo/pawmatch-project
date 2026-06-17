@@ -372,7 +372,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
       </div>
 
       <TrustFeaturesSection />
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </main>
   );
 }

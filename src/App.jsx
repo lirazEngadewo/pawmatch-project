@@ -7,7 +7,6 @@ import LandingPage from './pages/LandingPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import PetProfilePage from './pages/PetProfilePage.jsx';
-import AdoptionPage from './pages/AdoptionPage.jsx';
 import RequestsPage from './pages/RequestsPage.jsx';
 import UserProfilePage from './pages/UserProfilePage.jsx';
 import AboutUsPage from './pages/AboutUsPage.jsx';
@@ -119,6 +118,7 @@ function App() {
       {page === 'home' && (
         <HomePage
           onSelectPet={(id) => handleNavigate('profile', id)}
+          onNavigate={handleNavigate}
           isLoggedIn={isLoggedIn}
           favorites={favorites}
           toggleFavorite={toggleFavorite}
@@ -147,13 +147,6 @@ function App() {
         />
       )}
 
-      {page === 'adoption' && (
-        <AdoptionPage
-          isLoggedIn={isLoggedIn}
-          requireRegistration={requireRegistration}
-        />
-      )}
-
       {page === 'requests' && (
         <RequestsPage
           selectedPetId={selectedPetId}
@@ -173,7 +166,7 @@ function App() {
         />
       )}
 
-      {page === 'about' && <AboutUsPage />}
+      {page === 'about' && <AboutUsPage onNavigate={handleNavigate} />}
 
       {showModal && (
         <RegistrationModal

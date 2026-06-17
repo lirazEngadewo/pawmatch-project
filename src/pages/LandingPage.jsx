@@ -212,7 +212,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
 
       <HowItWorksSection />
       <TrustFeaturesSection />
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </main>
   );
 }

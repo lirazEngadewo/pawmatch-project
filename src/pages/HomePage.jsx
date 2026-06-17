@@ -5,7 +5,7 @@ import pets from '../data/pets.js';
 import useUserPreferences from '../hooks/useUserPreferences.js';
 import { calculateMatchPercent } from '../utils/matching.js';
 
-function HomePage({ onSelectPet, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
+function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const pet = pets[currentIndex];
   const userPreferences = useUserPreferences(currentUser);
@@ -196,7 +196,7 @@ function HomePage({ onSelectPet, isLoggedIn, favorites, toggleFavorite, requireR
       </div>
 
       <TrustFeaturesSection />
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </main>
   );
 }

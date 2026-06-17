@@ -223,7 +223,7 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
       </section>
 
       <TrustFeaturesSection />
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </main>
   );
 }

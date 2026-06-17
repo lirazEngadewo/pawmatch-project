@@ -1,9 +1,36 @@
+import { useState } from 'react';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 
-function AboutUsPage() {
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function AboutUsPage({ onNavigate }) {
+  const [form, setForm] = useState({ name: '', email: '', subject: '', phone: '', message: '' });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (field, value) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    if (fieldErrors[field]) setFieldErrors((prev) => ({ ...prev, [field]: '' }));
+  };
+
   const handleContactSubmit = (e) => {
     e.preventDefault();
+    const errors = {};
+    if (!form.name.trim()) errors.name = 'Full name is required.';
+    if (!form.email.trim()) errors.email = 'Email is required.';
+    else if (!EMAIL_RE.test(form.email)) errors.email = 'Please enter a valid email address.';
+    if (!form.subject.trim()) errors.subject = 'Subject is required.';
+    if (!form.message.trim()) errors.message = 'Message is required.';
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setSuccess(true);
+    setForm({ name: '', email: '', subject: '', phone: '', message: '' });
+    setFieldErrors({});
   };
 
   return (
@@ -49,41 +76,75 @@ function AboutUsPage() {
             </p>
           </div>
 
-          <form className="contact-form" onSubmit={handleContactSubmit}>
-            <div className="contact-form-row">
+          {success ? (
+            <p className="contact-success">Thank you! We received your message and will get back to you soon.</p>
+          ) : (
+            <form className="contact-form" onSubmit={handleContactSubmit} noValidate>
+              <div className="contact-form-row">
+                <label className="contact-label">
+                  Full Name
+                  <input
+                    type="text"
+                    placeholder="Your full name"
+                    className={`form-input${fieldErrors.name ? ' rq-input--error' : ''}`}
+                    value={form.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                  />
+                  {fieldErrors.name && <span className="contact-field-error">{fieldErrors.name}</span>}
+                </label>
+                <label className="contact-label">
+                  Email
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    className={`form-input${fieldErrors.email ? ' rq-input--error' : ''}`}
+                    value={form.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                  />
+                  {fieldErrors.email && <span className="contact-field-error">{fieldErrors.email}</span>}
+                </label>
+              </div>
+              <div className="contact-form-row">
+                <label className="contact-label">
+                  Subject
+                  <input
+                    type="text"
+                    placeholder="How can we help?"
+                    className={`form-input${fieldErrors.subject ? ' rq-input--error' : ''}`}
+                    value={form.subject}
+                    onChange={(e) => handleChange('subject', e.target.value)}
+                  />
+                  {fieldErrors.subject && <span className="contact-field-error">{fieldErrors.subject}</span>}
+                </label>
+                <label className="contact-label">
+                  Phone Number
+                  <input
+                    type="tel"
+                    placeholder="Phone (optional)"
+                    className="form-input"
+                    value={form.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                  />
+                </label>
+              </div>
               <label className="contact-label">
-                Full Name
-                <input type="text" placeholder="Your full name" className="form-input" />
+                Message
+                <textarea
+                  placeholder="Tell us how we can help or share your adoption story..."
+                  className={`form-input contact-textarea${fieldErrors.message ? ' rq-input--error' : ''}`}
+                  value={form.message}
+                  onChange={(e) => handleChange('message', e.target.value)}
+                />
+                {fieldErrors.message && <span className="contact-field-error">{fieldErrors.message}</span>}
               </label>
-              <label className="contact-label">
-                Email
-                <input type="email" placeholder="your@email.com" className="form-input" />
-              </label>
-            </div>
-            <div className="contact-form-row">
-              <label className="contact-label">
-                Subject
-                <input type="text" placeholder="How can we help?" className="form-input" />
-              </label>
-              <label className="contact-label">
-                Phone Number
-                <input type="tel" placeholder="Phone (optional)" className="form-input" />
-              </label>
-            </div>
-            <label className="contact-label">
-              Message
-              <textarea
-                placeholder="Tell us how we can help or share your adoption story..."
-                className="form-input contact-textarea"
-              />
-            </label>
-            <button type="submit" className="button button-primary">Send Message</button>
-          </form>
+              <button type="submit" className="button button-primary">Send Message</button>
+            </form>
+          )}
         </div>
       </section>
 
       <TrustFeaturesSection />
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </main>
   );
 }
