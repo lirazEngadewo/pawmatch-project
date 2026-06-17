@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import pets from '../data/pets.js';
@@ -192,6 +193,8 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
               ))
             )}
           </div>
+
+          <IsraelMap height="350px" compact />
         </div>
       </div>
 

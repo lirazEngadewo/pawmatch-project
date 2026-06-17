@@ -29,9 +29,9 @@ const pawIcon = L.divIcon({
   popupAnchor: [0, -42],
 });
 
-function IsraelMap() {
+function IsraelMap({ height = '500px', compact = false }) {
   return (
-    <section className="israel-map-section">
+    <section className={`israel-map-section${compact ? ' israel-map-section--compact' : ''}`}>
       <div className="israel-map-header">
         <p className="eyebrow">רשת האימוץ שלנו</p>
         <h2 className="israel-map-title">עמותות האימוץ ברחבי הארץ</h2>
@@ -42,7 +42,7 @@ function IsraelMap() {
         <MapContainer
           center={[31.5, 35.0]}
           zoom={7}
-          style={{ height: '500px', width: '100%' }}
+          style={{ height, width: '100%' }}
           scrollWheelZoom={false}
         >
           <TileLayer
