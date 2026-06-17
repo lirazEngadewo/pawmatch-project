@@ -44,22 +44,22 @@ function sizeScore(preferredSize, size) {
 }
 
 const CITY_TO_REGION = {
-  'תל אביב':      'מרכז',
-  'רמת גן':       'מרכז',
-  'הרצליה':       'השרון',
-  'הוד השרון':    'השרון',
-  'ראשון לציון':  'שפלה',
-  'רחובות':       'שפלה',
-  'חיפה':         'חיפה והקריות',
-  'קריית ביאליק': 'חיפה והקריות',
-  'טבריה':        'גליל תחתון',
-  'נצרת':         'גליל תחתון',
-  'צפת':          'גליל עליון',
-  'קריית שמונה':  'גליל עליון',
-  'ירושלים':      'ירושלים',
-  'בית שמש':      'ירושלים',
-  'באר שבע':      'דרום',
-  'אילת':         'דרום',
+  'Tel Aviv':       'Center',
+  'Ramat Gan':      'Center',
+  'Herzliya':       'Sharon',
+  'Hod HaSharon':   'Sharon',
+  'Rishon LeZion':  'Shephelah',
+  'Rehovot':        'Shephelah',
+  'Haifa':          'Haifa and Krayot',
+  'Kiryat Bialik':  'Haifa and Krayot',
+  'Tiberias':       'Lower Galilee',
+  'Nazareth':       'Lower Galilee',
+  'Safed':          'Upper Galilee',
+  'Kiryat Shmona':  'Upper Galilee',
+  'Jerusalem':      'Jerusalem',
+  'Beit Shemesh':   'Jerusalem',
+  "Be'er Sheva":    'South',
+  'Eilat':          'South',
 };
 
 function locationScore(preferredRegion, city) {
