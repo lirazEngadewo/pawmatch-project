@@ -76,7 +76,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
 
     setError('');
     setLoading(true);
-    const { error: authError } = await supabase.auth.signUp({
+    const { data: signUpData, error: authError } = await supabase.auth.signUp({
       email: email.toLowerCase(),
       password,
       options: {
@@ -86,13 +86,21 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
         },
       },
     });
-    setLoading(false);
 
     if (authError) {
+      setLoading(false);
       setError(mapAuthError(authError, 'signup'));
       return;
     }
 
+    if (signUpData?.user) {
+      await supabase.from('profiles').insert({
+        user_id: signUpData.user.id,
+        full_name: `${firstName.trim()} ${lastName.trim()}`,
+      });
+    }
+
+    setLoading(false);
     onSignUpSuccess?.();
     onNavigate('home');
   };

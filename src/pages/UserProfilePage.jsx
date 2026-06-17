@@ -35,6 +35,7 @@ const STATUS_DISPLAY = {
 };
 
 function UserProfilePage({ currentUser, favorites, onNavigate }) {
+  const [profile, setProfile] = useState(null);
   const [userPreferences, setUserPreferences] = useState(null);
   const [prefsLoaded, setPrefsLoaded] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
@@ -55,6 +56,16 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
   useEffect(() => {
     refreshPreferences();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    supabase
+      .from('profiles')
+      .select('full_name, avatar_url, bio')
+      .eq('user_id', currentUser.id)
+      .maybeSingle()
+      .then(({ data }) => setProfile(data ?? null));
   }, [currentUser]);
 
   const [requests, setRequests] = useState([]);
@@ -85,14 +96,15 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
 
-  const initials = ((currentUser?.user_metadata?.first_name?.[0] || '') + (currentUser?.user_metadata?.last_name?.[0] || '')).toUpperCase();
+  const displayName = profile?.full_name || `${currentUser?.user_metadata?.first_name ?? ''} ${currentUser?.user_metadata?.last_name ?? ''}`.trim();
+  const initials = displayName.split(' ').map((w) => w[0] || '').slice(0, 2).join('').toUpperCase();
 
   return (
     <main className="page up-page">
 
       {/* ── Greeting ── */}
       <div className="up-greeting">
-        <h1 className="up-greeting-title">Hello, {currentUser?.user_metadata?.first_name}</h1>
+        <h1 className="up-greeting-title">Hello, {displayName.split(' ')[0] || 'there'}</h1>
         <p className="up-greeting-sub">Welcome back to your PawMatch dashboard.</p>
       </div>
 
@@ -113,7 +125,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate }) {
         <div className="up-details-card card">
           <div className="up-details-avatar">{initials || '?'}</div>
           <div className="up-details-body">
-            <h2 className="up-details-name">{currentUser?.user_metadata?.first_name} {currentUser?.user_metadata?.last_name}</h2>
+            <h2 className="up-details-name">{displayName || '—'}</h2>
             <div className="up-details-grid">
               <div className="up-detail-item">
                 <span className="up-detail-label">Email</span>
