@@ -512,11 +512,11 @@ const pets = [
     about: 'Leo was brought to the shelter after his owner\'s landlord changed the pet policy, leaving Leo without a home through no fault of his own. He arrived carrying himself with all the dignity you\'d expect from a Persian -- slow blinking at newcomers, inspecting every corner methodically, and then settling in as if he owned the place. Leo is wonderfully calm, content to drape himself across soft furniture and accept petting sessions on his own schedule. His long, silky coat needs daily combing to stay tangle-free, but for those willing to invest the time, Leo repays with deep purrs and gentle companionship. He would thrive in a quiet adult home where his peaceful nature is truly matched.',
     details: ['Calm and regal', 'Indoor cat', 'Needs daily grooming', 'Quiet home preferred'],
     tags: ['Calm and regal', 'Indoor cat', 'Needs daily grooming', 'Quiet home preferred'],
-    image: 'https://images.unsplash.com/photo-1518791841217-8f162f1912fa?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1452857297128-d9c29adba80b?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
-      'https://images.unsplash.com/photo-1719896247911-bee9912ab36b?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1452857297128-d9c29adba80b?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1701368314970-2e31757a3b9d?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1559190394-df5a28aab5c5?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1686762843717-dec31bdf210f?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1637424864367-7ab8752c19c6?auto=format&fit=crop&w=400&q=80',
     ],
     healthCare: {
       vaccinationStatus: 'Fully vaccinated',

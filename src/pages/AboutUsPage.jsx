@@ -3,10 +3,17 @@ import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const STORY_PLACEHOLDER = '/bruno.jpg';
 
 function AboutUsPage({ onNavigate }) {
   const [form, setForm] = useState({ name: '', email: '', subject: '', phone: '', message: '' });
   const [fieldErrors, setFieldErrors] = useState({});
+  const [storyPhoto, setStoryPhoto] = useState(null);
+
+  const handleStoryPhotoChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) setStoryPhoto(URL.createObjectURL(file));
+  };
   const [success, setSuccess] = useState(false);
 
   const handleChange = (field, value) => {
@@ -46,13 +53,6 @@ function AboutUsPage({ onNavigate }) {
 
       <section className="section about-story-section">
         <div className="about-story-grid">
-          <div className="about-story-image">
-            <img
-              src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80"
-              alt="Bruno the dog"
-            />
-          </div>
-
           <div className="card about-story-card">
             <h2>Our Story</h2>
             <div className="about-story-body">
@@ -62,6 +62,21 @@ function AboutUsPage({ onNavigate }) {
               <p>That experience became the reason behind PawMatch. I wanted to create a platform that makes pet adoption warmer, simpler, and more accessible — both for adopters and for the animals waiting for a home.</p>
               <p>PawMatch is more than a student project. It is a small mission to help more pets find loving families and to make the adoption journey easier, clearer, and more human.</p>
             </div>
+          </div>
+
+          <div className="about-story-photo-col">
+            <div className="about-story-photo-frame">
+              <img src={storyPhoto || STORY_PLACEHOLDER} alt="Bruno the dog" />
+            </div>
+            <label className="about-story-upload-label">
+              Change Photo
+              <input
+                type="file"
+                accept="image/*"
+                className="about-story-upload-input"
+                onChange={handleStoryPhotoChange}
+              />
+            </label>
           </div>
         </div>
       </section>
