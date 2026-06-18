@@ -3,17 +3,10 @@ import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const STORY_PLACEHOLDER = '/bruno.jpg';
 
 function AboutUsPage({ onNavigate }) {
   const [form, setForm] = useState({ name: '', email: '', subject: '', phone: '', message: '' });
   const [fieldErrors, setFieldErrors] = useState({});
-  const [storyPhoto, setStoryPhoto] = useState(null);
-
-  const handleStoryPhotoChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) setStoryPhoto(URL.createObjectURL(file));
-  };
   const [success, setSuccess] = useState(false);
 
   const handleChange = (field, value) => {
@@ -59,24 +52,17 @@ function AboutUsPage({ onNavigate }) {
               <p>PawMatch was created from a personal journey and a deep love for animals. I'm a student, and I built this website during my degree after realizing how difficult and confusing the adoption process can be.</p>
               <p>During the war, I adopted my dog Bruno, the brown dog in the photo. Bruno was found wandering in northern Israel, without a home and without anyone knowing where he belonged. When I met him, I understood how many animals are waiting in shelters and rescue organizations, hoping someone will notice them and give them a chance.</p>
               <p>The adoption itself was one of the most meaningful decisions I have made, but the process was also difficult, unclear, and sometimes overwhelming. I felt that people who want to adopt should not have to struggle with scattered information, complicated forms, and confusing communication.</p>
-              <p>That experience became the reason behind PawMatch. I wanted to create a platform that makes pet adoption warmer, simpler, and more accessible — both for adopters and for the animals waiting for a home.</p>
+              <p>That experience became the reason behind PawMatch. I wanted to create a platform that makes pet adoption warmer, simpler, and more accessible both for adopters and for the animals waiting for a home.</p>
               <p>PawMatch is more than a student project. It is a small mission to help more pets find loving families and to make the adoption journey easier, clearer, and more human.</p>
             </div>
           </div>
 
           <div className="about-story-photo-col">
-            <div className="about-story-photo-frame">
-              <img src={storyPhoto || STORY_PLACEHOLDER} alt="Bruno the dog" />
-            </div>
-            <label className="about-story-upload-label">
-              Change Photo
-              <input
-                type="file"
-                accept="image/*"
-                className="about-story-upload-input"
-                onChange={handleStoryPhotoChange}
-              />
-            </label>
+            <img
+              src="/bruno.jpg"
+              alt="Bruno the dog"
+              onError={(e) => console.error('Bruno photo failed to load:', e.target.src)}
+            />
           </div>
         </div>
       </section>
