@@ -11,7 +11,8 @@ import { calculateMatchPercent, CITY_TO_REGION } from '../utils/matching.js';
 const REGIONS = ['Center', 'Sharon', 'Jerusalem', 'Haifa and Krayot', 'Upper Galilee', 'Lower Galilee', 'Shephelah', 'South'];
 
 function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedType, setSelectedType] = useState('');
@@ -127,7 +128,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
 
                 <div className="hm-info">
                   <div className="hm-name-row">
-                    <h2 className="hm-pet-name">{pet.name}</h2>
+                    <h2 className="hm-pet-name">{isHe && pet.name_he ? pet.name_he : pet.name}</h2>
                     {matchPercent !== null && (
                       <span className="match-pill">{matchPercent}% match</span>
                     )}
@@ -153,7 +154,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
                   </div>
 
                   <div className="tags-row">
-                    {pet.details.slice(0, 3).map((tag, i) => (
+                    {(isHe && pet.tags_he ? pet.tags_he : pet.details).slice(0, 3).map((tag, i) => (
                       <span key={i} className="tag">{tag}</span>
                     ))}
                   </div>
@@ -242,7 +243,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
                 <div key={fav.id} className="hm-fav-row">
                   <img src={fav.image} alt={fav.name} className="hm-fav-img" />
                   <div className="hm-fav-info">
-                    <p className="hm-fav-name">{fav.name}</p>
+                    <p className="hm-fav-name">{isHe && fav.name_he ? fav.name_he : fav.name}</p>
                     <p className="hm-fav-type">{fav.type}</p>
                   </div>
                   <span

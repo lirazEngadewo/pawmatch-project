@@ -2,6 +2,7 @@ const pets = [
   {
     id: 'milo',
     name: 'Milo',
+    name_he: 'מילו',
     type: 'Tabby Cat',
     breed: 'Tabby Cat',
     species: 'cat',
@@ -11,9 +12,11 @@ const pets = [
     location: 'Tel Aviv',
     description: 'A gentle lap cat who loves quiet mornings, soft pats, and a sunny window seat.',
     shortDescription: 'A gentle lap cat who loves quiet mornings, soft pats, and a sunny window seat.',
+    short_description_he: 'חתול חיק עדין שאוהב בקרים שקטים, ליטופים עדינים ומקום ישיבה שמשי ליד החלון.',
     about: 'Milo came to us after being found in a quiet Brooklyn neighborhood, where he had been living as a stray for a few months. Despite his rough start, he quickly won over every volunteer with his calm, affectionate nature. He loves curling up in sunlit spots, slow mornings with soft music, and will happily sit in your lap for hours. Milo is great for apartment living and does best in a calm household. He is shy at first but deeply loyal once he trusts you -- adopters say he turns into a tiny shadow who follows you from room to room.',
     details: ['Calm companion', 'Indoor cat', 'Loves toys', 'Friendly with kids'],
     tags: ['Calm companion', 'Indoor cat', 'Loves toys', 'Friendly with kids'],
+    tags_he: ['חבר רגוע', 'חתול בית', 'אוהב צעצועים', 'ידידותי לילדים'],
     image: 'https://images.unsplash.com/photo-1514505743617-980a45b2d358?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1719896247911-bee9912ab36b?auto=format&fit=crop&w=400&q=80',
@@ -43,6 +46,7 @@ const pets = [
   {
     id: 'luna',
     name: 'Luna',
+    name_he: 'לונה',
     type: 'Golden Retriever',
     breed: 'Golden Retriever',
     species: 'dog',
@@ -52,9 +56,11 @@ const pets = [
     location: 'Herzliya',
     description: 'Warm-hearted and playful. Luna is ready for walks, playtime, and a loving family.',
     shortDescription: 'Warm-hearted and playful. Luna is ready for walks, playtime, and a loving family.',
+    short_description_he: 'לבבית ועליזה. לונה מוכנה לטיולים, משחקים ומשפחה אוהבת.',
     about: 'Luna was surrendered when her previous family relocated internationally and could not take her along. She was clearly loved -- she is house-trained, knows basic commands, and walks beautifully on a leash. Luna is the kind of dog who greets you with a toy and melts into cuddles by evening. She thrives in active households and loves other dogs. She has a calm temperament with children and is patient enough for first-time dog owners. Luna would especially love a home with a yard or regular park visits.',
     details: ['High energy', 'Great on leash', 'Sweet natured', 'Loves cuddles'],
     tags: ['High energy', 'Great on leash', 'Sweet natured', 'Loves cuddles'],
+    tags_he: ['אנרגיה גבוהה', 'מצוינת ברצועה', 'מתוקה מטבעה', 'אוהבת חיבוקים'],
     image: 'https://images.unsplash.com/photo-1760791510936-eef13da5018b?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1760448934632-32853396fb8e?auto=format&fit=crop&w=400&q=80',
@@ -84,6 +90,7 @@ const pets = [
   {
     id: 'bella',
     name: 'Bella',
+    name_he: 'בלה',
     type: 'Beagle',
     breed: 'Beagle',
     species: 'dog',
@@ -93,9 +100,11 @@ const pets = [
     location: 'Rishon LeZion',
     description: 'Playful and curious, Bella loves morning walks, fetch, and curling up at your feet after a long day.',
     shortDescription: 'Playful and curious, Bella loves morning walks, fetch, and curling up at your feet.',
+    short_description_he: 'שובבה וסקרנית, בלה אוהבת טיולי בוקר, לזרוק כדור ולהתכרבל ליד רגליכם.',
     about: 'Bella is a spirited two-year-old Beagle with a nose for adventure and a heart full of love. She came to us as an owner surrender -- her family had to downsize and could not keep a dog. She adjusted quickly to shelter life, charming every staff member with her big brown eyes and wagging tail. Bella is eager to please and responds well to positive reinforcement training. She is happiest when she is exploring outdoors, and equally happy snuggling on the couch once the adventure is done. She would do best with a family who can give her daily activity and plenty of affection.',
     details: ['Loves outdoors', 'Great with kids', 'Easy to train', 'Playful spirit'],
     tags: ['Loves outdoors', 'Great with kids', 'Easy to train', 'Playful spirit'],
+    tags_he: ['אוהבת חוץ', 'מצוינת עם ילדים', 'קל לאמן', 'רוח שובבה'],
     image: 'https://images.unsplash.com/photo-1597513494470-9e5e199de58c?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1595301209932-587938108299?auto=format&fit=crop&w=400&q=80',
@@ -125,6 +134,7 @@ const pets = [
   {
     id: 'simba',
     name: 'Simba',
+    name_he: 'סימבה',
     type: 'Senior Cat',
     breed: 'Domestic Shorthair',
     species: 'cat',
@@ -134,9 +144,11 @@ const pets = [
     location: 'Haifa',
     description: 'A loyal friend with a calm heart. Simba is ready to share peaceful evenings.',
     shortDescription: 'A loyal friend with a calm heart. Simba is ready to share peaceful evenings.',
+    short_description_he: 'חבר נאמן עם לב רגוע. סימבה מוכן לחלוק ערבים שלווים.',
     about: 'Simba is a nine-year-old gentleman who deserves a warm, quiet home to spend his golden years. He was surrendered by an elderly owner who moved into assisted living -- a heartbreaking but loving decision. Simba is incredibly calm, deeply affectionate, and surprisingly playful for his age. He enjoys sitting by windows, gentle lap sessions, and the occasional toy mouse. Senior cats like Simba are often overlooked, but his adopters consistently say he is the most rewarding animal they have ever had. He will reward you with soft purrs and unwavering loyalty every single day.',
     details: ['Low energy', 'Loves naps', 'Sweet personality', 'Easygoing'],
     tags: ['Low energy', 'Loves naps', 'Sweet personality', 'Easygoing'],
+    tags_he: ['אנרגיה נמוכה', 'אוהב תנומות', 'אישיות מתוקה', 'קל מזג'],
     image: 'https://images.unsplash.com/photo-1621780030440-71c9ace78fa3?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1701368314970-2e31757a3b9d?auto=format&fit=crop&w=400&q=80',
@@ -166,6 +178,7 @@ const pets = [
   {
     id: 'rocky',
     name: 'Rocky',
+    name_he: 'רוקי',
     type: 'Labrador Retriever',
     breed: 'Labrador Retriever',
     species: 'dog',
@@ -175,9 +188,11 @@ const pets = [
     location: "Be'er Sheva",
     description: 'A bouncy, affectionate pup who loves fetch, swimming, and meeting new friends at the dog park.',
     shortDescription: 'A bouncy, affectionate pup who loves fetch, swimming, and meeting new friends.',
+    short_description_he: 'גור קופצני וחביב שאוהב לזרוק כדור, לשחות ולפגוש חברים חדשים.',
     about: 'Rocky was born into a foster home and has been surrounded by love since day one, but now he is ready for a family of his own. He is bursting with puppy energy -- always up for a game of fetch, a trip to the beach, or a romp with other dogs at the park. Rocky is still learning his manners, but he is whip-smart and food-motivated, which makes training a breeze. He gets along beautifully with other dogs and would thrive in an active household that can match his enthusiasm. Give him a job to do and a yard to run in, and he will reward you with endless tail wags.',
     details: ['High energy', 'Loves water', 'Great with other dogs', 'Still learning manners'],
     tags: ['High energy', 'Loves water', 'Great with other dogs', 'Still learning manners'],
+    tags_he: ['אנרגיה גבוהה', 'אוהב מים', 'מצוין עם כלבים אחרים', 'עדיין לומד נימוסים'],
     image: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=400&q=80',
@@ -207,6 +222,7 @@ const pets = [
   {
     id: 'daisy',
     name: 'Daisy',
+    name_he: 'דייזי',
     type: 'French Bulldog',
     breed: 'French Bulldog',
     species: 'dog',
@@ -215,11 +231,12 @@ const pets = [
     size: 'Small',
     location: 'Jerusalem',
     description: 'A snuggly little couch potato with a big personality and an even bigger snore.',
-
     shortDescription: 'A snuggly little couch potato with a big personality and an even bigger snore.',
+    short_description_he: 'ספה קטנה וחמודה עם אישיות גדולה ונחירות עוד יותר גדולות.',
     about: 'Daisy was surrendered when her owner could no longer manage the stairs in their walk-up apartment. She has settled into shelter life with a calm, easygoing attitude, charming staff with her wrinkly grin and dramatic sighs. Daisy is happiest curled up on a soft blanket next to her favorite person, though she does enjoy short strolls around the block. She gets along well with calm dogs and is very food motivated, making basic training simple. Because of her short snout, she needs a home with air conditioning and an owner mindful of her breathing during exercise or hot weather.',
     details: ['Low exercise needs', 'Loves naps', 'Great apartment dog', 'Snores loudly'],
     tags: ['Low exercise needs', 'Loves naps', 'Great apartment dog', 'Snores loudly'],
+    tags_he: ['צרכי פעילות נמוכים', 'אוהבת תנומות', 'כלבת דירה מצוינת', 'נוחרת בקול'],
     image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=400&q=80',
@@ -249,6 +266,7 @@ const pets = [
   {
     id: 'oreo',
     name: 'Oreo',
+    name_he: 'אוריאו',
     type: 'Siamese Cat',
     breed: 'Siamese',
     species: 'cat',
@@ -258,9 +276,11 @@ const pets = [
     location: 'Tiberias',
     description: 'A vocal, social cat who will tell you all about his day -- whether you ask or not.',
     shortDescription: 'A vocal, social cat who will tell you all about his day -- whether you ask or not.',
+    short_description_he: 'חתול מדבר וחברותי שיספר לכם על יומו — בין אם תשאלו ובין אם לאו.',
     about: 'Oreo came to the shelter as part of a large litter rescue and was the first kitten to march up and demand attention. Now grown, he has lost none of that confidence -- he greets visitors at the door, narrates his opinions in a steady stream of chirps and meows, and insists on supervising every task. Oreo loves interactive toys, window perches, and a good chase down the hallway, followed by a long nap in a sunbeam. He has lived happily with other cats and would do best in a home where someone is around to enjoy his chatty company.',
     details: ['Very talkative', 'Loves attention', 'Good with other cats', 'Indoor cat'],
     tags: ['Very talkative', 'Loves attention', 'Good with other cats', 'Indoor cat'],
+    tags_he: ['מדבר מאוד', 'אוהב תשומת לב', 'טוב עם חתולים אחרים', 'חתול בית'],
     image: 'https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=400&q=80',
@@ -290,6 +310,7 @@ const pets = [
   {
     id: 'coco',
     name: 'Coco',
+    name_he: 'קוקו',
     type: 'Poodle Mix',
     breed: 'Poodle Mix',
     species: 'dog',
@@ -299,9 +320,11 @@ const pets = [
     location: 'Safed',
     description: 'A clever, hypoallergenic sweetheart who already knows a dozen tricks and is eager to learn more.',
     shortDescription: 'A clever, hypoallergenic sweetheart who already knows a dozen tricks.',
+    short_description_he: 'חמודה חכמה והיפואלרגנית שכבר יודעת תריסר טריקים ומוכנה ללמוד עוד.',
     about: 'Coco spent the last five years as a beloved family pet until a job relocation made it impossible for her owners to bring her along. She is impeccably trained -- she can sit, stay, spin, shake, and even put her toys away in a basket. Coco is endlessly patient with children and loves nothing more than a good brushing session followed by a car ride with the window down. Her curly, low-shedding coat makes her a great fit for allergy-sensitive households, though she does need grooming every few weeks to stay tangle-free. Coco is looking for a family who will keep her mind busy and her heart full.',
     details: ['Hypoallergenic coat', 'Knows many tricks', 'Great with kids', 'Loves car rides'],
     tags: ['Hypoallergenic coat', 'Knows many tricks', 'Great with kids', 'Loves car rides'],
+    tags_he: ['פרווה היפואלרגנית', 'יודעת טריקים רבים', 'מצוינת עם ילדים', 'אוהבת נסיעות'],
     image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&w=400&q=80',
@@ -331,6 +354,7 @@ const pets = [
   {
     id: 'whiskers',
     name: 'Whiskers',
+    name_he: 'וויסקרס',
     type: 'Maine Coon',
     breed: 'Maine Coon',
     species: 'cat',
@@ -340,9 +364,11 @@ const pets = [
     location: 'Ramat Gan',
     description: 'A gentle giant with a luxurious coat, Whiskers is as cuddly as he is majestic.',
     shortDescription: 'A gentle giant with a luxurious coat, Whiskers is as cuddly as he is majestic.',
+    short_description_he: 'ענק עדין עם פרווה מפוארת, וויסקרס חביב כמו שהוא מרשים.',
     about: 'Whiskers showed up as a stray on a cold Boston doorstep and was clearly someone\'s much-loved companion before -- he is gentle, well-mannered, and immediately comfortable with people. True to his Maine Coon roots, he is a big, fluffy presence with a surprisingly soft, chirpy voice. He loves being brushed, lounging on the highest perch he can find, and following his favorite humans from room to room like a quiet shadow. Whiskers has lived peacefully alongside a friendly dog and would suit a calm home where his luxurious coat can get the regular care it needs.',
     details: ['Gentle giant', 'Loves brushing', 'Calm around dogs', 'Indoor cat'],
     tags: ['Gentle giant', 'Loves brushing', 'Calm around dogs', 'Indoor cat'],
+    tags_he: ['ענק עדין', 'אוהב מברשת', 'רגוע ליד כלבים', 'חתול בית'],
     image: 'https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1514505743617-980a45b2d358?auto=format&fit=crop&w=400&q=80',
@@ -372,6 +398,7 @@ const pets = [
   {
     id: 'penny',
     name: 'Penny',
+    name_he: 'פני',
     type: 'Domestic Shorthair',
     breed: 'Domestic Shorthair',
     species: 'cat',
@@ -381,9 +408,11 @@ const pets = [
     location: 'Beit Shemesh',
     description: 'A curious, energetic kitten who turns every cardboard box into a castle and every sock into a toy.',
     shortDescription: 'A curious, energetic kitten who turns every cardboard box into a castle.',
+    short_description_he: 'גורה סקרנית ואנרגטית שהופכת כל קרטון לטירה וכל גרב לצעצוע.',
     about: 'Penny was born in foster care after her mother was rescued from a feral colony, and she has been a ball of curiosity since she first opened her eyes. She spends her days tearing around the house, pouncing on toys, climbing anything climbable, and investigating every new smell with great seriousness. Penny is litter trained and incredibly affectionate once the zoomies wear off, often falling asleep mid-play in your lap. She would do best with another playful pet or an owner who has plenty of time to keep up with her boundless kitten energy.',
     details: ['Playful kitten', 'Loves climbing', 'Litter trained', 'Best with playmate'],
     tags: ['Playful kitten', 'Loves climbing', 'Litter trained', 'Best with playmate'],
+    tags_he: ['גורה שובבה', 'אוהבת טיפוס', 'מאומנת לארגז חול', 'מומלץ עם חבר'],
     image: 'https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=400&q=80',
@@ -415,6 +444,7 @@ const pets = [
   {
     id: 'max',
     name: 'Max',
+    name_he: 'מקס',
     type: 'Border Collie',
     breed: 'Border Collie',
     species: 'dog',
@@ -425,9 +455,11 @@ const pets = [
     matchPercent: 91,
     description: 'A brilliant, energetic herding dog who thrives on activity, learning, and a devoted owner.',
     shortDescription: 'A brilliant, energetic herding dog who thrives on activity and learning.',
+    short_description_he: 'כלב רועה גאוני ואנרגטי שמתפרח מפעילות, למידה ובעלים מסור.',
     about: 'Max arrived at the shelter after his owner suffered a medical emergency and could no longer care for an active dog. Despite the upheaval, Max adapted quickly and showed off his impressive vocabulary of commands within the first week. Border Collies are the Einsteins of the dog world, and Max is no exception -- he needs a job to do or a puzzle to solve every day. He excels at agility, frisbee, and any game that lets him run and think at the same time. Max would thrive with an experienced owner who can channel his energy and intelligence into a fulfilling daily routine.',
     details: ['Super intelligent', 'High energy', 'Loves agility', 'Needs active home'],
     tags: ['Super intelligent', 'High energy', 'Loves agility', 'Needs active home'],
+    tags_he: ['סופר חכם', 'אנרגיה גבוהה', 'אוהב אג\'יליטי', 'צריך בית פעיל'],
     image: 'https://images.unsplash.com/photo-1503256207526-0d5d80fa2f47?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=400&q=80',
@@ -457,6 +489,7 @@ const pets = [
   {
     id: 'nala',
     name: 'Nala',
+    name_he: 'נאלה',
     type: 'German Shepherd',
     breed: 'German Shepherd',
     species: 'dog',
@@ -467,9 +500,11 @@ const pets = [
     matchPercent: 88,
     description: 'A loyal, protective companion with a gentle soul and an unwavering devotion to her family.',
     shortDescription: 'A loyal, protective companion with a gentle soul and unwavering devotion.',
+    short_description_he: 'חברה נאמנה ומגינה עם נשמה עדינה ומסירות ללא תנאי למשפחתה.',
     about: 'Nala was brought to the shelter when her previous owner moved abroad and made the painful decision to leave her behind. She settled in quickly, earning the trust of every staff member with her gentle, dignified temperament. Despite her imposing size, Nala is an incredibly gentle dog who loves soft ear scratches, slow evening walks, and sitting quietly beside her favorite person. She has solid obedience training and walks beautifully on a leash. Nala is cautious with strangers but warms up beautifully and forms an unbreakable bond with her family once trust is established. She would do best as the only pet in a home where she can be the undivided center of attention.',
     details: ['Loyal companion', 'Protective', 'Obedience trained', 'Prefers to be only pet'],
     tags: ['Loyal companion', 'Protective', 'Obedience trained', 'Prefers to be only pet'],
+    tags_he: ['חבר נאמן', 'מגינה', 'מאומנת בציות', 'מועדפת כחיה יחידה'],
     image: 'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1562176566-e9afd27531d4?auto=format&fit=crop&w=400&q=80',
@@ -499,6 +534,7 @@ const pets = [
   {
     id: 'leo',
     name: 'Leo',
+    name_he: 'לאו',
     type: 'Persian Cat',
     breed: 'Persian',
     species: 'cat',
@@ -509,9 +545,11 @@ const pets = [
     matchPercent: 85,
     description: 'A regal Persian with a silky coat and a laid-back personality, perfect for a quiet household.',
     shortDescription: 'A regal Persian with a silky coat and a perfectly laid-back personality.',
+    short_description_he: 'פרסי ממלכותי עם פרווה משיית ואישיות רגועה לחלוטין, מושלם לבית שקט.',
     about: 'Leo was brought to the shelter after his owner\'s landlord changed the pet policy, leaving Leo without a home through no fault of his own. He arrived carrying himself with all the dignity you\'d expect from a Persian -- slow blinking at newcomers, inspecting every corner methodically, and then settling in as if he owned the place. Leo is wonderfully calm, content to drape himself across soft furniture and accept petting sessions on his own schedule. His long, silky coat needs daily combing to stay tangle-free, but for those willing to invest the time, Leo repays with deep purrs and gentle companionship. He would thrive in a quiet adult home where his peaceful nature is truly matched.',
     details: ['Calm and regal', 'Indoor cat', 'Needs daily grooming', 'Quiet home preferred'],
     tags: ['Calm and regal', 'Indoor cat', 'Needs daily grooming', 'Quiet home preferred'],
+    tags_he: ['רגוע וממלכותי', 'חתול בית', 'צריך טיפוח יומי', 'מועדף בית שקט'],
     image: 'https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1559190394-df5a28aab5c5?auto=format&fit=crop&w=400&q=80',
@@ -541,6 +579,7 @@ const pets = [
   {
     id: 'zoe',
     name: 'Zoe',
+    name_he: 'זואי',
     type: 'Ragdoll Cat',
     breed: 'Ragdoll',
     species: 'cat',
@@ -551,9 +590,11 @@ const pets = [
     matchPercent: 93,
     description: 'A floppy, blue-eyed beauty who melts into your arms and fills every room with soft purrs.',
     shortDescription: 'A floppy, blue-eyed beauty who melts into your arms and purrs constantly.',
+    short_description_he: 'יפהפייה כחולת עיניים שנמסה בזרועותיכם וממלאת כל חדר ברפרוף רך.',
     about: 'Zoe was brought to the shelter by a family who discovered their toddler had developed a cat allergy. Despite the difficult circumstances, Zoe arrived as one of the most sociable cats we have ever received -- she immediately began greeting visitors and flopping dramatically onto anyone who offered their lap. True to her Ragdoll nature, she goes completely limp when picked up, earning herself the nickname "noodle cat" among the staff. Zoe loves being carried around the house, watching birds from window perches, and playing with feathery wands. She is young enough to bond quickly and calm enough to suit a wide range of households.',
     details: ['Super affectionate', 'Goes floppy when held', 'Great with children', 'Indoor cat'],
     tags: ['Super affectionate', 'Goes floppy when held', 'Great with children', 'Indoor cat'],
+    tags_he: ['סופר חביבה', 'נמסה בעת אחיזה', 'מצוינת עם ילדים', 'חתולת בית'],
     image: 'https://images.unsplash.com/photo-1559190394-df5a28aab5c5?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1686762843717-dec31bdf210f?auto=format&fit=crop&w=400&q=80',
@@ -583,6 +624,7 @@ const pets = [
   {
     id: 'nyx',
     name: 'Nyx',
+    name_he: 'ניקס',
     type: 'Russian Blue Cat',
     breed: 'Russian Blue',
     species: 'cat',
@@ -593,9 +635,11 @@ const pets = [
     matchPercent: 87,
     description: 'A sleek, silver-coated beauty who chooses her people carefully and loves them fiercely.',
     shortDescription: 'A sleek, silver-coated beauty who chooses her people carefully and loves fiercely.',
+    short_description_he: 'יפהפייה בפרווה כסופה שבוחרת את אנשיה בקפידה ואוהבת אותם עמוקות.',
     about: 'Nyx was found as a stray near the Old City and brought to the shelter, though her gentle nature and comfort around people suggest she was someone\'s beloved pet who got lost. She is reserved at first -- Russian Blues are famously cautious with strangers -- but once she decides you\'re trustworthy, the loyalty she offers is extraordinary. She follows her favorite person room to room, chirps softly to ask for attention, and loves to sit at eye level and gaze at you with her striking green eyes. Nyx is quiet, clean, and low-shedding, making her an excellent fit for a calm apartment lifestyle. She does best as an only pet or alongside another gentle, calm cat.',
     details: ['Reserved but deeply loyal', 'Low shedding', 'Hypoallergenic-friendly', 'Best as only pet'],
     tags: ['Reserved but deeply loyal', 'Low shedding', 'Hypoallergenic-friendly', 'Best as only pet'],
+    tags_he: ['שמרנית אך נאמנה מאוד', 'נשירה נמוכה', 'ידידותית לאלרגיים', 'מועדפת כחיה יחידה'],
     image: 'https://images.unsplash.com/photo-1637424864367-7ab8752c19c6?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1729584983112-8c2dfe51f57f?auto=format&fit=crop&w=400&q=80',
@@ -625,6 +669,7 @@ const pets = [
   {
     id: 'baxter',
     name: 'Baxter',
+    name_he: 'בקסטר',
     type: 'Australian Shepherd',
     breed: 'Australian Shepherd',
     species: 'dog',
@@ -635,9 +680,11 @@ const pets = [
     matchPercent: 89,
     description: 'A colorful, quick-witted Aussie who is always one step ahead and eager to impress.',
     shortDescription: 'A colorful, quick-witted Aussie who is always one step ahead and eager to impress.',
+    short_description_he: 'אוסטרלי צבעוני וחכם שתמיד צעד אחד קדימה ומוכן להרשים.',
     about: 'Baxter came to us when his owner relocated for work and could not take him along. He brought his full personality with him from day one -- herding the other dogs at play time, alerting staff to anything unusual, and winning everyone over with his heterochromatic eyes and merle coat. Baxter is whip-smart and responds to commands with the kind of precision that makes trainers smile. He thrives on structure, regular exercise, and having a clear purpose. He is fantastic with older children and would excel at dog sports, hiking, or any activity that lets him move and think simultaneously. Baxter will reward the right owner with deep loyalty and endless entertainment.',
     details: ['Highly intelligent', 'Great at dog sports', 'Loves structure', 'Stunning merle coat'],
     tags: ['Highly intelligent', 'Great at dog sports', 'Loves structure', 'Stunning merle coat'],
+    tags_he: ['חכם מאוד', 'מצוין בספורט כלבים', 'אוהב מסגרת', 'פרוות מרל מרהיבה'],
     image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=400&q=80',
@@ -667,6 +714,7 @@ const pets = [
   {
     id: 'mochi',
     name: 'Mochi',
+    name_he: 'מוצ\'י',
     type: 'Bengal Cat',
     breed: 'Bengal',
     species: 'cat',
@@ -677,9 +725,11 @@ const pets = [
     matchPercent: 84,
     description: 'A wild-looking beauty with a house-cat heart who brings the jungle to your living room.',
     shortDescription: 'A wild-looking beauty with a house-cat heart -- brings the jungle to your living room.',
+    short_description_he: 'יפהפייה עם מראה פראי ולב של חתול בית — מביאה את הג\'ונגל לסלון.',
     about: 'Mochi was surrendered by a first-time cat owner who underestimated how much personality comes packed into a Bengal. She is stunning -- a rosette-patterned coat that shimmers in sunlight -- and she knows it. Mochi demands activity, interaction, and enrichment every single day. She loves leash walks (yes, really), puzzle feeders, and anything involving running water. She has a playful, mischievous energy that keeps her owners on their toes, but in the evenings she transforms into a surprisingly cuddly companion who curls up and purrs loudly. Mochi would thrive with an experienced cat owner who is ready for a genuine adventure.',
     details: ['Active and curious', 'Loves water play', 'Leash trainable', 'Needs daily enrichment'],
     tags: ['Active and curious', 'Loves water play', 'Leash trainable', 'Needs daily enrichment'],
+    tags_he: ['פעילה וסקרנית', 'אוהבת משחקי מים', 'ניתנת לאמן ברצועה', 'צריכה העשרה יומית'],
     image: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=400&q=80',
@@ -709,6 +759,7 @@ const pets = [
   {
     id: 'duke',
     name: 'Duke',
+    name_he: 'דיוק',
     type: 'Boxer',
     breed: 'Boxer',
     species: 'dog',
@@ -719,9 +770,11 @@ const pets = [
     matchPercent: 90,
     description: 'A goofy, lovable clown who bounds through life with boundless joy and no concept of personal space.',
     shortDescription: 'A goofy, lovable clown who bounds through life with boundless joy.',
+    short_description_he: 'ליצן חביב ומצחיק שממשיך בחיים עם שמחה אין קץ ואפס מושג על מרחב אישי.',
     about: 'Duke was brought to the shelter when his owner passed away and no family member could take him in. He was clearly the center of someone\'s world -- housebroken, leash trained, and deeply comfortable with people of all ages. Duke has that classic Boxer personality: exuberant, silly, and absolutely certain that every human he meets is his best friend. He will lean against your legs, rest his heavy head in your lap, and look up at you with the most soulful eyes you have ever seen. Duke is patient with children and plays well with other large dogs. He needs a committed owner who can laugh at his antics and match his enthusiasm for life.',
     details: ['Goofy and loving', 'Great with kids', 'Very affectionate', 'Loves to lean on people'],
     tags: ['Goofy and loving', 'Great with kids', 'Very affectionate', 'Loves to lean on people'],
+    tags_he: ['שובב ואוהב', 'מצוין עם ילדים', 'חביב מאוד', 'אוהב להישען על אנשים'],
     image: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1547407139-3c921a66005c?auto=format&fit=crop&w=400&q=80',
@@ -751,6 +804,7 @@ const pets = [
   {
     id: 'sandy',
     name: 'Sandy',
+    name_he: 'סנדי',
     type: 'Canaan Dog',
     breed: 'Canaan Dog',
     species: 'dog',
@@ -761,9 +815,11 @@ const pets = [
     matchPercent: 82,
     description: 'An agile, ancient Israeli breed with sharp instincts and a heart that bonds deeply to her chosen person.',
     shortDescription: 'An agile, ancient Israeli breed with sharp instincts and deep devotion to her person.',
+    short_description_he: 'גזע ישראלי עתיק וזריז עם אינסטינקטים חדים ומסירות עמוקה לאדם שלה.',
     about: 'Sandy is a Canaan Dog -- Israel\'s own native breed, as ancient as the land itself. She was brought in by a hiker who found her wandering near the Eilat mountains, clearly healthy and socialized but without identification. The Canaan Dog is unlike any other breed: independent, alert, and extraordinarily perceptive. Sandy reads the room with uncanny accuracy, adjusting her energy to match those around her. She is playful and affectionate with people she trusts, but takes time to warm up to strangers -- a trait deeply embedded in the breed\'s desert-watchdog heritage. Sandy deserves an experienced, patient owner who respects her intelligence and gives her the gentle consistency she needs to truly flourish.',
     details: ['Israeli native breed', 'Alert and perceptive', 'Bonds deeply', 'Experienced owner preferred'],
     tags: ['Israeli native breed', 'Alert and perceptive', 'Bonds deeply', 'Experienced owner preferred'],
+    tags_he: ['גזע ישראלי מקומי', 'ערנית ותפיסתית', 'נקשרת עמוקות', 'מועדף בעלים מנוסה'],
     image: 'https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=400&q=80',
@@ -793,6 +849,7 @@ const pets = [
   {
     id: 'thor',
     name: 'Thor',
+    name_he: 'ת\'ור',
     type: 'Siberian Husky',
     breed: 'Siberian Husky',
     species: 'dog',
@@ -803,9 +860,11 @@ const pets = [
     matchPercent: 86,
     description: 'A striking wolf-like dog with icy blue eyes, boundless energy, and an operatic howl.',
     shortDescription: 'A striking wolf-like dog with icy blue eyes, boundless energy, and an operatic howl.',
+    short_description_he: 'כלב מרהיב דמוי זאב עם עיניים תכולות כקרח, אנרגיה אין קץ ויללה מלאת נשמה.',
     about: 'Thor came to the shelter when his owners moved to a small city apartment and realized they could no longer meet his considerable exercise needs. He is in peak physical condition -- muscular, gleaming coat, utterly magnificent -- and he knows how to use those piercing blue eyes to get exactly what he wants. Thor is a typical Husky: dramatic, mischievous, stubborn when he chooses to be, and capable of more love than you\'d expect from a dog that looks like he belongs in the wilderness. He gets along well with other dogs and is wonderful with older children. Thor would absolutely thrive in the cooler northern climate of the Galilee and needs an owner with patience, humor, and a very sturdy fence.',
     details: ['Striking blue eyes', 'High energy', 'Good with other dogs', 'Needs secure yard'],
     tags: ['Striking blue eyes', 'High energy', 'Good with other dogs', 'Needs secure yard'],
+    tags_he: ['עיניים תכולות מרהיבות', 'אנרגיה גבוהה', 'טוב עם כלבים אחרים', 'צריך חצר מאובטחת'],
     image: 'https://images.unsplash.com/photo-1562176566-e9afd27531d4?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1760448934632-32853396fb8e?auto=format&fit=crop&w=400&q=80',
@@ -835,6 +894,7 @@ const pets = [
   {
     id: 'olive',
     name: 'Olive',
+    name_he: 'אוליב',
     type: 'Domestic Longhair Cat',
     breed: 'Domestic Longhair',
     species: 'cat',
@@ -845,9 +905,11 @@ const pets = [
     matchPercent: 88,
     description: 'A soft, tufted beauty with an old-soul calm who chooses one person to adore completely.',
     shortDescription: 'A soft, tufted beauty with an old-soul calm who chooses one person to adore completely.',
+    short_description_he: 'יפהפייה רכה ורגועה עם נשמה ותיקה שבוחרת אדם אחד לאהוב בכל מאודה.',
     about: 'Olive was brought to the shelter after her elderly owner entered a care facility. She spent most of her life as a devoted companion to a quiet household, and that upbringing shows in everything she does -- the careful, composed way she explores a new space, the steady purr she offers once she finally trusts you, the way she settles beside her person like a warm shadow. Olive is not a cat who gives her affection freely, but when she does, it is deeply felt. She would flourish in a calm adult home where she can take her time adjusting and eventually claim the lap of someone who will love her back just as quietly and completely.',
     details: ['Quietly devoted', 'One-person cat', 'Indoor cat', 'Calm home needed'],
     tags: ['Quietly devoted', 'One-person cat', 'Indoor cat', 'Calm home needed'],
+    tags_he: ['נאמנת בשקט', 'חתולת אדם אחד', 'חתולת בית', 'צריכה בית שקט'],
     image: 'https://images.unsplash.com/photo-1548681528-6a5c45b66b42?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1559190394-df5a28aab5c5?auto=format&fit=crop&w=400&q=80',
@@ -877,6 +939,7 @@ const pets = [
   {
     id: 'rex',
     name: 'Rex',
+    name_he: 'רקס',
     type: 'Labrador Mix',
     breed: 'Labrador Mix',
     species: 'dog',
@@ -887,9 +950,11 @@ const pets = [
     matchPercent: 92,
     description: 'A friendly, tail-wagging bundle who greets the world with enthusiasm and zero reservations.',
     shortDescription: 'A friendly, tail-wagging bundle who greets the world with enthusiasm and zero reservations.',
+    short_description_he: 'חבילה ידידותית עם זנב מנופף שמקבל את העולם בהתלהבות וללא היסוסים.',
     about: 'Rex was surrendered as a young dog when his family\'s new baby made caring for an energetic large dog overwhelming. He arrived at the shelter full of energy and goodwill, making friends with every staff member within hours. Rex has the classic Labrador personality -- open, joyful, enthusiastic -- amplified with a hint of mystery from his mixed heritage. He is already house-trained, responds well to basic commands, and has a natural patience that makes him great with older children and calm with other dogs. Rex would be perfectly happy with a long morning run, an afternoon of fetch, and an evening curled up at your feet. He is the kind of dog who makes every day feel like a good day.',
     details: ['Friendly and open', 'House trained', 'Loves fetch', 'Great family dog'],
     tags: ['Friendly and open', 'House trained', 'Loves fetch', 'Great family dog'],
+    tags_he: ['ידידותי ופתוח', 'מאומן לבית', 'אוהב לזרוק כדור', 'כלב משפחה מצוין'],
     image: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=800&q=80',
     galleryImages: [
       'https://images.unsplash.com/photo-1598442808932-fb399ebb6d70?auto=format&fit=crop&w=400&q=80',

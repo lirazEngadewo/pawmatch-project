@@ -12,7 +12,8 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
   const [heroIndex, setHeroIndex] = useState(0);
   const heroPet = pets[heroIndex];
   const userPreferences = useUserPreferences(currentUser);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   console.log('LandingPage debug:', { currentUser, userPreferences });
 
   const handleHeroNext = () => setHeroIndex((prev) => (prev + 1) % pets.length);
@@ -59,7 +60,9 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
           </div>
 
           <div className="landing-hero-info">
-            <h2 className="landing-pet-name">{heroPet.name}</h2>
+            <h2 className="landing-pet-name">
+              {isHe && heroPet.name_he ? heroPet.name_he : heroPet.name}
+            </h2>
 
             <div className="landing-meta-grid">
               <div className="landing-meta-item">
@@ -80,10 +83,12 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               </div>
             </div>
 
-            <p className="landing-pet-description">{heroPet.description}</p>
+            <p className="landing-pet-description">
+              {isHe && heroPet.short_description_he ? heroPet.short_description_he : heroPet.description}
+            </p>
 
             <div className="tags-row">
-              {heroPet.details.map((tag, i) => (
+              {(isHe && heroPet.tags_he ? heroPet.tags_he : heroPet.details).map((tag, i) => (
                 <span key={i} className="tag">{tag}</span>
               ))}
             </div>

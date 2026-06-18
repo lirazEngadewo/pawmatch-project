@@ -1,21 +1,28 @@
+import { useTranslation } from 'react-i18next';
+
 function PetCard({ pet, onSelect, matchPercent }) {
-  console.log('PetCard received:', pet.name, 'matchPercent =', matchPercent, typeof matchPercent);
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
+
+  const displayName = isHe && pet.name_he ? pet.name_he : pet.name;
+  const displayDescription = isHe && pet.short_description_he ? pet.short_description_he : pet.description;
+
   return (
     <article className="card pet-card">
       <img src={pet.image} alt={pet.name} className="pet-card-image" />
       <div className="pet-card-body">
         <div className="pet-card-content">
           <p className="pet-type">{pet.type}</p>
-          <h3>{pet.name}</h3>
+          <h3>{displayName}</h3>
           <p className="pet-meta">{pet.age} · {pet.location}</p>
-          <p className="pet-description">{pet.description}</p>
+          <p className="pet-description">{displayDescription}</p>
         </div>
         <div className="pet-footer">
           {matchPercent !== null && matchPercent !== undefined && (
             <span className="match-pill">{matchPercent}% match</span>
           )}
           <button className="button button-secondary" onClick={() => onSelect(pet.id)}>
-            View profile
+            {t('landing.viewFullProfile')}
           </button>
         </div>
       </div>
