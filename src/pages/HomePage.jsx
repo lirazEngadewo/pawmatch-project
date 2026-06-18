@@ -4,17 +4,28 @@ import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import pets from '../data/pets.js';
 import useUserPreferences from '../hooks/useUserPreferences.js';
-import { calculateMatchPercent } from '../utils/matching.js';
+import { calculateMatchPercent, CITY_TO_REGION } from '../utils/matching.js';
 
 function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const pet = pets[currentIndex];
+  const [selectedRegion, setSelectedRegion] = useState('');
+
+  const filteredPets = selectedRegion
+    ? pets.filter((p) => CITY_TO_REGION[p.location] === selectedRegion)
+    : pets;
+
+  const pet = filteredPets[currentIndex] ?? filteredPets[0];
   const userPreferences = useUserPreferences(currentUser);
   const matchPercent = calculateMatchPercent(pet, userPreferences);
-  console.log('HomePage debug:', { currentUser, userPreferences, pet: pet.id, matchPercent });
+  console.log('HomePage debug:', { currentUser, userPreferences, pet: pet?.id, matchPercent });
 
-  const handleNext = () => setCurrentIndex((p) => (p + 1) % pets.length);
-  const handlePrev = () => setCurrentIndex((p) => (p - 1 + pets.length) % pets.length);
+  const handleNext = () => setCurrentIndex((p) => (p + 1) % filteredPets.length);
+  const handlePrev = () => setCurrentIndex((p) => (p - 1 + filteredPets.length) % filteredPets.length);
+
+  const handleRegionChange = (e) => {
+    setSelectedRegion(e.target.value);
+    setCurrentIndex(0);
+  };
 
   const handleLike = () => {
     if (!isLoggedIn) { requireRegistration(); return; }
@@ -26,7 +37,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
     toggleFavorite(petId);
   };
 
-  const uniqueLocations = [...new Set(pets.map((p) => p.location).filter(Boolean))].sort();
+  const REGIONS = ['Center', 'Sharon', 'Jerusalem', 'Haifa and Krayot', 'Upper Galilee', 'Lower Galilee', 'Shephelah', 'South'];
 
   // Build favorites list from real data
   const favoritePets = (favorites || [])
@@ -109,7 +120,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
 
           {/* Dots */}
           <div className="hm-dots">
-            {pets.map((_, i) => (
+            {filteredPets.map((_, i) => (
               <span key={i} className={`hm-dot${i === currentIndex ? ' active' : ''}`} />
             ))}
           </div>
@@ -137,10 +148,10 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
 
             <div className="hm-filter-group">
               <label className="hm-filter-label">Location</label>
-              <select className="hm-filter-select">
+              <select className="hm-filter-select" value={selectedRegion} onChange={handleRegionChange}>
                 <option value="">All locations</option>
-                {uniqueLocations.map((loc) => (
-                  <option key={loc} value={loc}>{loc}</option>
+                {REGIONS.map((r) => (
+                  <option key={r} value={r}>{r}</option>
                 ))}
               </select>
             </div>

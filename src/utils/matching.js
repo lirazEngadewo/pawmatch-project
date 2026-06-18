@@ -43,7 +43,7 @@ function sizeScore(preferredSize, size) {
   return preferredSize.toLowerCase() === size.toLowerCase() ? 10 : 0;
 }
 
-const CITY_TO_REGION = {
+export const CITY_TO_REGION = {
   'Tel Aviv':       'Center',
   'Ramat Gan':      'Center',
   'Herzliya':       'Sharon',
