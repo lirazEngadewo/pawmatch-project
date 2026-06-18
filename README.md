@@ -35,6 +35,7 @@ A web platform that combines smart matching, an easy browsing experience, and a 
 | Service | Type | Purpose |
 |---|---|---|
 | Supabase | Database + Auth + Storage | Database, authentication, avatar storage |
+| Supabase Auth | Authentication | User registration, login, logout and session management |
 | Vercel | Hosting | Frontend deployment |
 | React + Vite | Frontend Framework | UI and app logic |
 | React Leaflet | Maps Library | Interactive Israel map with adoption organizations |

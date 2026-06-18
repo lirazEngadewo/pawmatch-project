@@ -473,13 +473,14 @@ h3 {
 .match-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
+  gap: 6px;
+  padding: 5px 14px;
   border-radius: 999px;
   background: var(--color-success);
   color: var(--color-text);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
 }
 
 .section {
@@ -3976,4 +3977,115 @@ h3 {
   /* Donation */
   .donation-form-card { padding: 20px 16px; }
   .donation-cta-section { padding: 48px 14px; }
+}
+
+/* ── Pet Carousel ──────────────────────────────────────────────────────── */
+
+.pet-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.pet-carousel-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pet-carousel-viewport {
+  flex: 1;
+  overflow: hidden;
+}
+
+.pet-carousel-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Desktop: 3 cards. Math: 3 cards + 2 gaps of 24px = 3x + 48px = 100% → x = (100% - 48px)/3 */
+.pet-carousel-item {
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: 0;
+}
+
+.pet-carousel-arrow {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  background: var(--color-card);
+  color: var(--color-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.pet-carousel-arrow:hover:not(:disabled) {
+  background: var(--color-accent);
+  border-color: var(--color-secondary);
+}
+
+.pet-carousel-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pet-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pet-carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-accent);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.pet-carousel-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.25);
+}
+
+/* Tablet: 2 cards. Math: 2 cards + 1 gap of 24px = 2x + 24px = 100% → x = (100% - 24px)/2 */
+@media (max-width: 768px) {
+  .pet-carousel-item {
+    flex: 0 0 calc(50% - 12px);
+  }
+
+  .pet-carousel-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile: 1 card, no side arrows — put them below as prev/next buttons */
+@media (max-width: 480px) {
+  .pet-carousel-item {
+    flex: 0 0 100%;
+  }
+
+  .pet-carousel-nav {
+    gap: 8px;
+  }
+
+  .pet-carousel-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
 }

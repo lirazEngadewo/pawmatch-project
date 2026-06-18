@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import PetCard from '../components/PetCard.jsx';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
+import PetCarousel from '../components/PetCarousel.jsx';
 import pets from '../data/pets.js';
 import useUserPreferences from '../hooks/useUserPreferences.js';
-import { calculateMatchPercent } from '../utils/matching.js';
 
 function LandingPage({ onSelectPet, onNavigate, currentUser }) {
   const [heroIndex, setHeroIndex] = useState(0);
@@ -195,20 +194,11 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
           <p className="eyebrow">Featured Friends</p>
           <h2>Pets who are ready to meet you.</h2>
         </div>
-        <div className="grid-list">
-          {pets.filter((pet) => pet.id !== 'bella').map((pet) => {
-            const matchPercent = calculateMatchPercent(pet, userPreferences);
-            console.log('LandingPage matchPercent:', pet.name, matchPercent);
-            return (
-              <PetCard
-                key={pet.id}
-                pet={pet}
-                onSelect={onSelectPet}
-                matchPercent={matchPercent}
-              />
-            );
-          })}
-        </div>
+        <PetCarousel
+          pets={pets.filter((pet) => pet.id !== 'bella')}
+          onSelectPet={onSelectPet}
+          userPreferences={userPreferences}
+        />
       </section>
 
       <HowItWorksSection />
