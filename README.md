@@ -52,6 +52,8 @@ A web platform that combines smart matching, an easy browsing experience, and a 
 - 🗺️ Interactive map of adoption organizations across Israel
 - 👤 User profiles with avatar upload
 - 📋 Submit adoption requests
+- 💝 Donation page to support adoption organizations
+- 📚 Resources page with Pet Care Tips and FAQ
 - 🔐 Secure authentication with RLS policies
 
 ## Running Locally
