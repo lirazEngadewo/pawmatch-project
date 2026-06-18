@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function AboutUsPage({ onNavigate }) {
+  const { t } = useTranslation();
   const [form, setForm] = useState({ name: '', email: '', subject: '', phone: '', message: '' });
   const [fieldErrors, setFieldErrors] = useState({});
   const [success, setSuccess] = useState(false);
@@ -17,11 +19,11 @@ function AboutUsPage({ onNavigate }) {
   const handleContactSubmit = (e) => {
     e.preventDefault();
     const errors = {};
-    if (!form.name.trim()) errors.name = 'Full name is required.';
-    if (!form.email.trim()) errors.email = 'Email is required.';
-    else if (!EMAIL_RE.test(form.email)) errors.email = 'Please enter a valid email address.';
-    if (!form.subject.trim()) errors.subject = 'Subject is required.';
-    if (!form.message.trim()) errors.message = 'Message is required.';
+    if (!form.name.trim()) errors.name = t('about.errorNameRequired');
+    if (!form.email.trim()) errors.email = t('about.errorEmailRequired');
+    else if (!EMAIL_RE.test(form.email)) errors.email = t('about.errorEmailInvalid');
+    if (!form.subject.trim()) errors.subject = t('about.errorSubjectRequired');
+    if (!form.message.trim()) errors.message = t('about.errorMessageRequired');
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -37,23 +39,21 @@ function AboutUsPage({ onNavigate }) {
     <main className="page page-about">
 
       <section className="about-intro">
-        <p className="eyebrow">About PawMatch</p>
-        <h1>About Us</h1>
-        <p className="body-copy">
-          We believe every pet deserves a loving home — and every adopter deserves a warm, clear, and simple path to get there.
-        </p>
+        <p className="eyebrow">{t('about.eyebrow')}</p>
+        <h1>{t('about.pageTitle')}</h1>
+        <p className="body-copy">{t('about.intro')}</p>
       </section>
 
       <section className="section about-story-section">
         <div className="about-story-grid">
           <div className="card about-story-card">
-            <h2>Our Story</h2>
+            <h2>{t('about.storyTitle')}</h2>
             <div className="about-story-body">
-              <p>PawMatch was created from a personal journey and a deep love for animals. I'm a student, and I built this website during my degree after realizing how difficult and confusing the adoption process can be.</p>
-              <p>During the war, I adopted my dog Bruno, the brown dog in the photo. Bruno was found wandering in northern Israel, without a home and without anyone knowing where he belonged. When I met him, I understood how many animals are waiting in shelters and rescue organizations, hoping someone will notice them and give them a chance.</p>
-              <p>The adoption itself was one of the most meaningful decisions I have made, but the process was also difficult, unclear, and sometimes overwhelming. I felt that people who want to adopt should not have to struggle with scattered information, complicated forms, and confusing communication.</p>
-              <p>That experience became the reason behind PawMatch. I wanted to create a platform that makes pet adoption warmer, simpler, and more accessible both for adopters and for the animals waiting for a home.</p>
-              <p>PawMatch is more than a student project. It is a small mission to help more pets find loving families and to make the adoption journey easier, clearer, and more human.</p>
+              <p>{t('about.story1')}</p>
+              <p>{t('about.story2')}</p>
+              <p>{t('about.story3')}</p>
+              <p>{t('about.story4')}</p>
+              <p>{t('about.story5')}</p>
             </div>
           </div>
 
@@ -70,23 +70,21 @@ function AboutUsPage({ onNavigate }) {
       <section id="contact" className="cta-section">
         <div className="contact-inner">
           <div className="contact-header">
-            <p className="eyebrow">Get in Touch</p>
-            <h2>Contact Us</h2>
-            <p className="body-copy">
-              Have a question, suggestion, or want to help more pets find a home? We'd love to hear from you.
-            </p>
+            <p className="eyebrow">{t('about.contactEyebrow')}</p>
+            <h2>{t('about.contactTitle')}</h2>
+            <p className="body-copy">{t('about.contactBody')}</p>
           </div>
 
           {success ? (
-            <p className="contact-success">Thank you! We received your message and will get back to you soon.</p>
+            <p className="contact-success">{t('about.contactSuccess')}</p>
           ) : (
             <form className="contact-form" onSubmit={handleContactSubmit} noValidate>
               <div className="contact-form-row">
                 <label className="contact-label">
-                  Full Name
+                  {t('about.labelFullName')}
                   <input
                     type="text"
-                    placeholder="Your full name"
+                    placeholder={t('about.placeholderFullName')}
                     className={`form-input${fieldErrors.name ? ' rq-input--error' : ''}`}
                     value={form.name}
                     onChange={(e) => handleChange('name', e.target.value)}
@@ -94,10 +92,10 @@ function AboutUsPage({ onNavigate }) {
                   {fieldErrors.name && <span className="contact-field-error">{fieldErrors.name}</span>}
                 </label>
                 <label className="contact-label">
-                  Email
+                  {t('about.labelEmail')}
                   <input
                     type="email"
-                    placeholder="your@email.com"
+                    placeholder={t('about.placeholderEmail')}
                     className={`form-input${fieldErrors.email ? ' rq-input--error' : ''}`}
                     value={form.email}
                     onChange={(e) => handleChange('email', e.target.value)}
@@ -107,10 +105,10 @@ function AboutUsPage({ onNavigate }) {
               </div>
               <div className="contact-form-row">
                 <label className="contact-label">
-                  Subject
+                  {t('about.labelSubject')}
                   <input
                     type="text"
-                    placeholder="How can we help?"
+                    placeholder={t('about.placeholderSubject')}
                     className={`form-input${fieldErrors.subject ? ' rq-input--error' : ''}`}
                     value={form.subject}
                     onChange={(e) => handleChange('subject', e.target.value)}
@@ -118,10 +116,10 @@ function AboutUsPage({ onNavigate }) {
                   {fieldErrors.subject && <span className="contact-field-error">{fieldErrors.subject}</span>}
                 </label>
                 <label className="contact-label">
-                  Phone Number
+                  {t('about.labelPhone')}
                   <input
                     type="tel"
-                    placeholder="Phone (optional)"
+                    placeholder={t('about.placeholderPhone')}
                     className="form-input"
                     value={form.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
@@ -129,16 +127,16 @@ function AboutUsPage({ onNavigate }) {
                 </label>
               </div>
               <label className="contact-label">
-                Message
+                {t('about.labelMessage')}
                 <textarea
-                  placeholder="Tell us how we can help or share your adoption story..."
+                  placeholder={t('about.placeholderMessage')}
                   className={`form-input contact-textarea${fieldErrors.message ? ' rq-input--error' : ''}`}
                   value={form.message}
                   onChange={(e) => handleChange('message', e.target.value)}
                 />
                 {fieldErrors.message && <span className="contact-field-error">{fieldErrors.message}</span>}
               </label>
-              <button type="submit" className="button button-primary">Send Message</button>
+              <button type="submit" className="button button-primary">{t('about.sendMessage')}</button>
             </form>
           )}
         </div>

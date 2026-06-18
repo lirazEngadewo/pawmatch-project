@@ -1,34 +1,36 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabaseClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function mapAuthError(error, mode) {
+function mapAuthError(error, mode, t) {
   const msg = error?.message ?? '';
   if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('network')) {
-    return 'Connection error. Please try again.';
+    return t('register.authErrorNetwork');
   }
   if (mode === 'signin') {
     if (msg.includes('Invalid login credentials') || msg.includes('invalid_credentials')) {
-      return 'Incorrect email or password.';
+      return t('register.authErrorInvalidCredentials');
     }
     if (msg.includes('Email not confirmed')) {
-      return 'Please verify your email before signing in.';
+      return t('register.authErrorEmailNotConfirmed');
     }
   }
   if (mode === 'signup') {
     if (msg.includes('User already registered') || msg.includes('already been registered')) {
-      return 'An account with this email already exists.';
+      return t('register.authErrorUserExists');
     }
     if (msg.includes('Password should be at least') || msg.includes('weak_password')) {
-      return 'Password must be at least 6 characters.';
+      return t('register.authErrorWeakPassword');
     }
   }
-  return msg || 'Something went wrong. Please try again.';
+  return msg || t('register.authErrorGeneral');
 }
 
 function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
-  const [authMode, setAuthMode] = useState('signin'); // 'signin' | 'signup'
+  const { t } = useTranslation();
+  const [authMode, setAuthMode] = useState('signin');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,13 +40,13 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
 
   const validate = () => {
     if (authMode === 'signup') {
-      if (!firstName.trim()) return 'Please enter your first name.';
-      if (!lastName.trim()) return 'Please enter your last name.';
+      if (!firstName.trim()) return t('register.errorFirstName');
+      if (!lastName.trim()) return t('register.errorLastName');
     }
-    if (!email.trim()) return 'Please enter your email.';
-    if (!EMAIL_RE.test(email)) return 'Please enter a valid email address.';
-    if (!password) return 'Please enter a password.';
-    if (authMode === 'signup' && password.length < 6) return 'Password must be at least 6 characters.';
+    if (!email.trim()) return t('register.errorEmail');
+    if (!EMAIL_RE.test(email)) return t('register.errorEmailInvalid');
+    if (!password) return t('register.errorPassword');
+    if (authMode === 'signup' && password.length < 6) return t('register.errorPasswordShort');
     return null;
   };
 
@@ -62,7 +64,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
     setLoading(false);
 
     if (authError) {
-      setError(mapAuthError(authError, 'signin'));
+      setError(mapAuthError(authError, 'signin', t));
       return;
     }
 
@@ -89,7 +91,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
 
     if (authError) {
       setLoading(false);
-      setError(mapAuthError(authError, 'signup'));
+      setError(mapAuthError(authError, 'signup', t));
       return;
     }
 
@@ -125,11 +127,9 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
           </div>
 
           <div className="register-content">
-            <h1>{authMode === 'signin' ? 'Welcome back' : 'Create your PawMatch account'}</h1>
+            <h1>{authMode === 'signin' ? t('register.signInTitle') : t('register.signUpTitle')}</h1>
             <p className="body-copy">
-              {authMode === 'signin'
-                ? 'Sign in to continue your PawMatch journey.'
-                : 'Join PawMatch to save pets, like profiles, and send adoption requests.'}
+              {authMode === 'signin' ? t('register.signInSubtitle') : t('register.signUpSubtitle')}
             </p>
 
             {sessionExpiredMessage && (
@@ -145,7 +145,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
                   <div className="form-group">
                     <input
                       type="text"
-                      placeholder="First Name"
+                      placeholder={t('register.placeholderFirstName')}
                       className="form-input"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
@@ -154,7 +154,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
                   <div className="form-group">
                     <input
                       type="text"
-                      placeholder="Last Name"
+                      placeholder={t('register.placeholderLastName')}
                       className="form-input"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
@@ -166,7 +166,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
               <div className="form-group">
                 <input
                   type="email"
-                  placeholder="Email"
+                  placeholder={t('register.placeholderEmail')}
                   className="form-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -176,7 +176,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
               <div className="form-group">
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder={t('register.placeholderPassword')}
                   className="form-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -187,29 +187,27 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
 
               <button type="submit" className="button button-primary register-submit" disabled={loading}>
                 {loading
-                  ? (authMode === 'signin' ? 'Signing in…' : 'Creating account…')
-                  : (authMode === 'signin' ? 'Sign In' : 'Create Account')}
+                  ? (authMode === 'signin' ? t('register.signingIn') : t('register.creatingAccount'))
+                  : (authMode === 'signin' ? t('register.signIn') : t('register.createAccount'))}
               </button>
             </form>
 
             <div className="register-helpers">
               {authMode === 'signin' ? (
                 <>
-                  <p>Don't have an account?{' '}
-                    <a href="#!" onClick={(e) => switchMode(e, 'signup')}>Create one now!</a>
+                  <p>{t('register.noAccount')}{' '}
+                    <a href="#!" onClick={(e) => switchMode(e, 'signup')}>{t('register.createNow')}</a>
                   </p>
-                  <p><a href="#!" onClick={(e) => e.preventDefault()}>Forgot password?</a></p>
+                  <p><a href="#!" onClick={(e) => e.preventDefault()}>{t('register.forgotPassword')}</a></p>
                 </>
               ) : (
-                <p>Already have an account?{' '}
-                  <a href="#!" onClick={(e) => switchMode(e, 'signin')}>Sign in</a>
+                <p>{t('register.haveAccount')}{' '}
+                  <a href="#!" onClick={(e) => switchMode(e, 'signin')}>{t('register.signInLink')}</a>
                 </p>
               )}
             </div>
 
-            <p className="register-legal">
-              By continuing, you agree to PawMatch's adoption process and privacy policy.
-            </p>
+            <p className="register-legal">{t('register.legal')}</p>
           </div>
         </div>
       </div>

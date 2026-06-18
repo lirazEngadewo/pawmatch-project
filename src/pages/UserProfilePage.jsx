@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import pets from '../data/pets.js';
 import Footer from '../components/Footer.jsx';
 import MatchingQuizModal from '../components/MatchingQuizModal.jsx';
@@ -28,13 +29,8 @@ const SAMPLE_MESSAGES = [
   },
 ];
 
-const STATUS_DISPLAY = {
-  pending: { label: 'Pending Approval', background: '#FEF3C7', color: '#92400E' },
-  approved: { label: 'Approved', background: '#D1FAE5', color: '#065F46' },
-  rejected: { label: 'Rejected', background: '#FEE2E2', color: '#991B1B' },
-};
-
 function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange }) {
+  const { t } = useTranslation();
   const [profile, setProfile] = useState(null);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [avatarError, setAvatarError] = useState('');
@@ -105,11 +101,11 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
     setAvatarError('');
 
     if (!file.type.startsWith('image/')) {
-      setAvatarError('Please upload an image file.');
+      setAvatarError(t('userProfile.avatarErrorType'));
       return;
     }
     if (file.size > 2 * 1024 * 1024) {
-      setAvatarError('File too large. Maximum size is 2MB.');
+      setAvatarError(t('userProfile.avatarErrorSize'));
       return;
     }
 
@@ -120,7 +116,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
     if (uploadError) {
       setAvatarUploading(false);
-      setAvatarError('Upload failed. Please try again.');
+      setAvatarError(t('userProfile.avatarErrorUpload'));
       return;
     }
 
@@ -141,23 +137,34 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
   const displayName = profile?.full_name || `${currentUser?.user_metadata?.first_name ?? ''} ${currentUser?.user_metadata?.last_name ?? ''}`.trim();
   const initials = displayName.split(' ').map((w) => w[0] || '').slice(0, 2).join('').toUpperCase();
 
+  const statusColors = {
+    pending: { background: '#FEF3C7', color: '#92400E' },
+    approved: { background: '#D1FAE5', color: '#065F46' },
+    rejected: { background: '#FEE2E2', color: '#991B1B' },
+  };
+
+  const getStatusLabel = (status) => {
+    if (status === 'pending') return t('userProfile.statusPending');
+    if (status === 'approved') return t('userProfile.statusApproved');
+    if (status === 'rejected') return t('userProfile.statusRejected');
+    return status;
+  };
+
   return (
     <main className="page up-page">
 
       {/* ── Greeting ── */}
       <div className="up-greeting">
-        <h1 className="up-greeting-title">Hello, {displayName.split(' ')[0] || 'there'}</h1>
-        <p className="up-greeting-sub">Welcome back to your PawMatch dashboard.</p>
+        <h1 className="up-greeting-title">{t('userProfile.greetingTitle', { name: displayName.split(' ')[0] || 'there' })}</h1>
+        <p className="up-greeting-sub">{t('userProfile.greetingSub')}</p>
       </div>
 
       {/* ── Matching Quiz Banner ── */}
       {prefsLoaded && !hasCompletedQuiz && (
         <div className="up-quiz-banner card">
-          <p className="up-quiz-banner-text">
-            Complete your matching quiz for personalized recommendations.
-          </p>
+          <p className="up-quiz-banner-text">{t('userProfile.quizBannerText')}</p>
           <button className="button button-primary" onClick={() => setShowQuizModal(true)}>
-            Take the Quiz
+            {t('userProfile.takeQuiz')}
           </button>
         </div>
       )}
@@ -192,16 +199,16 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
             {avatarError && <p className="up-avatar-error">{avatarError}</p>}
             <div className="up-details-grid">
               <div className="up-detail-item">
-                <span className="up-detail-label">Email</span>
+                <span className="up-detail-label">{t('userProfile.labelEmail')}</span>
                 <span className="up-detail-value">{currentUser?.email}</span>
               </div>
               <div className="up-detail-item">
-                <span className="up-detail-label">Account Status</span>
-                <span className="up-detail-value up-status-active">Active</span>
+                <span className="up-detail-label">{t('userProfile.labelAccountStatus')}</span>
+                <span className="up-detail-value up-status-active">{t('userProfile.statusActive')}</span>
               </div>
               <div className="up-detail-item">
-                <span className="up-detail-label">Member Type</span>
-                <span className="up-detail-value">PawMatch Adopter</span>
+                <span className="up-detail-label">{t('userProfile.labelMemberType')}</span>
+                <span className="up-detail-value">{t('userProfile.memberTypeValue')}</span>
               </div>
             </div>
           </div>
@@ -211,13 +218,11 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
       {/* ── Matching Preferences ── */}
       {hasCompletedQuiz && (
         <section className="up-section">
-          <h2 className="up-section-title">Your Matching Preferences</h2>
+          <h2 className="up-section-title">{t('userProfile.prefsTitle')}</h2>
           <div className="up-prefs-card card">
-            <p className="up-quiz-banner-text">
-              You've completed the matching quiz. Update your answers anytime to refine your pet recommendations.
-            </p>
+            <p className="up-quiz-banner-text">{t('userProfile.prefsText')}</p>
             <button className="button button-primary" onClick={() => setShowQuizModal(true)}>
-              Edit Preferences
+              {t('userProfile.editPrefs')}
             </button>
           </div>
         </section>
@@ -225,12 +230,12 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
       {/* ── Favorite Pets ── */}
       <section className="up-section">
-        <h2 className="up-section-title">Your Favorite Pets</h2>
+        <h2 className="up-section-title">{t('userProfile.favoritesTitle')}</h2>
         {favoritePets.length === 0 ? (
           <div className="up-empty card">
-            <p className="up-empty-text">No favorite pets yet. Browse pets and save your favorites!</p>
+            <p className="up-empty-text">{t('userProfile.favEmptyText')}</p>
             <button className="button button-primary" onClick={() => onNavigate('home')}>
-              Browse Pets
+              {t('userProfile.browsePets')}
             </button>
           </div>
         ) : (
@@ -246,7 +251,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
                     className="button button-primary up-pet-btn"
                     onClick={() => onNavigate('profile', pet.id)}
                   >
-                    View Profile
+                    {t('userProfile.viewProfile')}
                   </button>
                 </div>
               </div>
@@ -257,12 +262,12 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
       {/* ── Requests ── */}
       <section className="up-section">
-        <h2 className="up-section-title">Your Requests</h2>
+        <h2 className="up-section-title">{t('userProfile.requestsTitle')}</h2>
         {requests.length === 0 ? (
           <div className="up-empty card">
-            <p className="up-empty-text">No requests yet. Browse pets and reach out to get started!</p>
+            <p className="up-empty-text">{t('userProfile.reqEmptyText')}</p>
             <button className="button button-primary" onClick={() => onNavigate('home')}>
-              Browse Pets
+              {t('userProfile.browsePets')}
             </button>
           </div>
         ) : (
@@ -273,7 +278,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
               const submittedDate = new Date(req.created_at).toLocaleDateString('en-US', {
                 month: 'long', day: 'numeric', year: 'numeric',
               });
-              const statusInfo = STATUS_DISPLAY[req.status] || { label: req.status, background: '#E5E7EB', color: '#374151' };
+              const colors = statusColors[req.status] || { background: '#E5E7EB', color: '#374151' };
               return (
                 <div key={req.id} className="up-request-card card">
                   {reqPet && (
@@ -282,10 +287,10 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
                   <div className="up-request-info">
                     <h4 className="up-request-pet">{reqPet?.name || 'Unknown pet'}</h4>
                     <p className="up-request-type">{requestTypeLabel}</p>
-                    <p className="up-request-date">Submitted: {submittedDate}</p>
+                    <p className="up-request-date">{t('userProfile.submitted', { date: submittedDate })}</p>
                   </div>
-                  <span className="up-status-badge" style={{ background: statusInfo.background, color: statusInfo.color }}>
-                    {statusInfo.label}
+                  <span className="up-status-badge" style={{ background: colors.background, color: colors.color }}>
+                    {getStatusLabel(req.status)}
                   </span>
                 </div>
               );
@@ -296,7 +301,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
       {/* ── Shelter Messages ── */}
       <section className="up-section">
-        <h2 className="up-section-title">Messages from Shelters</h2>
+        <h2 className="up-section-title">{t('userProfile.messagesTitle')}</h2>
         <div className="up-messages-list">
           {SAMPLE_MESSAGES.map((msg) => (
             <div key={msg.id} className="up-message-card card">

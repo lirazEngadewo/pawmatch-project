@@ -102,13 +102,11 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       {/* ── CTA ── */}
       <section className="section cta-section">
         <div className="cta-content">
-          <p className="eyebrow">Ready to find your perfect match?</p>
-          <h3>Start your adoption journey with PawMatch.</h3>
-          <p className="body-copy">
-            Discover warm profiles, trusted partners, and a simple adoption experience designed for families.
-          </p>
+          <p className="eyebrow">{t('landing.ctaEyebrow')}</p>
+          <h3>{t('landing.ctaTitle')}</h3>
+          <p className="body-copy">{t('landing.ctaBody')}</p>
           <button className="button button-primary" onClick={() => onNavigate('home')}>
-            Start Your Journey Today
+            {t('landing.ctaButton')}
           </button>
         </div>
       </section>
@@ -117,72 +115,72 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       <div className="landing-stats">
         <div className="landing-stat-card">
           <strong>2,500+</strong>
-          <span>Successful Adoptions</span>
+          <span>{t('landing.statAdoptions')}</span>
         </div>
         <div className="landing-stat-card">
           <strong>150+</strong>
-          <span>Shelter Partners</span>
+          <span>{t('landing.statShelters')}</span>
         </div>
         <div className="landing-stat-card">
           <strong>5,000+</strong>
-          <span>Happy Families</span>
+          <span>{t('landing.statFamilies')}</span>
         </div>
         <div className="landing-stat-card">
           <strong>98%</strong>
-          <span>Satisfaction Rate</span>
+          <span>{t('landing.statSatisfaction')}</span>
         </div>
       </div>
 
       {/* ── TESTIMONIALS ── */}
       <section className="section testimonial-section">
         <div className="section-header">
-          <p className="eyebrow">What Adopters Love</p>
-          <h2>Kind stories from families who found their pet.</h2>
+          <p className="eyebrow">{t('landing.testimonialsEyebrow')}</p>
+          <h2>{t('landing.testimonialsTitle')}</h2>
         </div>
         <div className="testimonial-grid">
           <article className="testimonial-card">
             <div className="testimonial-header">
               <img
                 src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa?auto=format&fit=crop&w=120&q=80"
-                alt="Sara"
+                alt={t('landing.testimonial1Name')}
                 className="testimonial-avatar"
               />
               <div className="testimonial-copy">
-                <h4>Sara</h4>
-                <p>New dog mom</p>
+                <h4>{t('landing.testimonial1Name')}</h4>
+                <p>{t('landing.testimonial1Role')}</p>
               </div>
             </div>
-            <p>"PawMatch made adoption feel calm and personal. We found our perfect dog in just a few clicks."</p>
+            <p>{t('landing.testimonial1Text')}</p>
             <div className="star-rating">★★★★★</div>
           </article>
           <article className="testimonial-card">
             <div className="testimonial-header">
               <img
                 src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=120&q=80"
-                alt="Daniel"
+                alt={t('landing.testimonial2Name')}
                 className="testimonial-avatar"
               />
               <div className="testimonial-copy">
-                <h4>Daniel</h4>
-                <p>Cat dad</p>
+                <h4>{t('landing.testimonial2Name')}</h4>
+                <p>{t('landing.testimonial2Role')}</p>
               </div>
             </div>
-            <p>"The pet previews helped me understand every animal's personality. Milo fits right in."</p>
+            <p>{t('landing.testimonial2Text')}</p>
             <div className="star-rating">★★★★★</div>
           </article>
           <article className="testimonial-card">
             <div className="testimonial-header">
               <img
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"
-                alt="Mia"
+                alt={t('landing.testimonial3Name')}
                 className="testimonial-avatar"
               />
               <div className="testimonial-copy">
-                <h4>Mia</h4>
-                <p>Family adopter</p>
+                <h4>{t('landing.testimonial3Name')}</h4>
+                <p>{t('landing.testimonial3Role')}</p>
               </div>
             </div>
-            <p>"Every step felt warm and thoughtful. We love our new family member and the support team was great."</p>
+            <p>{t('landing.testimonial3Text')}</p>
             <div className="star-rating">★★★★★</div>
           </article>
         </div>
@@ -207,17 +205,15 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
 
       <section className="donation-cta-section">
         <div className="donation-cta-content">
-          <h2>Want to make a difference?</h2>
-          <p className="donation-cta-text">Support the animals waiting for a home</p>
+          <h2>{t('landing.donationCtaTitle')}</h2>
+          <p className="donation-cta-text">{t('landing.donationCtaText')}</p>
           <button
             className="button button-primary"
             onClick={() => onNavigate('donation')}
           >
-            Donate to PawMatch ❤️
+            {t('landing.donationCtaButton')}
           </button>
-          <p className="donation-cta-note">
-            All donations go directly to the adoption organizations participating in PawMatch
-          </p>
+          <p className="donation-cta-note">{t('landing.donationCtaNote')}</p>
         </div>
       </section>
 

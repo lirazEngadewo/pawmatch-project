@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Footer from '../components/Footer.jsx';
 
 const PRESET_AMOUNTS = [10, 50, 100];
 
 function DonationPage({ onNavigate }) {
+  const { t } = useTranslation();
   const [selectedAmount, setSelectedAmount] = useState(null);
   const [customAmount, setCustomAmount] = useState('');
   const [donorName, setDonorName] = useState('');
@@ -22,13 +24,13 @@ function DonationPage({ onNavigate }) {
     e.preventDefault();
 
     if (!selectedAmount) {
-      setAmountError('Please select or enter a donation amount.');
+      setAmountError(t('donation.errorNoAmount'));
       return;
     }
     if (selectedAmount === 'custom') {
       const val = parseFloat(customAmount);
       if (!customAmount || isNaN(val) || val <= 0) {
-        setAmountError('Please enter a valid amount.');
+        setAmountError(t('donation.errorInvalidAmount'));
         return;
       }
       setFinalAmount(val);
@@ -45,41 +47,37 @@ function DonationPage({ onNavigate }) {
     <main className="page donation-page">
       <section className="donation-hero">
         <div className="donation-hero-icon">🐾</div>
-        <h1>Support PawMatch &amp; Help Pets Find Homes</h1>
-        <p className="body-copy">
-          Your donation helps adoption organizations care for animals waiting for a home.
-        </p>
+        <h1>{t('donation.heroTitle')}</h1>
+        <p className="body-copy">{t('donation.heroSubtitle')}</p>
       </section>
 
       <section className="section donation-form-section">
         {donated ? (
           <div className="card donation-success">
             <div className="donation-success-icon">❤️</div>
-            <h2>Thank you for your donation!</h2>
+            <h2>{t('donation.thankYou')}</h2>
             <p className="donation-success-message">
               {donorName.trim()
-                ? `Thank you, ${donorName.trim()}! Your generous contribution of ₪${finalAmount} will help pets find loving homes.`
-                : `Your generous contribution of ₪${finalAmount} will help pets find loving homes.`}{' '}
-              Every donation makes a real difference.
+                ? t('donation.successWithName', { name: donorName.trim(), amount: finalAmount })
+                : t('donation.successNoName', { amount: finalAmount })}{' '}
+              {t('donation.everyDonation')}
             </p>
             {message.trim() && (
               <blockquote className="donation-success-quote">"{message.trim()}"</blockquote>
             )}
-            <p className="donation-success-note">
-              PawMatch is a student project — all donations are simulated and no real payment is processed.
-            </p>
+            <p className="donation-success-note">{t('donation.simulatedNote')}</p>
             <button
               className="button button-primary"
               onClick={() => onNavigate('landing')}
             >
-              Go back home
+              {t('donation.goHome')}
             </button>
           </div>
         ) : (
           <div className="card donation-form-card">
             <form className="donation-form" onSubmit={handleSubmit} noValidate>
               <div className="donation-field">
-                <label className="donation-field-label">Choose a donation amount</label>
+                <label className="donation-field-label">{t('donation.chooseAmount')}</label>
                 <div className="donation-amounts">
                   {PRESET_AMOUNTS.map((amt) => (
                     <button
@@ -96,7 +94,7 @@ function DonationPage({ onNavigate }) {
                     className={`quiz-option${selectedAmount === 'custom' ? ' quiz-option--active' : ''}`}
                     onClick={() => handleAmountClick('custom')}
                   >
-                    Custom
+                    {t('donation.customAmount')}
                   </button>
                 </div>
                 {selectedAmount === 'custom' && (
@@ -105,7 +103,7 @@ function DonationPage({ onNavigate }) {
                     className="form-input donation-custom-input"
                     value={customAmount}
                     onChange={(e) => { setCustomAmount(e.target.value); setAmountError(''); }}
-                    placeholder="Enter amount in ₪"
+                    placeholder={t('donation.placeholderCustom')}
                     min="1"
                   />
                 )}
@@ -113,28 +111,28 @@ function DonationPage({ onNavigate }) {
               </div>
 
               <label className="contact-label">
-                Your name (optional)
+                {t('donation.labelName')}
                 <input
                   type="text"
                   className="form-input"
                   value={donorName}
                   onChange={(e) => setDonorName(e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t('donation.placeholderName')}
                 />
               </label>
 
               <label className="contact-label">
-                Message to the animals (optional)
+                {t('donation.labelMessage')}
                 <textarea
                   className="form-input contact-textarea"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Write a short message of support..."
+                  placeholder={t('donation.placeholderMessage')}
                 />
               </label>
 
               <button type="submit" className="button button-primary donation-submit-btn">
-                Donate Now ❤️
+                {t('donation.donateNow')}
               </button>
             </form>
           </div>
