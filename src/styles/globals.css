@@ -2586,6 +2586,148 @@ h3 {
   background: var(--color-primary);
 }
 
+/* ── Donation page ──────────────────────────────────────────────────────── */
+
+.nav-link--donate {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.donation-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.donation-hero {
+  text-align: center;
+  padding: 64px 24px 40px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.donation-hero-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.donation-form-section {
+  max-width: 580px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.donation-form-card {
+  padding: 40px;
+}
+
+.donation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.donation-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.donation-field-label {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--color-text);
+}
+
+.donation-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.donation-custom-input {
+  margin-top: 8px;
+  max-width: 220px;
+}
+
+.donation-submit-btn {
+  align-self: flex-start;
+  padding: 14px 36px;
+  font-size: 1.05rem;
+}
+
+.donation-success {
+  padding: 48px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.donation-success-icon {
+  font-size: 3.5rem;
+}
+
+.donation-success-message {
+  color: rgba(43, 43, 43, 0.84);
+  line-height: 1.8;
+  max-width: 460px;
+}
+
+.donation-success-quote {
+  font-style: italic;
+  color: var(--color-primary);
+  border-left: 3px solid var(--color-accent);
+  padding-left: 16px;
+  margin: 0;
+  text-align: left;
+}
+
+.donation-success-note {
+  font-size: 0.82rem;
+  color: rgba(43, 43, 43, 0.5);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* ── Donation CTA on LandingPage ──────────────────────────────────────── */
+
+.donation-cta-section {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: var(--color-section);
+  padding: 80px 48px;
+  margin-top: 72px;
+  text-align: center;
+}
+
+.donation-cta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.donation-cta-text {
+  color: rgba(43, 43, 43, 0.75);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.donation-cta-note {
+  font-size: 0.82rem;
+  color: rgba(43, 43, 43, 0.5);
+  margin: 0;
+}
+
 @media (max-width: 720px) {
   .about-story-grid,
   .contact-form-row {

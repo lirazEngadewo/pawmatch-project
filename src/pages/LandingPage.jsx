@@ -214,6 +214,23 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       <HowItWorksSection />
       <IsraelMap />
       <TrustFeaturesSection />
+
+      <section className="donation-cta-section">
+        <div className="donation-cta-content">
+          <h2>Want to make a difference?</h2>
+          <p className="donation-cta-text">Support the animals waiting for a home</p>
+          <button
+            className="button button-primary"
+            onClick={() => onNavigate('donation')}
+          >
+            Donate to PawMatch ❤️
+          </button>
+          <p className="donation-cta-note">
+            All donations go directly to the adoption organizations participating in PawMatch
+          </p>
+        </div>
+      </section>
+
       <Footer onNavigate={onNavigate} />
     </main>
   );

@@ -10,6 +10,7 @@ import PetProfilePage from './pages/PetProfilePage.jsx';
 import RequestsPage from './pages/RequestsPage.jsx';
 import UserProfilePage from './pages/UserProfilePage.jsx';
 import AboutUsPage from './pages/AboutUsPage.jsx';
+import DonationPage from './pages/DonationPage.jsx';
 import pets from './data/pets.js';
 
 function App() {
@@ -182,6 +183,8 @@ function App() {
       )}
 
       {page === 'about' && <AboutUsPage onNavigate={handleNavigate} />}
+
+      {page === 'donation' && <DonationPage onNavigate={handleNavigate} currentUser={currentUser} />}
 
       {showModal && (
         <RegistrationModal

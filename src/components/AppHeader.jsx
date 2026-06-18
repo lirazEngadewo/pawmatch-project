@@ -92,6 +92,13 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
                 Requests
               </a>
             )}
+            <a
+              href="#!"
+              className={`nav-link nav-link--donate${currentPage === 'donation' ? ' nav-link--active' : ''}`}
+              onClick={(e) => { e.preventDefault(); onNavigate('donation'); }}
+            >
+              Donate ❤️
+            </a>
           </div>
 
           {isLoggedIn ? (
