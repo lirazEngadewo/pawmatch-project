@@ -466,8 +466,8 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: nowrap;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .match-pill {
@@ -4088,4 +4088,22 @@ h3 {
     height: 32px;
     font-size: 1rem;
   }
+}
+
+/* Carousel cards: stack vertically so body has full width for badge + button */
+.pet-carousel-item .pet-card {
+  flex-direction: column;
+  height: auto;
+  min-height: 340px;
+}
+
+.pet-carousel-item .pet-card-image {
+  width: 100%;
+  height: 190px;
+  flex-shrink: 0;
+}
+
+.pet-carousel-item .pet-card-body {
+  padding: 18px 20px;
+  flex: 1;
 }
