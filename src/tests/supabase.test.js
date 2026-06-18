@@ -17,10 +17,16 @@
 import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+const hasCredentials = Boolean(
+  import.meta.env.VITE_SUPABASE_URL &&
+  import.meta.env.VITE_SUPABASE_ANON_KEY &&
+  import.meta.env.VITE_TEST_USER_EMAIL &&
+  import.meta.env.VITE_TEST_USER_PASSWORD
 );
+
+const supabase = hasCredentials
+  ? createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY)
+  : null;
 
 const TEST_EMAIL = import.meta.env.VITE_TEST_USER_EMAIL;
 const TEST_PASSWORD = import.meta.env.VITE_TEST_USER_PASSWORD;
@@ -33,11 +39,7 @@ const cleanupFavoriteIds = [];
 // ── Setup / teardown ──────────────────────────────────────────────────────────
 
 beforeAll(async () => {
-  if (!TEST_EMAIL || !TEST_PASSWORD) {
-    throw new Error(
-      'Set VITE_TEST_USER_EMAIL and VITE_TEST_USER_PASSWORD in .env.test before running Supabase tests.'
-    );
-  }
+  if (!hasCredentials) return;
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email: TEST_EMAIL,
@@ -60,7 +62,7 @@ afterAll(async () => {
 
 // ── adoption_requests ─────────────────────────────────────────────────────────
 
-describe('adoption_requests', () => {
+describe.skipIf(!hasCredentials)('adoption_requests', () => {
 
   test('inserting a request creates a row with the correct fields', async () => {
     const { data, error } = await supabase
@@ -108,7 +110,7 @@ describe('adoption_requests', () => {
 
 // ── user_preferences ──────────────────────────────────────────────────────────
 
-describe('user_preferences', () => {
+describe.skipIf(!hasCredentials)('user_preferences', () => {
 
   test('upserting preferences with completed=true saves correctly', async () => {
     const prefs = {
@@ -140,7 +142,7 @@ describe('user_preferences', () => {
 
 // ── favorites ─────────────────────────────────────────────────────────────────
 
-describe('favorites', () => {
+describe.skipIf(!hasCredentials)('favorites', () => {
 
   test('inserting a favorite creates a row that appears in a subsequent fetch', async () => {
     const { data, error } = await supabase
