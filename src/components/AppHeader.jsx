@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl, onLogout }) {
+function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl, profileName, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -57,10 +57,20 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
 
   const getInitials = () => {
     if (!currentUser) return '?';
+    if (profileName) {
+      const parts = profileName.trim().split(/\s+/);
+      return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase() || profileName[0].toUpperCase();
+    }
     const first = currentUser.user_metadata?.first_name?.[0] || '';
     const last = currentUser.user_metadata?.last_name?.[0] || '';
-    return (first + last).toUpperCase();
+    if (first || last) return (first + last).toUpperCase();
+    return (currentUser.email?.[0] ?? '?').toUpperCase();
   };
+
+  const displayName = profileName
+    || [currentUser?.user_metadata?.first_name, currentUser?.user_metadata?.last_name].filter(Boolean).join(' ')
+    || currentUser?.email
+    || '';
 
   const handleLogout = () => {
     closeAll();
@@ -124,9 +134,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
 
               {dropdownOpen && (
                 <div className="user-dropdown">
-                  <p className="dropdown-name">
-                    {currentUser.user_metadata?.first_name} {currentUser.user_metadata?.last_name}
-                  </p>
+                  <p className="dropdown-name">{displayName}</p>
                   <button
                     className="dropdown-item"
                     onClick={() => { closeAll(); onNavigate('userProfile'); }}

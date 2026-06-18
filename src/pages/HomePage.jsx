@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
@@ -15,8 +15,15 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
   const [selectedType, setSelectedType] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [filtersApplied, setFiltersApplied] = useState(false);
+  const resultsRef = useRef(null);
 
   const userPreferences = useUserPreferences(currentUser);
+
+  useEffect(() => {
+    if (filtersApplied && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [filtersApplied]);
 
   // Single-card carousel: region filter only (existing behaviour, updates live)
   const carouselPets = selectedRegion
@@ -83,7 +90,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
 
           {filtersApplied ? (
             /* ── GRID VIEW ── */
-            <div className="hm-results">
+            <div className="hm-results" ref={resultsRef}>
               <div className="hm-results-header">
                 <p className="hm-results-count">
                   Showing {gridPets.length} pet{gridPets.length !== 1 ? 's' : ''} matching your filters

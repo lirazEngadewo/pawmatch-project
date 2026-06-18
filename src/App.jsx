@@ -23,6 +23,7 @@ function App() {
   // Current user from Supabase Auth session
   const [currentUser, setCurrentUser] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const [profileName, setProfileName] = useState(null);
   const [sessionExpiredMessage, setSessionExpiredMessage] = useState('');
   const [toast, setToast] = useState(null);
   const isManualLogout = useRef(false);
@@ -77,19 +78,23 @@ function App() {
   };
 
   useEffect(() => {
-    if (!currentUser) { setAvatarUrl(null); return; }
+    if (!currentUser) { setAvatarUrl(null); setProfileName(null); return; }
     supabase
       .from('profiles')
-      .select('avatar_url')
+      .select('avatar_url, full_name')
       .eq('user_id', currentUser.id)
       .maybeSingle()
-      .then(({ data }) => setAvatarUrl(data?.avatar_url ?? null));
+      .then(({ data }) => {
+        setAvatarUrl(data?.avatar_url ?? null);
+        setProfileName(data?.full_name ?? null);
+      });
   }, [currentUser]);
 
   const handleLogout = async () => {
     isManualLogout.current = true;
     await supabase.auth.signOut();
     setAvatarUrl(null);
+    setProfileName(null);
     setFavorites([]);
     localStorage.removeItem('favoritePets');
     handleNavigate('landing');
@@ -120,6 +125,7 @@ function App() {
         isLoggedIn={isLoggedIn}
         currentUser={currentUser}
         avatarUrl={avatarUrl}
+        profileName={profileName}
         onLogout={handleLogout}
       />
 
