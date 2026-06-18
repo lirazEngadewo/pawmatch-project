@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "דף הבית",
+    "howItWorks": "איך זה עובד",
+    "aboutUs": "אודותינו",
+    "contact": "צור קשר",
+    "requests": "בקשות",
+    "donate": "תרמו ❤️",
+    "register": "הרשמה",
+    "myProfile": "הפרופיל שלי",
+    "logout": "התנתקות"
+  },
+  "landing": {
+    "heroTitle": "פגשו את החבר הטוב ביותר שלכם",
+    "heroSubtitle": "גלו חיות מחמד מוכנות לאימוץ",
+    "labelAge": "גיל",
+    "labelGender": "מין",
+    "labelBreed": "גזע",
+    "labelLocation": "מיקום",
+    "viewFullProfile": "← צפה בפרופיל המלא",
+    "featuredEyebrow": "חיות מומלצות",
+    "featuredTitle": "חיות מחמד שמחכות לכם."
+  }
+}

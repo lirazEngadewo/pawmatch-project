@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
@@ -11,6 +12,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
   const [heroIndex, setHeroIndex] = useState(0);
   const heroPet = pets[heroIndex];
   const userPreferences = useUserPreferences(currentUser);
+  const { t } = useTranslation();
   console.log('LandingPage debug:', { currentUser, userPreferences });
 
   const handleHeroNext = () => setHeroIndex((prev) => (prev + 1) % pets.length);
@@ -23,10 +25,8 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       <section className="landing-hero-section">
 
         <div className="landing-hero-header">
-          <h1 className="landing-hero-title">Meet Your Future Best Friend</h1>
-          <p className="landing-hero-subtitle">
-            Swipe through our featured pets ready for adoption
-          </p>
+          <h1 className="landing-hero-title">{t('landing.heroTitle')}</h1>
+          <p className="landing-hero-subtitle">{t('landing.heroSubtitle')}</p>
         </div>
 
         <div className="landing-hero-card">
@@ -63,19 +63,19 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
 
             <div className="landing-meta-grid">
               <div className="landing-meta-item">
-                <p className="meta-label">Age</p>
+                <p className="meta-label">{t('landing.labelAge')}</p>
                 <p className="meta-value">{heroPet.age}</p>
               </div>
               <div className="landing-meta-item">
-                <p className="meta-label">Gender</p>
+                <p className="meta-label">{t('landing.labelGender')}</p>
                 <p className="meta-value">{heroPet.gender}</p>
               </div>
               <div className="landing-meta-item">
-                <p className="meta-label">Breed</p>
+                <p className="meta-label">{t('landing.labelBreed')}</p>
                 <p className="meta-value">{heroPet.type}</p>
               </div>
               <div className="landing-meta-item">
-                <p className="meta-label">Location</p>
+                <p className="meta-label">{t('landing.labelLocation')}</p>
                 <p className="meta-value">📍 {heroPet.location}</p>
               </div>
             </div>
@@ -92,7 +92,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               className="button button-primary landing-cta"
               onClick={() => onSelectPet(heroPet.id)}
             >
-              View Full Profile →
+              {t('landing.viewFullProfile')}
             </button>
           </div>
         </div>
@@ -191,8 +191,8 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       {/* ── FEATURED PETS ── */}
       <section className="section featured-section">
         <div className="section-header">
-          <p className="eyebrow">Featured Friends</p>
-          <h2>Pets who are ready to meet you.</h2>
+          <p className="eyebrow">{t('landing.featuredEyebrow')}</p>
+          <h2>{t('landing.featuredTitle')}</h2>
         </div>
         <PetCarousel
           pets={pets.filter((pet) => pet.id !== 'bella')}

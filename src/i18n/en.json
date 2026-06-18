@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Home",
+    "howItWorks": "How It Works",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "requests": "Requests",
+    "donate": "Donate ❤️",
+    "register": "Register",
+    "myProfile": "My Profile",
+    "logout": "Logout"
+  },
+  "landing": {
+    "heroTitle": "Meet Your Future Best Friend",
+    "heroSubtitle": "Swipe through our featured pets ready for adoption",
+    "labelAge": "Age",
+    "labelGender": "Gender",
+    "labelBreed": "Breed",
+    "labelLocation": "Location",
+    "viewFullProfile": "View Full Profile →",
+    "featuredEyebrow": "Featured Friends",
+    "featuredTitle": "Pets who are ready to meet you."
+  }
+}
