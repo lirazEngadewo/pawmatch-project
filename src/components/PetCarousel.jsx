@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import PetCard from './PetCard.jsx';
 import { calculateMatchPercent } from '../utils/matching.js';
 
+const TRACK_GAP = 24;
+
 function PetCarousel({ pets, onSelectPet, userPreferences }) {
   const [page, setPage] = useState(0);
   const [cardsPerPage, setCardsPerPage] = useState(3);
@@ -24,7 +26,18 @@ function PetCarousel({ pets, onSelectPet, userPreferences }) {
   }, []);
 
   const totalPages = Math.ceil(pets.length / cardsPerPage);
-  const translateX = -page * viewportWidth;
+
+  // Integer card width eliminates sub-pixel rounding drift across pages.
+  // Floor so 3 cards never exceed viewportWidth (avoids a 1px overflow on the right).
+  const cardWidth = viewportWidth > 0
+    ? Math.floor((viewportWidth - (cardsPerPage - 1) * TRACK_GAP) / cardsPerPage)
+    : null;
+
+  // One page = N cards + N inter-item gaps (including the gap that separates pages).
+  // Basing the translation on cardWidth (not viewportWidth) keeps it in sync with
+  // the actual rendered pixel positions, so there is zero accumulation error.
+  const pageWidth = cardWidth !== null ? cardsPerPage * (cardWidth + TRACK_GAP) : 0;
+  const translateX = -page * pageWidth;
 
   const goPrev = () => setPage((p) => Math.max(0, p - 1));
   const goNext = () => setPage((p) => Math.min(totalPages - 1, p + 1));
@@ -49,7 +62,11 @@ function PetCarousel({ pets, onSelectPet, userPreferences }) {
             {pets.map((pet) => {
               const matchPercent = calculateMatchPercent(pet, userPreferences);
               return (
-                <div key={pet.id} className="pet-carousel-item">
+                <div
+                  key={pet.id}
+                  className="pet-carousel-item"
+                  style={cardWidth ? { width: `${cardWidth}px`, flex: `0 0 ${cardWidth}px` } : undefined}
+                >
                   <PetCard pet={pet} onSelect={onSelectPet} matchPercent={matchPercent} />
                 </div>
               );

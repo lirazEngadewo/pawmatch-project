@@ -2139,6 +2139,96 @@ h3 {
 
 .hm-apply-btn:hover { opacity: 0.9; }
 
+/* Filter results: header row (count + clear button) */
+.hm-results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hm-results-count {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.hm-clear-btn {
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 2px solid var(--color-primary);
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.hm-clear-btn:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.hm-clear-btn--sidebar {
+  width: 100%;
+  height: 44px;
+  margin-top: 10px;
+  font-size: 0.92rem;
+}
+
+/* Filter results: 3-column card grid */
+.hm-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Vertical card layout (image top, content bottom) inside results grid */
+.hm-results-grid .pet-card {
+  flex-direction: column;
+  height: auto;
+  min-height: 340px;
+}
+
+.hm-results-grid .pet-card-image {
+  width: 100%;
+  height: 190px;
+  flex-shrink: 0;
+}
+
+.hm-results-grid .pet-card-body {
+  padding: 18px 20px;
+  flex: 1;
+}
+
+.hm-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(43, 43, 43, 0.6);
+  font-size: 1rem;
+  background: #fff;
+  border-radius: 14px;
+}
+
+/* Tablet: 2 columns when dashboard stacks to single column */
+@media (max-width: 768px) {
+  .hm-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: single column */
+@media (max-width: 480px) {
+  .hm-results-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Favorites card */
 .hm-favorites-card {
   background: #fff;

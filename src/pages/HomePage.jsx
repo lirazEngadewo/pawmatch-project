@@ -2,28 +2,53 @@ import { useState } from 'react';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
+import PetCard from '../components/PetCard.jsx';
 import pets from '../data/pets.js';
 import useUserPreferences from '../hooks/useUserPreferences.js';
 import { calculateMatchPercent, CITY_TO_REGION } from '../utils/matching.js';
 
+const REGIONS = ['Center', 'Sharon', 'Jerusalem', 'Haifa and Krayot', 'Upper Galilee', 'Lower Galilee', 'Shephelah', 'South'];
+
 function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedType, setSelectedType] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [filtersApplied, setFiltersApplied] = useState(false);
 
-  const filteredPets = selectedRegion
+  const userPreferences = useUserPreferences(currentUser);
+
+  // Single-card carousel: region filter only (existing behaviour, updates live)
+  const carouselPets = selectedRegion
     ? pets.filter((p) => CITY_TO_REGION[p.location] === selectedRegion)
     : pets;
 
-  const pet = filteredPets[currentIndex] ?? filteredPets[0];
-  const userPreferences = useUserPreferences(currentUser);
+  const pet = carouselPets[currentIndex] ?? carouselPets[0] ?? pets[0];
   const matchPercent = calculateMatchPercent(pet, userPreferences);
-  console.log('HomePage debug:', { currentUser, userPreferences, pet: pet?.id, matchPercent });
 
-  const handleNext = () => setCurrentIndex((p) => (p + 1) % filteredPets.length);
-  const handlePrev = () => setCurrentIndex((p) => (p - 1 + filteredPets.length) % filteredPets.length);
+  // Grid view: all three filters applied on button click
+  const gridPets = pets.filter((p) => {
+    if (selectedRegion && CITY_TO_REGION[p.location] !== selectedRegion) return false;
+    if (selectedType && p.species !== selectedType) return false;
+    if (selectedSize && p.size !== selectedSize) return false;
+    return true;
+  });
+
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % carouselPets.length);
+  const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + carouselPets.length) % carouselPets.length);
 
   const handleRegionChange = (e) => {
     setSelectedRegion(e.target.value);
+    setCurrentIndex(0);
+  };
+
+  const handleApplyFilters = () => setFiltersApplied(true);
+
+  const handleClearFilters = () => {
+    setSelectedRegion('');
+    setSelectedType('');
+    setSelectedSize('');
+    setFiltersApplied(false);
     setCurrentIndex(0);
   };
 
@@ -37,9 +62,6 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
     toggleFavorite(petId);
   };
 
-  const REGIONS = ['Center', 'Sharon', 'Jerusalem', 'Haifa and Krayot', 'Upper Galilee', 'Lower Galilee', 'Shephelah', 'South'];
-
-  // Build favorites list from real data
   const favoritePets = (favorites || [])
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
@@ -49,100 +71,116 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
   return (
     <main className="page-home">
 
-      {/* ── Page title ── */}
       <div className="hm-header">
         <h1 className="hm-title">Find your new best friend</h1>
         <p className="hm-subtitle">Swipe, match, and change a life.</p>
       </div>
 
-      {/* ── Dashboard grid ── */}
       <div className="hm-dashboard">
 
-        {/* LEFT – matching column */}
+        {/* LEFT – main column */}
         <div className="hm-col-main">
 
-          {/* Pet card */}
-          <div className="hm-pet-card">
+          {filtersApplied ? (
+            /* ── GRID VIEW ── */
+            <div className="hm-results">
+              <div className="hm-results-header">
+                <p className="hm-results-count">
+                  Showing {gridPets.length} pet{gridPets.length !== 1 ? 's' : ''} matching your filters
+                </p>
+                <button className="hm-clear-btn" onClick={handleClearFilters}>
+                  Clear Filters
+                </button>
+              </div>
 
-            {/* Image side */}
-            <div className="hm-image-area">
-              <button className="hm-arrow hm-arrow-left" onClick={handlePrev}>‹</button>
-              <img
-                src={pet.image}
-                alt={pet.name}
-                className="hm-pet-img"
-              />
-              <button className="hm-arrow hm-arrow-right" onClick={handleNext}>›</button>
+              {gridPets.length === 0 ? (
+                <p className="hm-no-results">No pets match these filters. Try different options.</p>
+              ) : (
+                <div className="hm-results-grid">
+                  {gridPets.map((p) => (
+                    <PetCard
+                      key={p.id}
+                      pet={p}
+                      onSelect={onSelectPet}
+                      matchPercent={calculateMatchPercent(p, userPreferences)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
+          ) : (
+            /* ── SINGLE CARD VIEW ── */
+            <>
+              <div className="hm-pet-card">
+                <div className="hm-image-area">
+                  <button className="hm-arrow hm-arrow-left" onClick={handlePrev}>‹</button>
+                  <img src={pet.image} alt={pet.name} className="hm-pet-img" />
+                  <button className="hm-arrow hm-arrow-right" onClick={handleNext}>›</button>
+                </div>
 
-            {/* Info side */}
-            <div className="hm-info">
-              <div className="hm-name-row">
-                <h2 className="hm-pet-name">{pet.name}</h2>
-                {matchPercent !== null && (
-                  <span className="match-pill">{matchPercent}% match</span>
-                )}
+                <div className="hm-info">
+                  <div className="hm-name-row">
+                    <h2 className="hm-pet-name">{pet.name}</h2>
+                    {matchPercent !== null && (
+                      <span className="match-pill">{matchPercent}% match</span>
+                    )}
+                  </div>
+
+                  <div className="hm-details-grid">
+                    <div className="hm-detail">
+                      <span className="hm-detail-label">Age</span>
+                      <span className="hm-detail-value">{pet.age}</span>
+                    </div>
+                    <div className="hm-detail">
+                      <span className="hm-detail-label">Gender</span>
+                      <span className="hm-detail-value">{pet.gender}</span>
+                    </div>
+                    <div className="hm-detail">
+                      <span className="hm-detail-label">Size</span>
+                      <span className="hm-detail-value">{pet.size}</span>
+                    </div>
+                    <div className="hm-detail">
+                      <span className="hm-detail-label">Location</span>
+                      <span className="hm-detail-value">📍 {pet.location}</span>
+                    </div>
+                  </div>
+
+                  <div className="tags-row">
+                    {pet.details.slice(0, 3).map((tag, i) => (
+                      <span key={i} className="tag">{tag}</span>
+                    ))}
+                  </div>
+
+                  <button className="hm-profile-btn" onClick={() => onSelectPet(pet.id)}>
+                    View Full Profile
+                  </button>
+                </div>
               </div>
 
-              <div className="hm-details-grid">
-                <div className="hm-detail">
-                  <span className="hm-detail-label">Age</span>
-                  <span className="hm-detail-value">{pet.age}</span>
-                </div>
-                <div className="hm-detail">
-                  <span className="hm-detail-label">Gender</span>
-                  <span className="hm-detail-value">{pet.gender}</span>
-                </div>
-                <div className="hm-detail">
-                  <span className="hm-detail-label">Size</span>
-                  <span className="hm-detail-value">{pet.size}</span>
-                </div>
-                <div className="hm-detail">
-                  <span className="hm-detail-label">Location</span>
-                  <span className="hm-detail-value">📍 {pet.location}</span>
-                </div>
-              </div>
-
-              <div className="tags-row">
-                {pet.details.slice(0, 3).map((tag, i) => (
-                  <span key={i} className="tag">{tag}</span>
+              <div className="hm-dots">
+                {carouselPets.map((_, i) => (
+                  <span key={i} className={`hm-dot${i === currentIndex ? ' active' : ''}`} />
                 ))}
               </div>
 
-              <button
-                className="hm-profile-btn"
-                onClick={() => onSelectPet(pet.id)}
-              >
-                View Full Profile
-              </button>
-            </div>
-          </div>
-
-          {/* Dots */}
-          <div className="hm-dots">
-            {filteredPets.map((_, i) => (
-              <span key={i} className={`hm-dot${i === currentIndex ? ' active' : ''}`} />
-            ))}
-          </div>
-
-          {/* Skip / Like */}
-          <div className="hm-actions">
-            <button className="hm-skip-btn" onClick={handleNext}>
-              <span>✕</span> Skip
-            </button>
-            <button
-              className={`hm-like-btn${isCurrentFavorite ? ' hm-like-btn--active' : ''}`}
-              onClick={handleLike}
-            >
-              <span>♥</span> {isCurrentFavorite ? 'Liked!' : 'Like'}
-            </button>
-          </div>
+              <div className="hm-actions">
+                <button className="hm-skip-btn" onClick={handleNext}>
+                  <span>✕</span> Skip
+                </button>
+                <button
+                  className={`hm-like-btn${isCurrentFavorite ? ' hm-like-btn--active' : ''}`}
+                  onClick={handleLike}
+                >
+                  <span>♥</span> {isCurrentFavorite ? 'Liked!' : 'Like'}
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         {/* RIGHT – sidebar */}
         <div className="hm-sidebar">
 
-          {/* Filters */}
           <div className="hm-filters-card">
             <h3 className="hm-sidebar-title">Filters</h3>
 
@@ -158,27 +196,31 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
 
             <div className="hm-filter-group">
               <label className="hm-filter-label">Pet Type</label>
-              <select className="hm-filter-select">
-                <option>All types</option>
-                <option>Cat</option>
-                <option>Dog</option>
+              <select className="hm-filter-select" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                <option value="">All types</option>
+                <option value="cat">Cat</option>
+                <option value="dog">Dog</option>
               </select>
             </div>
 
             <div className="hm-filter-group">
               <label className="hm-filter-label">Size</label>
-              <select className="hm-filter-select">
-                <option>All sizes</option>
-                <option>Small</option>
-                <option>Medium</option>
-                <option>Large</option>
+              <select className="hm-filter-select" value={selectedSize} onChange={(e) => setSelectedSize(e.target.value)}>
+                <option value="">All sizes</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
               </select>
             </div>
 
-            <button className="hm-apply-btn">Apply Filters</button>
+            <button className="hm-apply-btn" onClick={handleApplyFilters}>Apply Filters</button>
+            {filtersApplied && (
+              <button className="hm-clear-btn hm-clear-btn--sidebar" onClick={handleClearFilters}>
+                Clear Filters
+              </button>
+            )}
           </div>
 
-          {/* Favorites */}
           <div className="hm-favorites-card">
             <h3 className="hm-sidebar-title">Your Favorites</h3>
 
