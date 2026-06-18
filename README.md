@@ -42,7 +42,7 @@ A web platform that combines smart matching, an easy browsing experience, and a 
 | Vitest | Testing | Unit and integration tests (14/14 passing) |
 
 ## Database Schema (ERD)
-![Database Schema - ERD](public/erd.png)
+![Database Schema - ERD](docs/erd.png)
 
 ## Features
 - 🔍 Browse 22 pets available for adoption
