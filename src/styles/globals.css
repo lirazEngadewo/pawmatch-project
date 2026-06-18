@@ -4224,3 +4224,153 @@ h3 {
   padding: 18px 20px;
   flex: 1;
 }
+
+/* ── RTL Overrides ────────────────────────────────────────────────────────── */
+
+/* Header & navigation */
+[dir="rtl"] .app-header { flex-direction: row-reverse; }
+[dir="rtl"] .page-nav { flex-direction: row-reverse; }
+[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+[dir="rtl"] .hamburger-btn { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .nav-link { text-align: right; }
+[dir="rtl"] .dropdown-item { text-align: right; }
+[dir="rtl"] .user-dropdown { right: auto; left: 0; }
+
+/* Landing page */
+[dir="rtl"] .landing-hero-info { align-items: flex-end; text-align: right; }
+[dir="rtl"] .tags-row { flex-direction: row-reverse; }
+[dir="rtl"] .pet-footer { flex-direction: row-reverse; }
+[dir="rtl"] .landing-stats { flex-direction: row-reverse; }
+[dir="rtl"] .testimonials-grid .testimonial-card { text-align: right; }
+[dir="rtl"] .testimonial-header { flex-direction: row-reverse; }
+
+/* How it works & trust */
+[dir="rtl"] .how-it-works-grid { flex-direction: row-reverse; }
+[dir="rtl"] .trust-grid { flex-direction: row-reverse; }
+[dir="rtl"] .trust-card { text-align: right; align-items: flex-end; }
+[dir="rtl"] .trust-card-icon { align-self: flex-end; }
+
+/* Home page pet card */
+[dir="rtl"] .hm-pet-card { flex-direction: row-reverse; }
+[dir="rtl"] .hm-name-row { flex-direction: row-reverse; }
+[dir="rtl"] .hm-tags { flex-direction: row-reverse; }
+[dir="rtl"] .hm-actions { flex-direction: row-reverse; }
+[dir="rtl"] .hm-results-header { flex-direction: row-reverse; }
+[dir="rtl"] .hm-fav-row { flex-direction: row-reverse; }
+[dir="rtl"] .hm-filter-card { text-align: right; }
+[dir="rtl"] .hm-filter-card select { text-align: right; }
+[dir="rtl"] .hm-filter-actions { flex-direction: row-reverse; }
+[dir="rtl"] .favorites-header { flex-direction: row-reverse; }
+[dir="rtl"] .favorite-item { flex-direction: row-reverse; }
+
+/* Pet profile page */
+[dir="rtl"] .pp-hero-top { flex-direction: row-reverse; }
+[dir="rtl"] .pp-thumbs { flex-direction: row-reverse; }
+[dir="rtl"] .pp-similar-top { flex-direction: row-reverse; }
+[dir="rtl"] .pp-requirements-list { padding-left: 0; padding-right: 20px; }
+[dir="rtl"] .detail-list { flex-direction: row-reverse; }
+[dir="rtl"] .action-buttons { flex-direction: row-reverse; }
+
+/* User profile page */
+[dir="rtl"] .up-details-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-avatar-camera { right: auto; left: 0; }
+[dir="rtl"] .up-quiz-banner { flex-direction: row-reverse; }
+[dir="rtl"] .up-prefs-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-request-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-message-header { flex-direction: row-reverse; }
+[dir="rtl"] .up-details-grid { text-align: right; }
+[dir="rtl"] .up-details-label { text-align: right; }
+[dir="rtl"] .up-details-value { text-align: right; }
+[dir="rtl"] .up-section-header { flex-direction: row-reverse; }
+
+/* Requests page */
+[dir="rtl"] .rq-option-card { text-align: right; align-items: flex-end; }
+[dir="rtl"] .rq-info-box { flex-direction: row-reverse; }
+[dir="rtl"] .rq-pet-preview { flex-direction: row-reverse; }
+[dir="rtl"] .request-panel ul { padding-left: 0; padding-right: 20px; }
+
+/* Forms (About, Register, Requests, Donation) */
+[dir="rtl"] .form-group { text-align: right; }
+[dir="rtl"] .form-error { text-align: right; }
+[dir="rtl"] .form-row-two { flex-direction: row-reverse; }
+[dir="rtl"] .contact-label { text-align: right; }
+[dir="rtl"] .contact-field-error { text-align: right; }
+[dir="rtl"] .contact-form-row { flex-direction: row-reverse; }
+[dir="rtl"] .form-input { text-align: right; }
+[dir="rtl"] textarea.form-input { text-align: right; }
+
+/* FAQ & resources */
+[dir="rtl"] .faq-question { text-align: right; flex-direction: row-reverse; }
+[dir="rtl"] .faq-answer p { text-align: right; }
+[dir="rtl"] .tip-card { text-align: right; align-items: flex-end; }
+[dir="rtl"] .section-header { text-align: right; }
+
+/* Donation page */
+[dir="rtl"] .donation-success-quote {
+  border-left: none;
+  border-right: 3px solid var(--color-accent);
+  padding-left: 0;
+  padding-right: 16px;
+  text-align: right;
+}
+[dir="rtl"] .donation-success { text-align: right; align-items: flex-end; }
+[dir="rtl"] .donation-field { text-align: right; }
+[dir="rtl"] .donation-field-label { text-align: right; }
+[dir="rtl"] .donation-amounts { flex-direction: row-reverse; }
+
+/* Footer */
+[dir="rtl"] .footer-link { text-align: right; }
+[dir="rtl"] .footer-columns { flex-direction: row-reverse; }
+[dir="rtl"] .footer-col { text-align: right; align-items: flex-end; }
+[dir="rtl"] .footer-social { flex-direction: row-reverse; }
+[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+/* Israel map */
+[dir="rtl"] .israel-map-header { text-align: right; }
+
+/* General text alignment for block elements under RTL */
+[dir="rtl"] p,
+[dir="rtl"] li,
+[dir="rtl"] label,
+[dir="rtl"] .eyebrow,
+[dir="rtl"] .body-copy { text-align: right; }
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4 { text-align: right; }
+
+/* Exceptions: keep centered elements centered */
+[dir="rtl"] .landing-hero h1,
+[dir="rtl"] .landing-hero p,
+[dir="rtl"] .landing-hero .eyebrow,
+[dir="rtl"] .donation-hero h1,
+[dir="rtl"] .donation-hero p,
+[dir="rtl"] .donation-hero .eyebrow,
+[dir="rtl"] .resources-intro h1,
+[dir="rtl"] .resources-intro p,
+[dir="rtl"] .resources-intro .eyebrow,
+[dir="rtl"] .how-it-works .eyebrow,
+[dir="rtl"] .how-it-works h2,
+[dir="rtl"] .trust-section .eyebrow,
+[dir="rtl"] .trust-section h2,
+[dir="rtl"] .cta-section h2,
+[dir="rtl"] .cta-section p,
+[dir="rtl"] .testimonials-section .eyebrow,
+[dir="rtl"] .testimonials-section h2,
+[dir="rtl"] .faq-section .eyebrow,
+[dir="rtl"] .faq-section h2,
+[dir="rtl"] .tips-section .eyebrow,
+[dir="rtl"] .tips-section h2,
+[dir="rtl"] .how-it-works-step h3,
+[dir="rtl"] .how-it-works-step p,
+[dir="rtl"] .pet-carousel-dots,
+[dir="rtl"] .app-toast { text-align: center; }
+
+/* Mobile RTL adjustments */
+@media (max-width: 768px) {
+  [dir="rtl"] .page-nav { flex-direction: column; align-items: flex-end; }
+  [dir="rtl"] .nav-links { flex-direction: column; }
+  [dir="rtl"] .hamburger-btn { margin-left: 0; margin-right: auto; }
+  [dir="rtl"] .user-dropdown { right: auto; left: 0; }
+}

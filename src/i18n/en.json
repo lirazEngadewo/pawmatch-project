@@ -309,6 +309,15 @@
     "followUs": "Follow Us",
     "copyright": "© 2026 PawMatch. All rights reserved."
   },
+  "map": {
+    "eyebrow": "Our Adoption Network",
+    "title": "Adoption Organizations Across Israel",
+    "subtitle": "Click on a marker for more details",
+    "city": "City",
+    "region": "Region",
+    "phone": "Phone",
+    "contact": "Contact"
+  },
   "userProfile": {
     "greetingTitle": "Hello, {{name}}",
     "greetingSub": "Welcome back to your PawMatch dashboard.",
