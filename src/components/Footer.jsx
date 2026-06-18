@@ -18,6 +18,20 @@ function Footer({ onNavigate }) {
     }, 150);
   };
 
+  const goToPetCareTips = () => {
+    onNavigate?.('resources');
+    setTimeout(() => {
+      document.getElementById('pet-care-tips')?.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  };
+
+  const goToFaq = () => {
+    onNavigate?.('resources');
+    setTimeout(() => {
+      document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+    }, 150);
+  };
+
   return (
     <footer className="footer">
       <div className="footer-top footer-grid">
@@ -43,8 +57,8 @@ function Footer({ onNavigate }) {
           <p className="eyebrow">Resources</p>
           <ul>
             <li><button type="button" className="footer-link" onClick={goToHowItWorks}>Adoption Guide</button></li>
-            <li><span style={{ color: 'rgba(255,255,255,0.72)' }}>Pet Care Tips</span></li>
-            <li><span style={{ color: 'rgba(255,255,255,0.72)' }}>FAQ</span></li>
+            <li><button type="button" className="footer-link" onClick={goToPetCareTips}>Pet Care Tips</button></li>
+            <li><button type="button" className="footer-link" onClick={goToFaq}>FAQ</button></li>
           </ul>
         </div>
 
