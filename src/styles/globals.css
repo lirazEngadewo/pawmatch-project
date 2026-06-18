@@ -73,7 +73,7 @@ img {
 }
 
 .app-shell {
-  padding-top: 68px;
+  padding-top: 80px;
 }
 
 .app-header {
@@ -3934,6 +3934,8 @@ h3 {
 
   /* donation CTA */
   .donation-cta-section { padding: 60px 20px; }
+
+  .app-shell { padding-top: 68px; }
 
   /* Preferences card: stack vertically so button isn't cut off */
   .up-prefs-card {
