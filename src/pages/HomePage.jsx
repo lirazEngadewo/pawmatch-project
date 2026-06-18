@@ -26,6 +26,8 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
     toggleFavorite(petId);
   };
 
+  const uniqueLocations = [...new Set(pets.map((p) => p.location).filter(Boolean))].sort();
+
   // Build favorites list from real data
   const favoritePets = (favorites || [])
     .map((id) => pets.find((p) => p.id === id))
@@ -136,11 +138,10 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
             <div className="hm-filter-group">
               <label className="hm-filter-label">Location</label>
               <select className="hm-filter-select">
-                <option>All locations</option>
-                <option>Brooklyn, NY</option>
-                <option>Austin, TX</option>
-                <option>Portland, OR</option>
-                <option>Seattle, WA</option>
+                <option value="">All locations</option>
+                {uniqueLocations.map((loc) => (
+                  <option key={loc} value={loc}>{loc}</option>
+                ))}
               </select>
             </div>
 
