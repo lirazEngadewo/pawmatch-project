@@ -68,7 +68,7 @@ img {
   top: 0;
   background: rgba(247, 243, 238, 0.96);
   backdrop-filter: blur(10px);
-  z-index: 10;
+  z-index: 1000;
 }
 
 .app-header {
@@ -3912,6 +3912,12 @@ h3 {
   .user-avatar-wrap,
   .header-register-btn {
     margin: 12px 0 4px;
+  }
+
+  /* Dropdown opens rightward on mobile (avatar is on the left side) */
+  .user-dropdown {
+    right: auto;
+    left: 0;
   }
 
   /* About story stacks */
