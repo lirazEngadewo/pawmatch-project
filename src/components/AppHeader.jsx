@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const navItems = [
@@ -22,9 +23,14 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
     return () => document.removeEventListener('mousedown', handler);
   }, [dropdownOpen]);
 
+  const closeAll = () => {
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  };
+
   const handleNavClick = (event, item) => {
     event.preventDefault();
-    setDropdownOpen(false);
+    closeAll();
 
     if (item.label === 'How It Works') {
       if (currentPage === 'landing') {
@@ -57,21 +63,21 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
   };
 
   const handleLogout = () => {
-    setDropdownOpen(false);
+    closeAll();
     onLogout();
   };
 
   return (
     <header className="app-header-bar">
       <div className="app-header">
-        <div className="brand-block" onClick={() => onNavigate('landing')} style={{ cursor: 'pointer' }}>
+        <div className="brand-block" onClick={() => { closeAll(); onNavigate('landing'); }} style={{ cursor: 'pointer' }}>
           <div className="brand-logo">🐾</div>
           <div className="brand-copy">
             <p className="eyebrow">PawMatch</p>
           </div>
         </div>
 
-        <nav className="page-nav">
+        <nav className={`page-nav${menuOpen ? ' page-nav--open' : ''}`}>
           <div className="nav-links">
             {navItems.map((item) => (
               <a
@@ -87,7 +93,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
               <a
                 href="#!"
                 className={`nav-link${currentPage === 'requests' ? ' nav-link--active' : ''}`}
-                onClick={(e) => { e.preventDefault(); onNavigate('requests'); }}
+                onClick={(e) => { e.preventDefault(); closeAll(); onNavigate('requests'); }}
               >
                 Requests
               </a>
@@ -96,7 +102,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
               <a
                 href="#!"
                 className={`nav-link nav-link--donate${currentPage === 'donation' ? ' nav-link--active' : ''}`}
-                onClick={(e) => { e.preventDefault(); onNavigate('donation'); }}
+                onClick={(e) => { e.preventDefault(); closeAll(); onNavigate('donation'); }}
               >
                 Donate ❤️
               </a>
@@ -123,7 +129,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
                   </p>
                   <button
                     className="dropdown-item"
-                    onClick={() => { setDropdownOpen(false); onNavigate('userProfile'); }}
+                    onClick={() => { closeAll(); onNavigate('userProfile'); }}
                   >
                     My Profile
                   </button>
@@ -134,11 +140,23 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
               )}
             </div>
           ) : (
-            <button className="button button-outline" onClick={() => onNavigate('register')}>
+            <button
+              className="button button-outline header-register-btn"
+              onClick={() => { closeAll(); onNavigate('register'); }}
+            >
               Register
             </button>
           )}
         </nav>
+
+        <button
+          className="hamburger-btn"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </div>
     </header>
   );
