@@ -63,12 +63,17 @@ img {
 }
 
 .app-header-bar {
-  width: 100%;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   background: rgba(247, 243, 238, 0.96);
   backdrop-filter: blur(10px);
   z-index: 1000;
+}
+
+.app-shell {
+  padding-top: 68px;
 }
 
 .app-header {
@@ -3929,19 +3934,6 @@ h3 {
 
   /* donation CTA */
   .donation-cta-section { padding: 60px 20px; }
-
-  /* Fixed header on mobile */
-  .app-header-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  /* Push page content below fixed header (~62px header height + buffer) */
-  .app-shell {
-    padding-top: 68px;
-  }
 
   /* Preferences card: stack vertically so button isn't cut off */
   .up-prefs-card {
