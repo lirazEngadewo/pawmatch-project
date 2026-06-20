@@ -4244,6 +4244,15 @@ h3 {
 [dir="rtl"] .testimonials-grid .testimonial-card { text-align: right; }
 [dir="rtl"] .testimonial-header { flex-direction: row-reverse; }
 
+/* Pet card (shared component) */
+[dir="rtl"] .pet-card-body { text-align: right; }
+[dir="rtl"] .pet-card-content { text-align: right; }
+
+/* Quiz modal */
+[dir="rtl"] .quiz-modal-card { text-align: right; }
+[dir="rtl"] .quiz-question { text-align: right; }
+[dir="rtl"] .quiz-options { justify-content: flex-end; }
+
 /* How it works & trust */
 [dir="rtl"] .how-it-works-grid { flex-direction: row-reverse; }
 [dir="rtl"] .trust-grid { flex-direction: row-reverse; }
@@ -4257,11 +4266,15 @@ h3 {
 [dir="rtl"] .hm-actions { flex-direction: row-reverse; }
 [dir="rtl"] .hm-results-header { flex-direction: row-reverse; }
 [dir="rtl"] .hm-fav-row { flex-direction: row-reverse; }
-[dir="rtl"] .hm-filter-card { text-align: right; }
-[dir="rtl"] .hm-filter-card select { text-align: right; }
+[dir="rtl"] .hm-filters-card { text-align: right; }
+[dir="rtl"] .hm-filters-card select { text-align: right; }
 [dir="rtl"] .hm-filter-actions { flex-direction: row-reverse; }
 [dir="rtl"] .favorites-header { flex-direction: row-reverse; }
 [dir="rtl"] .favorite-item { flex-direction: row-reverse; }
+[dir="rtl"] .hm-detail { text-align: right; }
+[dir="rtl"] .hm-info { text-align: right; }
+[dir="rtl"] .hm-fav-info { text-align: right; }
+[dir="rtl"] .hm-favorites-card { text-align: right; }
 
 /* Pet profile page */
 [dir="rtl"] .pp-hero-top { flex-direction: row-reverse; }
@@ -4270,6 +4283,11 @@ h3 {
 [dir="rtl"] .pp-requirements-list { padding-left: 0; padding-right: 20px; }
 [dir="rtl"] .detail-list { flex-direction: row-reverse; }
 [dir="rtl"] .action-buttons { flex-direction: row-reverse; }
+[dir="rtl"] .pp-info-item { text-align: right; }
+[dir="rtl"] .pp-health-item { text-align: right; }
+[dir="rtl"] .pp-adoption-item { text-align: right; }
+[dir="rtl"] .pp-similar-info { text-align: right; }
+[dir="rtl"] .pp-quick-card { text-align: right; }
 
 /* User profile page */
 [dir="rtl"] .up-details-card { flex-direction: row-reverse; }
@@ -4282,6 +4300,12 @@ h3 {
 [dir="rtl"] .up-details-label { text-align: right; }
 [dir="rtl"] .up-details-value { text-align: right; }
 [dir="rtl"] .up-section-header { flex-direction: row-reverse; }
+[dir="rtl"] .up-detail-item { text-align: right; }
+[dir="rtl"] .up-pet-body { text-align: right; }
+[dir="rtl"] .up-request-info { text-align: right; }
+[dir="rtl"] .up-details-body { text-align: right; }
+[dir="rtl"] .up-empty { align-items: flex-end; text-align: right; }
+[dir="rtl"] .up-greeting { text-align: right; }
 
 /* Requests page */
 [dir="rtl"] .rq-option-card { text-align: right; align-items: flex-end; }
@@ -4328,17 +4352,29 @@ h3 {
 /* Israel map */
 [dir="rtl"] .israel-map-header { text-align: right; }
 
-/* General text alignment for block elements under RTL */
+/* General text alignment and direction for block elements under RTL */
 [dir="rtl"] p,
 [dir="rtl"] li,
 [dir="rtl"] label,
 [dir="rtl"] .eyebrow,
-[dir="rtl"] .body-copy { text-align: right; }
+[dir="rtl"] .body-copy {
+  text-align: right;
+  direction: rtl;
+}
 
 [dir="rtl"] h1,
 [dir="rtl"] h2,
 [dir="rtl"] h3,
-[dir="rtl"] h4 { text-align: right; }
+[dir="rtl"] h4 {
+  text-align: right;
+  direction: rtl;
+}
+
+/* Ensure span values inside RTL cards inherit proper direction */
+[dir="rtl"] span {
+  direction: rtl;
+  unicode-bidi: embed;
+}
 
 /* Exceptions: keep centered elements centered */
 [dir="rtl"] .landing-hero h1,

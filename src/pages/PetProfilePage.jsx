@@ -17,6 +17,11 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
 
   const allImages = [pet.image, ...pet.galleryImages];
   const isFavorite = favorites?.includes(pet.id);
+  const aboutText = isHe && pet.about_he ? pet.about_he : pet.about;
+  const hc = isHe && pet.healthCare_he ? pet.healthCare_he : pet.healthCare;
+  const requirements = isHe && pet.adoptionInfo.requirements_he
+    ? pet.adoptionInfo.requirements_he
+    : pet.adoptionInfo.requirements;
   const similarPets = pet.similarPetIds
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
@@ -137,7 +142,7 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
       {/* ── About ── */}
       <section className="pp-section card">
         <h2 className="pp-section-title">{t('petProfile.aboutTitle', { name: pet.name })}</h2>
-        <p className="pp-about-text">{pet.about}</p>
+        <p className="pp-about-text">{aboutText}</p>
       </section>
 
       {/* ── Health & Care ── */}
@@ -146,19 +151,19 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
         <div className="pp-health-grid">
           <div className="pp-health-item">
             <span className="pp-health-label">{t('petProfile.labelVaccination')}</span>
-            <span className="pp-health-value">{pet.healthCare.vaccinationStatus}</span>
+            <span className="pp-health-value">{hc.vaccinationStatus}</span>
           </div>
           <div className="pp-health-item">
             <span className="pp-health-label">{t('petProfile.labelEnergy')}</span>
-            <span className="pp-health-value">{pet.healthCare.energyLevel}</span>
+            <span className="pp-health-value">{hc.energyLevel}</span>
           </div>
           <div className="pp-health-item">
             <span className="pp-health-label">{t('petProfile.labelMedicalHistory')}</span>
-            <span className="pp-health-value">{pet.healthCare.medicalHistory}</span>
+            <span className="pp-health-value">{hc.medicalHistory}</span>
           </div>
           <div className="pp-health-item">
             <span className="pp-health-label">{t('petProfile.labelSpecialNeeds')}</span>
-            <span className="pp-health-value">{pet.healthCare.specialNeeds}</span>
+            <span className="pp-health-value">{hc.specialNeeds}</span>
           </div>
         </div>
       </section>
@@ -187,7 +192,7 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
         <div className="pp-requirements">
           <h4 className="pp-requirements-title">{t('petProfile.requirementsTitle')}</h4>
           <ul className="pp-requirements-list">
-            {pet.adoptionInfo.requirements.map((req) => (
+            {requirements.map((req) => (
               <li key={req}>{req}</li>
             ))}
           </ul>
