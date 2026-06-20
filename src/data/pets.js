@@ -31,12 +31,12 @@ const pets = [
       energyLevel: 'Low - loves lounging and quiet play',
       medicalHistory: 'Neutered, healthy with no known conditions',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'נמוכה — אוהב התנדנדות ומשחק שקט',
       medicalHistory: 'מסורס, בריא ללא מצבים ידועים',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'Brooklyn Animal Rescue',
@@ -89,12 +89,12 @@ const pets = [
       energyLevel: 'High - needs daily walks and play',
       medicalHistory: 'Spayed, heartworm negative, all clear',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה ועדכנית',
       energyLevel: 'גבוהה — זקוקה לטיולים ומשחקים יומיומיים',
       medicalHistory: 'מעוקרת, שלילית לתולעות לב, בריאה לחלוטין',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'Austin Paws Rescue',
@@ -147,12 +147,12 @@ const pets = [
       energyLevel: 'Medium-high - loves walks, fetch, and exploring',
       medicalHistory: 'Spayed, healthy, no known conditions',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'בינונית-גבוהה — אוהבת טיולים, זריקות כדור ויציאות',
       medicalHistory: 'מעוקרת, בריאה, ללא מצבים ידועים',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'Portland Humane Society',
@@ -205,12 +205,12 @@ const pets = [
       energyLevel: 'Low - calm lap cat with occasional bursts of play',
       medicalHistory: 'Neutered, mild arthritis managed with diet',
       specialNeeds: 'Joint-friendly diet recommended',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו, ניקוי שיניים בוצע',
       energyLevel: 'נמוכה — חתול חיק שקט עם התפרצויות משחק מדי פעם',
       medicalHistory: 'מסורס, דלקת מפרקים קלה מנוהלת בתזונה',
       specialNeeds: 'מומלצת תזונה ידידותית לעצמות',
-    },
     },
     adoptionInfo: {
       shelterName: 'Seattle Animal Shelter',
@@ -263,12 +263,12 @@ const pets = [
       energyLevel: 'Very high - needs daily exercise and play',
       medicalHistory: 'Neutered, healthy puppy checkup completed',
       specialNeeds: 'Currently enrolled in basic obedience training',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'גבוהה מאוד — זקוק לפעילות ומשחק יומיומיים',
       medicalHistory: 'מסורס, בדיקת גור תקינה בוצעה',
       specialNeeds: 'כרגע בקורס ציות בסיסי',
-    },
     },
     adoptionInfo: {
       shelterName: 'San Francisco SPCA',
@@ -321,12 +321,12 @@ const pets = [
       energyLevel: 'Low - short walks and lots of lounging',
       medicalHistory: 'Spayed, mild seasonal allergies managed with diet',
       specialNeeds: 'Sensitive to heat, needs a climate-controlled home',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'נמוכה — טיולים קצרים ושפע שינה',
       medicalHistory: 'מעוקרת, אלרגיות עונתיות קלות מנוהלות בתזונה',
       specialNeeds: 'רגישה לחום, דורשת בית ממוזג',
-    },
     },
     adoptionInfo: {
       shelterName: 'Denver Dumb Friends League',
@@ -379,12 +379,12 @@ const pets = [
       energyLevel: 'Medium - playful bursts followed by long naps',
       medicalHistory: 'Neutered, healthy, routine checkups up to date',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'בינונית — התפרצויות שחקנות ואחריהן תנומות ארוכות',
       medicalHistory: 'מסורס, בריא, בדיקות שגרתיות עדכניות',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'Chicago Cat Rescue',
@@ -437,12 +437,12 @@ const pets = [
       energyLevel: 'Medium - daily walks plus mental stimulation',
       medicalHistory: 'Spayed, dental cleaning done, healthy',
       specialNeeds: 'Needs grooming every 4-6 weeks',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'בינונית — טיולים יומיומיים ועידוד מנטלי',
       medicalHistory: 'מעוקרת, ניקוי שיניים בוצע, בריאה',
       specialNeeds: 'זקוקה לתספורת כל 4–6 שבועות',
-    },
     },
     adoptionInfo: {
       shelterName: 'Miami-Dade Animal Services',
@@ -495,12 +495,12 @@ const pets = [
       energyLevel: 'Low-medium - relaxed but enjoys play sessions',
       medicalHistory: 'Neutered, heart screening clear, healthy',
       specialNeeds: 'Daily brushing recommended for his long coat',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'נמוכה-בינונית — רגוע עם מפגשי משחק מהנים',
       medicalHistory: 'מסורס, בדיקת לב תקינה, בריא',
       specialNeeds: 'הברשה יומיומית מומלצת לפרווה הארוכה',
-    },
     },
     adoptionInfo: {
       shelterName: 'Boston Animal Care',
@@ -553,12 +553,12 @@ const pets = [
       energyLevel: 'Very high - constant zoomies and play',
       medicalHistory: 'Spay scheduled at 6 months, otherwise healthy',
       specialNeeds: 'Needs a kitten-safe space until fully vaccinated',
+    },
     healthCare_he: {
       vaccinationStatus: 'סבב ראשון של חיסוני גורות הושלם',
       energyLevel: 'גבוהה מאוד — זום-זום ומשחק תמידיים',
       medicalHistory: 'עיקור מתוכנן ב-6 חודשים, אחרת בריאה',
       specialNeeds: 'זקוקה למרחב בטוח לגורות עד לחיסון מלא',
-    },
     },
     adoptionInfo: {
       shelterName: 'Denver Dumb Friends League',
@@ -614,12 +614,12 @@ const pets = [
       energyLevel: 'Very high - needs 2+ hours of exercise and mental stimulation daily',
       medicalHistory: 'Neutered, hip screening clear, excellent health',
       specialNeeds: 'Requires daily mental stimulation to prevent boredom',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'גבוהה מאוד — זקוק ל-2+ שעות פעילות וגירוי מנטלי יומיומי',
       medicalHistory: 'מסורס, בדיקת ירכיים תקינה, בריאות מצוינת',
       specialNeeds: 'דורש גירוי מנטלי יומי למניעת שעמום',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת אוהבי חיות תל אביב',
@@ -673,12 +673,12 @@ const pets = [
       energyLevel: 'Medium-high - daily walks and training sessions',
       medicalHistory: 'Spayed, healthy, degenerative myelopathy screening negative',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה ועדכנית',
       energyLevel: 'בינונית-גבוהה — טיולים יומיומיים ומפגשי אילוף',
       medicalHistory: 'מעוקרת, בריאה, בדיקת מיאלופתיה ניוונית שלילית',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'מקלט עיריית רמת גן',
@@ -732,12 +732,12 @@ const pets = [
       energyLevel: 'Low - gentle play and long peaceful nap sessions',
       medicalHistory: 'Neutered, routine tear duct cleaning, otherwise healthy',
       specialNeeds: 'Daily brushing required; eye area needs gentle wiping',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'נמוכה — משחק עדין ומנוחות ארוכות',
       medicalHistory: 'מסורס, ניקוי שגרתי של צינורות הדמע, אחרת בריא',
       specialNeeds: 'הברשה יומית נדרשת; אזור העין צריך ניגוב עדין',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת חסד לחיות השרון',
@@ -791,12 +791,12 @@ const pets = [
       energyLevel: 'Low-medium - gentle play and lots of cuddle time',
       medicalHistory: 'Spayed, HCM screening scheduled, currently healthy',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'נמוכה-בינונית — משחק עדין והרבה זמן חיבוק',
       medicalHistory: 'מעוקרת, בדיקת HCM מתוכננת, כרגע בריאה',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת "חיות עם לב" הרצליה',
@@ -850,12 +850,12 @@ const pets = [
       energyLevel: 'Low-medium - calm with periodic bursts of playfulness',
       medicalHistory: 'Spayed, microchipped, fully healthy',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'נמוכה-בינונית — רגועה עם התפרצויות שחקנות תקופתיות',
       medicalHistory: 'מעוקרת, ממוקרצ\'יפת, בריאה לחלוטין',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'אגודת צער בעלי חיים ירושלים',
@@ -909,12 +909,12 @@ const pets = [
       energyLevel: 'High - needs 90+ minutes of activity daily',
       medicalHistory: 'Neutered, MDR1 gene tested negative, healthy',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'גבוהה — זקוק ל-90 דקות פעילות לפחות ביום',
       medicalHistory: 'מסורס, בדיקת גן MDR1 שלילית, בריא',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'מקלט בעלי חיות בית שמש',
@@ -968,12 +968,12 @@ const pets = [
       energyLevel: 'Very high - needs interactive play and environmental enrichment daily',
       medicalHistory: 'Spayed, PK deficiency tested negative, healthy',
       specialNeeds: 'Requires puzzle feeders and interactive toys to stay mentally engaged',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'גבוהה מאוד — זקוקה למשחק אינטראקטיבי ועשרה סביבתית יומיומית',
       medicalHistory: 'מעוקרת, בדיקת חסר PK שלילית, בריאה',
       specialNeeds: 'דורשת מזיני-חידות וצעצועים אינטראקטיביים',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת "אהבה לחיות" קריות',
@@ -1027,12 +1027,12 @@ const pets = [
       energyLevel: 'Medium-high - daily walks and boisterous play sessions',
       medicalHistory: 'Neutered, cardiac screening clear, healthy for his age',
       specialNeeds: 'Sensitive to extreme heat; avoid midday walks in summer',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'בינונית-גבוהה — טיולים יומיומיים ומפגשי משחק סוערים',
       medicalHistory: 'מסורס, בדיקת לב תקינה, בריא לגילו',
       specialNeeds: 'רגיש לחום קיצוני; להימנע מטיולים בשעות הצהריים בקיץ',
-    },
     },
     adoptionInfo: {
       shelterName: 'מקלט עיריית חיפה',
@@ -1086,12 +1086,12 @@ const pets = [
       energyLevel: 'Medium-high - daily outdoor activity, best in early morning or evening',
       medicalHistory: 'Spayed, microchipped, excellent health',
       specialNeeds: 'Walks best in cooler hours during hot weather',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'בינונית-גבוהה — פעילות חיצונית יומית, עדיפות בוקר מוקדם או ערב',
       medicalHistory: 'מעוקרת, ממוקרצ\'יפת, בריאות מצוינת',
       specialNeeds: 'טיולים בשעות הקרירות יותר במזג אוויר חם',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת "חיות אילת"',
@@ -1145,12 +1145,12 @@ const pets = [
       energyLevel: 'Very high - needs 2+ hours of vigorous daily exercise',
       medicalHistory: 'Neutered, eye exam clear, healthy',
       specialNeeds: 'Cannot tolerate extreme heat; thrives in cooler climates',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'גבוהה מאוד — זקוק ל-2+ שעות פעילות גופנית נמרצת יומית',
       medicalHistory: 'מסורס, בדיקת עיניים תקינה, בריא',
       specialNeeds: 'לא יכול לסבול חום קיצוני; משגשג באקלים קריר',
-    },
     },
     adoptionInfo: {
       shelterName: 'מקלט חיות גליל עליון',
@@ -1204,12 +1204,12 @@ const pets = [
       energyLevel: 'Low - gentle play and long peaceful stretches',
       medicalHistory: 'Spayed, dental scaling done, healthy',
       specialNeeds: 'Weekly brushing for her medium-length coat',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסנת במלואה',
       energyLevel: 'נמוכה — משחק עדין ותקופות שלווה ארוכות',
       medicalHistory: 'מעוקרת, קנית שיניים בוצעה, בריאה',
       specialNeeds: 'הברשה שבועית לפרווה הבינונית שלה',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת "רחמים לחיות" נצרת',
@@ -1263,12 +1263,12 @@ const pets = [
       energyLevel: 'High - enthusiastic about all forms of exercise',
       medicalHistory: 'Neutered, hip screening clear, healthy',
       specialNeeds: 'None',
+    },
     healthCare_he: {
       vaccinationStatus: 'מחוסן במלואו',
       energyLevel: 'גבוהה — נלהב לכל סוגי הפעילות',
       medicalHistory: 'מסורס, בדיקת ירכיים תקינה, בריא',
       specialNeeds: 'אין',
-    },
     },
     adoptionInfo: {
       shelterName: 'עמותת "כלב נאמן" רחובות',

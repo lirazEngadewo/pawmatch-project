@@ -4227,6 +4227,11 @@ h3 {
 
 /* ── RTL Overrides ────────────────────────────────────────────────────────── */
 
+/* Blanket: right-align all text when RTL is active */
+[dir="rtl"] * {
+  text-align: right;
+}
+
 /* Header & navigation */
 [dir="rtl"] .app-header { flex-direction: row-reverse; }
 [dir="rtl"] .page-nav { flex-direction: row-reverse; }
@@ -4377,6 +4382,12 @@ h3 {
 }
 
 /* Exceptions: keep centered elements centered */
+[dir="rtl"] button,
+[dir="rtl"] .button,
+[dir="rtl"] .donation-amount-btn,
+[dir="rtl"] .stat-card,
+[dir="rtl"] .stat-card h3,
+[dir="rtl"] .stat-card p,
 [dir="rtl"] .landing-hero h1,
 [dir="rtl"] .landing-hero p,
 [dir="rtl"] .landing-hero .eyebrow,
@@ -4400,6 +4411,7 @@ h3 {
 [dir="rtl"] .tips-section h2,
 [dir="rtl"] .how-it-works-step h3,
 [dir="rtl"] .how-it-works-step p,
+[dir="rtl"] .hm-dots,
 [dir="rtl"] .pet-carousel-dots,
 [dir="rtl"] .app-toast { text-align: center; }
 
