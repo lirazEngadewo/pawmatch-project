@@ -13,9 +13,10 @@ export const translateSize = (s, isHe) => {
 
 export const translateAge = (a, isHe) => {
   if (!isHe) return a;
-  return a
-    .replace(/\byears\b/, 'שנים')
-    .replace(/\byear\b/, 'שנה')
-    .replace(/\bmonths\b/, 'חודשים')
-    .replace(/\bmonth\b/, 'חודש');
+  const m = a.match(/^(\d+)\s+(year|years|month|months)$/);
+  if (m) {
+    const heUnit = { year: 'שנה', years: 'שנים', month: 'חודש', months: 'חודשים' }[m[2]];
+    return `\u200F${m[1]} ${heUnit}`;
+  }
+  return a;
 };
