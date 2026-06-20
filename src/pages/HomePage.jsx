@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { translateGender, translateSize, translateAge } from '../utils/petLocale.js';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
@@ -137,15 +138,15 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
                   <div className="hm-details-grid">
                     <div className="hm-detail">
                       <span className="hm-detail-label">{t('home.labelAge')}</span>
-                      <span className="hm-detail-value">{pet.age}</span>
+                      <span className="hm-detail-value">{translateAge(pet.age, isHe)}</span>
                     </div>
                     <div className="hm-detail">
                       <span className="hm-detail-label">{t('home.labelGender')}</span>
-                      <span className="hm-detail-value">{pet.gender}</span>
+                      <span className="hm-detail-value">{translateGender(pet.gender, isHe)}</span>
                     </div>
                     <div className="hm-detail">
                       <span className="hm-detail-label">{t('home.labelSize')}</span>
-                      <span className="hm-detail-value">{pet.size}</span>
+                      <span className="hm-detail-value">{translateSize(pet.size, isHe)}</span>
                     </div>
                     <div className="hm-detail">
                       <span className="hm-detail-label">{t('home.labelLocation')}</span>

@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import pets from '../data/pets.js';
+import { translateGender, translateSize, translateAge } from '../utils/petLocale.js';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import useUserPreferences from '../hooks/useUserPreferences.js';
 import { calculateMatchPercent } from '../utils/matching.js';
 
 function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   const pet = pets.find((p) => p.id === selectedPetId) || pets[0];
   const [activeImage, setActiveImage] = useState(pet.image);
   const userPreferences = useUserPreferences(currentUser);
@@ -49,9 +51,9 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
       <div className="pp-hero">
         <div className="pp-hero-top">
           <div>
-            <h1 className="pp-hero-name">{pet.name}</h1>
+            <h1 className="pp-hero-name">{isHe && pet.name_he ? pet.name_he : pet.name}</h1>
             <p className="pp-hero-subtitle">
-              {pet.age} &middot; {pet.gender} &middot; {pet.breed}
+              {translateAge(pet.age, isHe)} &middot; {translateGender(pet.gender, isHe)} &middot; {isHe && pet.breed_he ? pet.breed_he : pet.breed}
             </p>
           </div>
           {matchPercent !== null && (
@@ -88,19 +90,19 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
             <div className="pp-info-grid">
               <div className="pp-info-item">
                 <span className="pp-info-label">{t('petProfile.labelAge')}</span>
-                <span className="pp-info-value">{pet.age}</span>
+                <span className="pp-info-value">{translateAge(pet.age, isHe)}</span>
               </div>
               <div className="pp-info-item">
                 <span className="pp-info-label">{t('petProfile.labelGender')}</span>
-                <span className="pp-info-value">{pet.gender}</span>
+                <span className="pp-info-value">{translateGender(pet.gender, isHe)}</span>
               </div>
               <div className="pp-info-item">
                 <span className="pp-info-label">{t('petProfile.labelBreed')}</span>
-                <span className="pp-info-value">{pet.breed}</span>
+                <span className="pp-info-value">{isHe && pet.breed_he ? pet.breed_he : pet.breed}</span>
               </div>
               <div className="pp-info-item">
                 <span className="pp-info-label">{t('petProfile.labelSize')}</span>
-                <span className="pp-info-value">{pet.size}</span>
+                <span className="pp-info-value">{translateSize(pet.size, isHe)}</span>
               </div>
               <div className="pp-info-item pp-info-item--wide">
                 <span className="pp-info-label">{t('petProfile.labelLocation')}</span>
@@ -109,7 +111,7 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
             </div>
 
             <div className="tags-row">
-              {pet.details.map((tag) => (
+              {(isHe && pet.tags_he ? pet.tags_he : pet.details).map((tag) => (
                 <span key={tag} className="tag">{tag}</span>
               ))}
             </div>

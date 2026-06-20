@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { translateGender, translateAge } from '../utils/petLocale.js';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
@@ -67,15 +68,15 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
             <div className="landing-meta-grid">
               <div className="landing-meta-item">
                 <p className="meta-label">{t('landing.labelAge')}</p>
-                <p className="meta-value">{heroPet.age}</p>
+                <p className="meta-value">{translateAge(heroPet.age, isHe)}</p>
               </div>
               <div className="landing-meta-item">
                 <p className="meta-label">{t('landing.labelGender')}</p>
-                <p className="meta-value">{heroPet.gender}</p>
+                <p className="meta-value">{translateGender(heroPet.gender, isHe)}</p>
               </div>
               <div className="landing-meta-item">
                 <p className="meta-label">{t('landing.labelBreed')}</p>
-                <p className="meta-value">{heroPet.type}</p>
+                <p className="meta-value">{isHe && heroPet.type_he ? heroPet.type_he : heroPet.type}</p>
               </div>
               <div className="landing-meta-item">
                 <p className="meta-label">{t('landing.labelLocation')}</p>
