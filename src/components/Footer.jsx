@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 function Footer({ onNavigate }) {
   const { t } = useTranslation();
@@ -75,7 +75,7 @@ function Footer({ onNavigate }) {
       </div>
 
       <div className="footer-bottom">
-        <p>{t('footer.copyright')}</p>
+        <p><Trans i18nKey="footer.copyright" components={{ ltr: <span dir="ltr" /> }} /></p>
       </div>
     </footer>
   );

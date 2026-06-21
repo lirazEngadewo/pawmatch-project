@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Footer from '../components/Footer.jsx';
 
 const PRESET_AMOUNTS = [10, 50, 100];
@@ -47,7 +47,7 @@ function DonationPage({ onNavigate }) {
     <main className="page donation-page">
       <section className="donation-hero">
         <div className="donation-hero-icon">🐾</div>
-        <h1>{t('donation.heroTitle')}</h1>
+        <h1><Trans i18nKey="donation.heroTitle" components={{ ltr: <span dir="ltr" /> }} /></h1>
         <p className="body-copy">{t('donation.heroSubtitle')}</p>
       </section>
 
@@ -65,7 +65,7 @@ function DonationPage({ onNavigate }) {
             {message.trim() && (
               <blockquote className="donation-success-quote">"{message.trim()}"</blockquote>
             )}
-            <p className="donation-success-note">{t('donation.simulatedNote')}</p>
+            <p className="donation-success-note"><Trans i18nKey="donation.simulatedNote" components={{ ltr: <span dir="ltr" /> }} /></p>
             <button
               className="button button-primary"
               onClick={() => onNavigate('landing')}

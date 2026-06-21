@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Footer from '../components/Footer.jsx';
 
 function ResourcesPage({ onNavigate }) {
@@ -56,7 +56,7 @@ function ResourcesPage({ onNavigate }) {
       <section id="faq" className="section faq-section">
         <div className="section-header">
           <h2>{t('resources.faqTitle')}</h2>
-          <p className="body-copy">{t('resources.faqSubtitle')}</p>
+          <p className="body-copy"><Trans i18nKey="resources.faqSubtitle" components={{ ltr: <span dir="ltr" /> }} /></p>
         </div>
         <div className="faq-list">
           {FAQS.map((item, i) => (
@@ -67,12 +67,12 @@ function ResourcesPage({ onNavigate }) {
                 onClick={() => toggle(i)}
                 aria-expanded={openIndex === i}
               >
-                <span>{t(item.qKey)}</span>
+                <span><Trans i18nKey={item.qKey} components={{ ltr: <span dir="ltr" /> }} /></span>
                 <span className="faq-chevron">{openIndex === i ? '▲' : '▼'}</span>
               </button>
               {openIndex === i && (
                 <div className="faq-answer">
-                  <p>{t(item.aKey)}</p>
+                  <p><Trans i18nKey={item.aKey} components={{ ltr: <span dir="ltr" /> }} /></p>
                 </div>
               )}
             </div>

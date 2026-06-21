@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { translateGender, translateAge } from '../utils/petLocale.js';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import IsraelMap from '../components/IsraelMap.jsx';
@@ -109,7 +109,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       <section className="section cta-section">
         <div className="cta-content">
           <p className="eyebrow">{t('landing.ctaEyebrow')}</p>
-          <h3>{t('landing.ctaTitle')}</h3>
+          <h3><Trans i18nKey="landing.ctaTitle" components={{ ltr: <span dir="ltr" /> }} /></h3>
           <p className="body-copy">{t('landing.ctaBody')}</p>
           <button className="button button-primary" onClick={() => onNavigate('home')}>
             {t('landing.ctaButton')}
@@ -156,7 +156,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
                 <p>{t('landing.testimonial1Role')}</p>
               </div>
             </div>
-            <p>{t('landing.testimonial1Text')}</p>
+            <p><Trans i18nKey="landing.testimonial1Text" components={{ ltr: <span dir="ltr" /> }} /></p>
             <div className="star-rating">★★★★★</div>
           </article>
           <article className="testimonial-card">
@@ -171,7 +171,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
                 <p>{t('landing.testimonial2Role')}</p>
               </div>
             </div>
-            <p>{t('landing.testimonial2Text')}</p>
+            <p><Trans i18nKey="landing.testimonial2Text" components={{ ltr: <span dir="ltr" /> }} /></p>
             <div className="star-rating">★★★★★</div>
           </article>
           <article className="testimonial-card">
@@ -217,9 +217,9 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
             className="button button-primary"
             onClick={() => onNavigate('donation')}
           >
-            {t('landing.donationCtaButton')}
+            <Trans i18nKey="landing.donationCtaButton" components={{ ltr: <span dir="ltr" /> }} />
           </button>
-          <p className="donation-cta-note">{t('landing.donationCtaNote')}</p>
+          <p className="donation-cta-note"><Trans i18nKey="landing.donationCtaNote" components={{ ltr: <span dir="ltr" /> }} /></p>
         </div>
       </section>
 

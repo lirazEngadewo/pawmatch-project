@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 
@@ -39,7 +39,7 @@ function AboutUsPage({ onNavigate }) {
     <main className="page page-about">
 
       <section className="about-intro">
-        <p className="eyebrow">{t('about.eyebrow')}</p>
+        <p className="eyebrow"><Trans i18nKey="about.eyebrow" components={{ ltr: <span dir="ltr" /> }} /></p>
         <h1>{t('about.pageTitle')}</h1>
         <p className="body-copy">{t('about.intro')}</p>
       </section>
@@ -49,11 +49,11 @@ function AboutUsPage({ onNavigate }) {
           <div className="card about-story-card">
             <h2>{t('about.storyTitle')}</h2>
             <div className="about-story-body">
-              <p>{t('about.story1')}</p>
-              <p>{t('about.story2')}</p>
+              <p><Trans i18nKey="about.story1" components={{ ltr: <span dir="ltr" /> }} /></p>
+              <p><Trans i18nKey="about.story2" components={{ ltr: <span dir="ltr" /> }} /></p>
               <p>{t('about.story3')}</p>
-              <p>{t('about.story4')}</p>
-              <p>{t('about.story5')}</p>
+              <p><Trans i18nKey="about.story4" components={{ ltr: <span dir="ltr" /> }} /></p>
+              <p><Trans i18nKey="about.story5" components={{ ltr: <span dir="ltr" /> }} /></p>
             </div>
           </div>
 

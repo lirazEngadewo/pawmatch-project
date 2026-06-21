@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import pets from '../data/pets.js';
 import Footer from '../components/Footer.jsx';
 import MatchingQuizModal from '../components/MatchingQuizModal.jsx';
@@ -156,7 +156,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
       {/* ── Greeting ── */}
       <div className="up-greeting">
         <h1 className="up-greeting-title">{t('userProfile.greetingTitle', { name: displayName.split(' ')[0] || 'there' })}</h1>
-        <p className="up-greeting-sub">{t('userProfile.greetingSub')}</p>
+        <p className="up-greeting-sub"><Trans i18nKey="userProfile.greetingSub" components={{ ltr: <span dir="ltr" /> }} /></p>
       </div>
 
       {/* ── Matching Quiz Banner ── */}
@@ -208,7 +208,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
               </div>
               <div className="up-detail-item">
                 <span className="up-detail-label">{t('userProfile.labelMemberType')}</span>
-                <span className="up-detail-value">{t('userProfile.memberTypeValue')}</span>
+                <span className="up-detail-value"><Trans i18nKey="userProfile.memberTypeValue" components={{ ltr: <span dir="ltr" /> }} /></span>
               </div>
             </div>
           </div>

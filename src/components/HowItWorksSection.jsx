@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 function HowItWorksSection() {
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ function HowItWorksSection() {
   return (
     <section id="how-it-works" className="how-it-works-section">
       <div className="section-header how-header">
-        <p className="eyebrow">{t('howItWorks.eyebrow')}</p>
+        <p className="eyebrow"><Trans i18nKey="howItWorks.eyebrow" components={{ ltr: <span dir="ltr" /> }} /></p>
         <h2>{t('howItWorks.title')}</h2>
       </div>
 

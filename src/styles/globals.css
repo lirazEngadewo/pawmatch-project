@@ -4261,8 +4261,8 @@ h3 {
 /* How it works & trust */
 [dir="rtl"] .how-it-works-grid { flex-direction: row-reverse; }
 [dir="rtl"] .trust-grid { flex-direction: row-reverse; }
-[dir="rtl"] .trust-card { text-align: right; align-items: flex-end; }
-[dir="rtl"] .trust-card-icon { align-self: flex-end; }
+[dir="rtl"] .trust-card { text-align: right; align-items: flex-start; }
+[dir="rtl"] .trust-card-icon { align-self: flex-start; }
 
 /* Home page pet card */
 [dir="rtl"] .hm-pet-card { flex-direction: row-reverse; }
@@ -4276,10 +4276,12 @@ h3 {
 [dir="rtl"] .hm-filter-actions { flex-direction: row-reverse; }
 [dir="rtl"] .favorites-header { flex-direction: row-reverse; }
 [dir="rtl"] .favorite-item { flex-direction: row-reverse; }
-[dir="rtl"] .hm-detail { text-align: right; }
+[dir="rtl"] .hm-detail { text-align: right; align-items: flex-start; }
 [dir="rtl"] .hm-info { text-align: right; }
 [dir="rtl"] .hm-fav-info { text-align: right; }
 [dir="rtl"] .hm-favorites-card { text-align: right; }
+/* Explicit RTL direction on home page detail grid so columns flow right→left */
+[dir="rtl"] .hm-details-grid { direction: rtl; }
 
 /* Pet profile page */
 [dir="rtl"] .pp-hero-top { flex-direction: row-reverse; }
@@ -4288,9 +4290,14 @@ h3 {
 [dir="rtl"] .pp-requirements-list { padding-left: 0; padding-right: 20px; }
 [dir="rtl"] .detail-list { flex-direction: row-reverse; }
 [dir="rtl"] .action-buttons { flex-direction: row-reverse; }
-[dir="rtl"] .pp-info-item { text-align: right; }
-[dir="rtl"] .pp-health-item { text-align: right; }
-[dir="rtl"] .pp-adoption-item { text-align: right; }
+/* Explicit RTL direction on pp grids so columns flow right→left */
+[dir="rtl"] .pp-info-grid,
+[dir="rtl"] .pp-health-grid,
+[dir="rtl"] .pp-adoption-grid { direction: rtl; }
+/* flex-column containers: flex-start = inline-start = RIGHT in RTL */
+[dir="rtl"] .pp-info-item { text-align: right; align-items: flex-start; }
+[dir="rtl"] .pp-health-item { text-align: right; align-items: flex-start; }
+[dir="rtl"] .pp-adoption-item { text-align: right; align-items: flex-start; }
 [dir="rtl"] .pp-similar-info { text-align: right; }
 [dir="rtl"] .pp-quick-card { text-align: right; }
 
@@ -4301,19 +4308,22 @@ h3 {
 [dir="rtl"] .up-prefs-card { flex-direction: row-reverse; }
 [dir="rtl"] .up-request-card { flex-direction: row-reverse; }
 [dir="rtl"] .up-message-header { flex-direction: row-reverse; }
-[dir="rtl"] .up-details-grid { text-align: right; }
+/* Explicit RTL direction on user details grid so columns flow right→left */
+[dir="rtl"] .up-details-grid { text-align: right; direction: rtl; }
 [dir="rtl"] .up-details-label { text-align: right; }
 [dir="rtl"] .up-details-value { text-align: right; }
 [dir="rtl"] .up-section-header { flex-direction: row-reverse; }
-[dir="rtl"] .up-detail-item { text-align: right; }
+[dir="rtl"] .up-detail-item { text-align: right; align-items: flex-start; }
+[dir="rtl"] .up-status-active { align-self: flex-start; }
 [dir="rtl"] .up-pet-body { text-align: right; }
 [dir="rtl"] .up-request-info { text-align: right; }
 [dir="rtl"] .up-details-body { text-align: right; }
-[dir="rtl"] .up-empty { align-items: flex-end; text-align: right; }
+[dir="rtl"] .up-empty { align-items: flex-start; text-align: right; }
 [dir="rtl"] .up-greeting { text-align: right; }
 
 /* Requests page */
-[dir="rtl"] .rq-option-card { text-align: right; align-items: flex-end; }
+[dir="rtl"] .rq-option-card { text-align: right; align-items: flex-start; }
+[dir="rtl"] .rq-no-favorites { align-items: flex-start; text-align: right; }
 [dir="rtl"] .rq-info-box { flex-direction: row-reverse; }
 [dir="rtl"] .rq-pet-preview { flex-direction: row-reverse; }
 [dir="rtl"] .request-panel ul { padding-left: 0; padding-right: 20px; }

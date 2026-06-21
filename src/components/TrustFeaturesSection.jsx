@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 function TrustFeaturesSection() {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ function TrustFeaturesSection() {
     <section className="trust-section trust-section--beige">
       <div className="trust-inner">
         <div className="section-header trust-header">
-          <p className="eyebrow">{t('trust.eyebrow')}</p>
+          <p className="eyebrow"><Trans i18nKey="trust.eyebrow" components={{ ltr: <span dir="ltr" /> }} /></p>
           <h3>{t('trust.title')}</h3>
         </div>
         <div className="trust-grid">

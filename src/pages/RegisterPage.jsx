@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabaseClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -127,9 +127,15 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
           </div>
 
           <div className="register-content">
-            <h1>{authMode === 'signin' ? t('register.signInTitle') : t('register.signUpTitle')}</h1>
+            <h1>
+              {authMode === 'signin'
+                ? t('register.signInTitle')
+                : <Trans i18nKey="register.signUpTitle" components={{ ltr: <span dir="ltr" /> }} />}
+            </h1>
             <p className="body-copy">
-              {authMode === 'signin' ? t('register.signInSubtitle') : t('register.signUpSubtitle')}
+              {authMode === 'signin'
+                ? <Trans i18nKey="register.signInSubtitle" components={{ ltr: <span dir="ltr" /> }} />
+                : <Trans i18nKey="register.signUpSubtitle" components={{ ltr: <span dir="ltr" /> }} />}
             </p>
 
             {sessionExpiredMessage && (
@@ -207,7 +213,7 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
               )}
             </div>
 
-            <p className="register-legal">{t('register.legal')}</p>
+            <p className="register-legal"><Trans i18nKey="register.legal" components={{ ltr: <span dir="ltr" /> }} /></p>
           </div>
         </div>
       </div>
