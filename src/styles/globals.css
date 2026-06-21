@@ -4232,142 +4232,7 @@ h3 {
   text-align: right;
 }
 
-/* Header & navigation */
-[dir="rtl"] .app-header { flex-direction: row-reverse; }
-[dir="rtl"] .page-nav { flex-direction: row-reverse; }
-[dir="rtl"] .nav-links { flex-direction: row-reverse; }
-[dir="rtl"] .hamburger-btn { margin-left: 0; margin-right: auto; }
-[dir="rtl"] .nav-link { text-align: right; }
-[dir="rtl"] .dropdown-item { text-align: right; }
-[dir="rtl"] .user-dropdown { right: auto; left: 0; }
-
-/* Landing page */
-[dir="rtl"] .landing-hero-info { align-items: flex-end; text-align: right; }
-[dir="rtl"] .tags-row { flex-direction: row-reverse; }
-[dir="rtl"] .pet-footer { flex-direction: row-reverse; }
-[dir="rtl"] .landing-stats { flex-direction: row-reverse; }
-[dir="rtl"] .testimonials-grid .testimonial-card { text-align: right; }
-[dir="rtl"] .testimonial-header { flex-direction: row-reverse; }
-
-/* Pet card (shared component) */
-[dir="rtl"] .pet-card-body { text-align: right; }
-[dir="rtl"] .pet-card-content { text-align: right; }
-
-/* Quiz modal */
-[dir="rtl"] .quiz-modal-card { text-align: right; }
-[dir="rtl"] .quiz-question { text-align: right; }
-[dir="rtl"] .quiz-options { justify-content: flex-end; }
-
-/* How it works & trust */
-[dir="rtl"] .how-it-works-grid { flex-direction: row-reverse; }
-[dir="rtl"] .trust-grid { flex-direction: row-reverse; }
-[dir="rtl"] .trust-card { text-align: right; align-items: flex-start; }
-[dir="rtl"] .trust-card-icon { align-self: flex-start; }
-
-/* Home page pet card */
-[dir="rtl"] .hm-pet-card { flex-direction: row-reverse; }
-[dir="rtl"] .hm-name-row { flex-direction: row-reverse; }
-[dir="rtl"] .hm-tags { flex-direction: row-reverse; }
-[dir="rtl"] .hm-actions { flex-direction: row-reverse; }
-[dir="rtl"] .hm-results-header { flex-direction: row-reverse; }
-[dir="rtl"] .hm-fav-row { flex-direction: row-reverse; }
-[dir="rtl"] .hm-filters-card { text-align: right; }
-[dir="rtl"] .hm-filters-card select { text-align: right; }
-[dir="rtl"] .hm-filter-actions { flex-direction: row-reverse; }
-[dir="rtl"] .favorites-header { flex-direction: row-reverse; }
-[dir="rtl"] .favorite-item { flex-direction: row-reverse; }
-[dir="rtl"] .hm-detail { text-align: right; align-items: flex-start; }
-[dir="rtl"] .hm-info { text-align: right; }
-[dir="rtl"] .hm-fav-info { text-align: right; }
-[dir="rtl"] .hm-favorites-card { text-align: right; }
-/* Explicit RTL direction on home page detail grid so columns flow right→left */
-[dir="rtl"] .hm-details-grid { direction: rtl; }
-
-/* Pet profile page */
-[dir="rtl"] .pp-hero-top { flex-direction: row-reverse; }
-[dir="rtl"] .pp-thumbs { flex-direction: row-reverse; }
-[dir="rtl"] .pp-similar-top { flex-direction: row-reverse; }
-[dir="rtl"] .pp-requirements-list { padding-left: 0; padding-right: 20px; }
-[dir="rtl"] .detail-list { flex-direction: row-reverse; }
-[dir="rtl"] .action-buttons { flex-direction: row-reverse; }
-/* Explicit RTL direction on pp grids so columns flow right→left */
-[dir="rtl"] .pp-info-grid,
-[dir="rtl"] .pp-health-grid,
-[dir="rtl"] .pp-adoption-grid { direction: rtl; }
-/* flex-column containers: flex-start = inline-start = RIGHT in RTL */
-[dir="rtl"] .pp-info-item { text-align: right; align-items: flex-start; }
-[dir="rtl"] .pp-health-item { text-align: right; align-items: flex-start; }
-[dir="rtl"] .pp-adoption-item { text-align: right; align-items: flex-start; }
-[dir="rtl"] .pp-similar-info { text-align: right; }
-[dir="rtl"] .pp-quick-card { text-align: right; }
-
-/* User profile page */
-[dir="rtl"] .up-details-card { flex-direction: row-reverse; }
-[dir="rtl"] .up-avatar-camera { right: auto; left: 0; }
-[dir="rtl"] .up-quiz-banner { flex-direction: row-reverse; }
-[dir="rtl"] .up-prefs-card { flex-direction: row-reverse; }
-[dir="rtl"] .up-request-card { flex-direction: row-reverse; }
-[dir="rtl"] .up-message-header { flex-direction: row-reverse; }
-/* Explicit RTL direction on user details grid so columns flow right→left */
-[dir="rtl"] .up-details-grid { text-align: right; direction: rtl; }
-[dir="rtl"] .up-details-label { text-align: right; }
-[dir="rtl"] .up-details-value { text-align: right; }
-[dir="rtl"] .up-section-header { flex-direction: row-reverse; }
-[dir="rtl"] .up-detail-item { text-align: right; align-items: flex-start; }
-[dir="rtl"] .up-status-active { align-self: flex-start; }
-[dir="rtl"] .up-pet-body { text-align: right; }
-[dir="rtl"] .up-request-info { text-align: right; }
-[dir="rtl"] .up-details-body { text-align: right; }
-[dir="rtl"] .up-empty { align-items: flex-start; text-align: right; }
-[dir="rtl"] .up-greeting { text-align: right; }
-
-/* Requests page */
-[dir="rtl"] .rq-option-card { text-align: right; align-items: flex-start; }
-[dir="rtl"] .rq-no-favorites { align-items: flex-start; text-align: right; }
-[dir="rtl"] .rq-info-box { flex-direction: row-reverse; }
-[dir="rtl"] .rq-pet-preview { flex-direction: row-reverse; }
-[dir="rtl"] .request-panel ul { padding-left: 0; padding-right: 20px; }
-
-/* Forms (About, Register, Requests, Donation) */
-[dir="rtl"] .form-group { text-align: right; }
-[dir="rtl"] .form-error { text-align: right; }
-[dir="rtl"] .form-row-two { flex-direction: row-reverse; }
-[dir="rtl"] .contact-label { text-align: right; }
-[dir="rtl"] .contact-field-error { text-align: right; }
-[dir="rtl"] .contact-form-row { flex-direction: row-reverse; }
-[dir="rtl"] .form-input { text-align: right; }
-[dir="rtl"] textarea.form-input { text-align: right; }
-
-/* FAQ & resources */
-[dir="rtl"] .faq-question { text-align: right; flex-direction: row-reverse; }
-[dir="rtl"] .faq-answer p { text-align: right; }
-[dir="rtl"] .tip-card { text-align: right; align-items: flex-end; }
-[dir="rtl"] .section-header { text-align: right; }
-
-/* Donation page */
-[dir="rtl"] .donation-success-quote {
-  border-left: none;
-  border-right: 3px solid var(--color-accent);
-  padding-left: 0;
-  padding-right: 16px;
-  text-align: right;
-}
-[dir="rtl"] .donation-success { text-align: right; align-items: flex-end; }
-[dir="rtl"] .donation-field { text-align: right; }
-[dir="rtl"] .donation-field-label { text-align: right; }
-[dir="rtl"] .donation-amounts { flex-direction: row-reverse; }
-
-/* Footer */
-[dir="rtl"] .footer-link { text-align: right; }
-[dir="rtl"] .footer-columns { flex-direction: row-reverse; }
-[dir="rtl"] .footer-col { text-align: right; align-items: flex-end; }
-[dir="rtl"] .footer-social { flex-direction: row-reverse; }
-[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
-
-/* Israel map */
-[dir="rtl"] .israel-map-header { text-align: right; }
-
-/* General text alignment and direction for block elements under RTL */
+/* ── Global block elements: direction + alignment ── */
 [dir="rtl"] p,
 [dir="rtl"] li,
 [dir="rtl"] label,
@@ -4375,6 +4240,7 @@ h3 {
 [dir="rtl"] .body-copy {
   text-align: right;
   direction: rtl;
+  width: 100%;
 }
 
 [dir="rtl"] h1,
@@ -4383,15 +4249,275 @@ h3 {
 [dir="rtl"] h4 {
   text-align: right;
   direction: rtl;
+  width: 100%;
 }
 
-/* Ensure span values inside RTL cards inherit proper direction */
+/* Spans: direction only, no unicode-bidi: embed (causes multi-line shrink-wrapping issues) */
 [dir="rtl"] span {
   direction: rtl;
-  unicode-bidi: embed;
 }
 
-/* Exceptions: keep centered elements centered */
+/* All native form controls: RTL direction so typed text flows right */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ── Header & navigation ── */
+[dir="rtl"] .app-header { flex-direction: row-reverse; }
+[dir="rtl"] .page-nav { flex-direction: row-reverse; }
+[dir="rtl"] .nav-links { flex-direction: row-reverse; }
+[dir="rtl"] .hamburger-btn { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .nav-link { text-align: right; }
+[dir="rtl"] .dropdown-item { text-align: right; }
+[dir="rtl"] .user-dropdown { right: auto; left: 0; }
+
+/* ── Landing page ── */
+/*
+ * landing-hero-info is a flex column. Default align-items: stretch keeps children
+ * filling the full container width — correct for multi-line text alignment.
+ * We only set text direction; no align-items override needed.
+ */
+[dir="rtl"] .landing-hero-info { text-align: right; direction: rtl; }
+[dir="rtl"] .landing-meta-grid { direction: rtl; }
+/*
+ * landing-meta-item children (spans) are flex items in a column. Setting display: block
+ * + width: 100% ensures every line of wrapped text aligns to the right edge.
+ */
+[dir="rtl"] .landing-meta-item { text-align: right; direction: rtl; }
+[dir="rtl"] .landing-meta-item span { display: block; width: 100%; text-align: right; }
+[dir="rtl"] .tags-row { flex-direction: row-reverse; }
+[dir="rtl"] .pet-footer { flex-direction: row-reverse; }
+[dir="rtl"] .landing-stats { flex-direction: row-reverse; }
+[dir="rtl"] .testimonials-grid .testimonial-card { text-align: right; direction: rtl; }
+[dir="rtl"] .testimonial-header { flex-direction: row-reverse; }
+
+/* ── Pet card (shared component) ── */
+[dir="rtl"] .pet-card-body { text-align: right; direction: rtl; }
+[dir="rtl"] .pet-card-content { text-align: right; direction: rtl; }
+
+/* ── Quiz / matching modal ── */
+[dir="rtl"] .quiz-modal-card { text-align: right; direction: rtl; }
+[dir="rtl"] .quiz-question { text-align: right; direction: rtl; }
+[dir="rtl"] .quiz-question-label { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .quiz-options { justify-content: flex-end; }
+[dir="rtl"] .quiz-option { direction: rtl; }
+
+/* ── How it works & trust features ── */
+[dir="rtl"] .how-it-works-grid { flex-direction: row-reverse; }
+[dir="rtl"] .trust-grid { flex-direction: row-reverse; }
+/*
+ * trust-card is a flex column. Removing align-items keeps the default stretch,
+ * so h4/p children fill the full card width — all lines align to the right edge.
+ */
+[dir="rtl"] .trust-card { text-align: right; direction: rtl; }
+/* The icon is a small circle that should hug the right side, so align-self is fine here */
+[dir="rtl"] .trust-card-icon { align-self: flex-start; }
+/* Explicit width on text children ensures multi-line text fills the card */
+[dir="rtl"] .trust-card h4,
+[dir="rtl"] .trust-card p { width: 100%; display: block; text-align: right; direction: rtl; }
+
+/* ── Home page ── */
+[dir="rtl"] .hm-pet-card { flex-direction: row-reverse; }
+[dir="rtl"] .hm-name-row { flex-direction: row-reverse; }
+[dir="rtl"] .hm-tags { flex-direction: row-reverse; }
+[dir="rtl"] .hm-actions { flex-direction: row-reverse; }
+[dir="rtl"] .hm-results-header { flex-direction: row-reverse; }
+[dir="rtl"] .hm-fav-row { flex-direction: row-reverse; }
+[dir="rtl"] .hm-filters-card { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-filters-card select { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-filter-actions { flex-direction: row-reverse; }
+[dir="rtl"] .favorites-header { flex-direction: row-reverse; }
+[dir="rtl"] .favorite-item { flex-direction: row-reverse; }
+/* Grid direction so detail columns flow right→left */
+[dir="rtl"] .hm-details-grid { direction: rtl; }
+/*
+ * hm-detail is a flex column. Default stretch keeps children at full width.
+ * Span children need display: block + width: 100% for multi-line correctness.
+ */
+[dir="rtl"] .hm-detail { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-detail-label,
+[dir="rtl"] .hm-detail-value { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .hm-info { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-fav-info { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-favorites-card { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-fav-name,
+[dir="rtl"] .hm-fav-type { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── Pet profile page ── */
+[dir="rtl"] .pp-hero-top { flex-direction: row-reverse; }
+[dir="rtl"] .pp-thumbs { flex-direction: row-reverse; }
+[dir="rtl"] .pp-similar-top { flex-direction: row-reverse; }
+[dir="rtl"] .pp-requirements-list { padding-left: 0; padding-right: 20px; }
+[dir="rtl"] .detail-list { flex-direction: row-reverse; }
+[dir="rtl"] .action-buttons { flex-direction: row-reverse; }
+/* Grid direction so columns flow right→left */
+[dir="rtl"] .pp-info-grid,
+[dir="rtl"] .pp-health-grid,
+[dir="rtl"] .pp-adoption-grid { direction: rtl; }
+/*
+ * Flex column items: removing align-items restores default stretch so children
+ * fill the cell width. Span children also get display: block + width: 100%.
+ */
+[dir="rtl"] .pp-info-item { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-health-item { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-adoption-item { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-info-label,
+[dir="rtl"] .pp-info-value,
+[dir="rtl"] .pp-health-label,
+[dir="rtl"] .pp-health-value { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .pp-about-text { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-section-title { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-similar-info { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-quick-card { text-align: right; direction: rtl; }
+
+/* ── User profile page ── */
+[dir="rtl"] .up-details-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-avatar-camera { right: auto; left: 0; }
+[dir="rtl"] .up-quiz-banner { flex-direction: row-reverse; }
+[dir="rtl"] .up-prefs-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-request-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-message-header { flex-direction: row-reverse; }
+[dir="rtl"] .up-message-meta { text-align: right; direction: rtl; }
+/* Grid direction for details grid */
+[dir="rtl"] .up-details-grid { direction: rtl; }
+[dir="rtl"] .up-details-label { text-align: right; direction: rtl; }
+[dir="rtl"] .up-details-value { text-align: right; direction: rtl; }
+[dir="rtl"] .up-section-header { flex-direction: row-reverse; }
+[dir="rtl"] .up-section-title { text-align: right; direction: rtl; }
+/* Flex column items: removing align-items restores default stretch */
+[dir="rtl"] .up-detail-item { text-align: right; direction: rtl; }
+[dir="rtl"] .up-detail-label,
+[dir="rtl"] .up-detail-value { display: block; width: 100%; text-align: right; direction: rtl; }
+/* Badge stays narrow; align-self: flex-start = right-anchored in RTL column */
+[dir="rtl"] .up-status-active { align-self: flex-start; }
+[dir="rtl"] .up-pet-body { text-align: right; direction: rtl; }
+[dir="rtl"] .up-pet-name,
+[dir="rtl"] .up-pet-meta,
+[dir="rtl"] .up-pet-location { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-request-info { text-align: right; direction: rtl; }
+[dir="rtl"] .up-request-pet,
+[dir="rtl"] .up-request-type,
+[dir="rtl"] .up-request-date { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-details-body { text-align: right; direction: rtl; }
+/* up-empty has align-items: flex-start in base; add stretch so text fills width */
+[dir="rtl"] .up-empty { text-align: right; direction: rtl; align-items: stretch; }
+[dir="rtl"] .up-empty-text { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-greeting { text-align: right; direction: rtl; }
+[dir="rtl"] .up-greeting-title,
+[dir="rtl"] .up-greeting-sub { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-message-shelter,
+[dir="rtl"] .up-message-date,
+[dir="rtl"] .up-message-text { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── Requests page ── */
+[dir="rtl"] .rq-header { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-form-title { text-align: right; direction: rtl; }
+/*
+ * rq-option-card has align-items: flex-start in base. Add display:block + width:100%
+ * to span children so multi-line text fills the full card width.
+ */
+[dir="rtl"] .rq-option-card { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-option-label,
+[dir="rtl"] .rq-option-desc { display: block; width: 100%; text-align: right; direction: rtl; }
+/*
+ * rq-no-favorites has align-items: flex-start in base. Override to stretch so the
+ * text paragraph fills the container width.
+ */
+[dir="rtl"] .rq-no-favorites { text-align: right; direction: rtl; align-items: stretch; }
+[dir="rtl"] .rq-no-favorites-text { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .rq-field { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-label { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .rq-input { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-row { direction: rtl; }
+[dir="rtl"] .rq-error-text { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-info-box { flex-direction: row-reverse; }
+[dir="rtl"] .rq-pet-preview { flex-direction: row-reverse; }
+[dir="rtl"] .request-panel ul { padding-left: 0; padding-right: 20px; }
+[dir="rtl"] .rq-pet-preview-name { display: block; text-align: right; direction: rtl; }
+
+/* ── Forms (About, Register, Requests, Donation) ── */
+[dir="rtl"] .form-group { text-align: right; direction: rtl; }
+[dir="rtl"] .form-error { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .form-row-two { flex-direction: row-reverse; }
+[dir="rtl"] .contact-label { text-align: right; direction: rtl; }
+[dir="rtl"] .contact-field-error { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .contact-form-row { flex-direction: row-reverse; }
+[dir="rtl"] .form-input { text-align: right; direction: rtl; }
+[dir="rtl"] textarea.form-input { text-align: right; direction: rtl; }
+[dir="rtl"] .register-helpers { text-align: right; direction: rtl; }
+[dir="rtl"] .register-legal { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .form-session-banner { text-align: right; direction: rtl; width: 100%; }
+
+/* ── FAQ & resources ── */
+[dir="rtl"] .faq-question { text-align: right; flex-direction: row-reverse; }
+[dir="rtl"] .faq-answer { direction: rtl; }
+[dir="rtl"] .faq-answer p { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .section-header { text-align: right; direction: rtl; }
+[dir="rtl"] .tips-grid { direction: rtl; }
+/*
+ * tip-card is a flex column with default stretch — no align-items override needed.
+ * Explicit width on text children for belt-and-suspenders.
+ */
+[dir="rtl"] .tip-card { text-align: right; direction: rtl; }
+[dir="rtl"] .tip-title,
+[dir="rtl"] .tip-desc { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── Donation page ── */
+[dir="rtl"] .donation-success-quote {
+  border-left: none;
+  border-right: 3px solid var(--color-accent);
+  padding-left: 0;
+  padding-right: 16px;
+  text-align: right;
+  direction: rtl;
+}
+/*
+ * donation-success has align-items: center in base. Override to stretch so text
+ * elements fill the container width for correct multi-line alignment.
+ */
+[dir="rtl"] .donation-success { text-align: right; direction: rtl; align-items: stretch; }
+[dir="rtl"] .donation-success-message,
+[dir="rtl"] .donation-success-note { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .donation-field { text-align: right; direction: rtl; }
+[dir="rtl"] .donation-field-label { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .donation-amounts { flex-direction: row-reverse; }
+[dir="rtl"] .donation-form { direction: rtl; }
+[dir="rtl"] .donation-form .contact-label { text-align: right; direction: rtl; }
+
+/* ── Footer ──
+ * IMPORTANT: Footer uses .footer-column (singular) and .footer-brand, not
+ * .footer-col or .footer-columns. The grid is .footer-top.
+ */
+[dir="rtl"] .footer-link { text-align: right; }  /* overrides [dir="rtl"] button { text-align: center } */
+[dir="rtl"] .footer-top { direction: rtl; }       /* grid: columns flow right→left */
+[dir="rtl"] .footer-brand { text-align: right; direction: rtl; }
+[dir="rtl"] .footer-column { text-align: right; direction: rtl; }
+[dir="rtl"] .footer-description { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .footer-social { flex-direction: row-reverse; }
+[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+/* ── Israel map ── */
+[dir="rtl"] .israel-map-header { text-align: right; direction: rtl; }
+[dir="rtl"] .israel-map-title { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .israel-map-subtitle { text-align: right; direction: rtl; width: 100%; }
+/* map-popup already has text-align: right in base; add direction for multi-line correctness */
+[dir="rtl"] .map-popup { direction: rtl; }
+[dir="rtl"] .map-popup-name { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .map-popup-row { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── About page ── */
+[dir="rtl"] .about-intro { text-align: right; direction: rtl; }
+[dir="rtl"] .about-story-grid { direction: rtl; }
+[dir="rtl"] .about-story-card { text-align: right; direction: rtl; }
+[dir="rtl"] .about-story-body { text-align: right; direction: rtl; }
+[dir="rtl"] .about-story-body p { width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .contact-inner { direction: rtl; }
+[dir="rtl"] .contact-header { text-align: right; direction: rtl; }
+
+/* ── Exceptions: keep these elements centered even in RTL ── */
 [dir="rtl"] button,
 [dir="rtl"] .button,
 [dir="rtl"] .donation-amount-btn,
@@ -4424,6 +4550,9 @@ h3 {
 [dir="rtl"] .hm-dots,
 [dir="rtl"] .pet-carousel-dots,
 [dir="rtl"] .app-toast { text-align: center; }
+
+/* footer-link is a button but must stay right-aligned, not centered — re-apply after exception */
+[dir="rtl"] .footer-link { text-align: right; }
 
 /* Mobile RTL adjustments */
 @media (max-width: 768px) {
