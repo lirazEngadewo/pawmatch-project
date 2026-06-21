@@ -30,7 +30,8 @@ const SAMPLE_MESSAGES = [
 ];
 
 function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   const [profile, setProfile] = useState(null);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [avatarError, setAvatarError] = useState('');
@@ -244,9 +245,9 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
               <div key={pet.id} className="up-pet-card card">
                 <img src={pet.image} alt={pet.name} className="up-pet-img" />
                 <div className="up-pet-body">
-                  <h3 className="up-pet-name">{pet.name}</h3>
-                  <p className="up-pet-meta">{pet.breed} &middot; {pet.age}</p>
-                  <p className="up-pet-location">📍 {pet.location}</p>
+                  <h3 className="up-pet-name">{isHe && pet.name_he ? pet.name_he : pet.name}</h3>
+                  <p className="up-pet-meta">{isHe && pet.breed_he ? pet.breed_he : pet.breed} &middot; {pet.age}</p>
+                  <p className="up-pet-location">📍 {isHe && pet.location_he ? pet.location_he : pet.location}</p>
                   <button
                     className="button button-primary up-pet-btn"
                     onClick={() => onNavigate('profile', pet.id)}
@@ -285,7 +286,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
                     <img src={reqPet.image} alt={reqPet.name} className="up-request-img" />
                   )}
                   <div className="up-request-info">
-                    <h4 className="up-request-pet">{reqPet?.name || 'Unknown pet'}</h4>
+                    <h4 className="up-request-pet">{isHe && reqPet?.name_he ? reqPet.name_he : (reqPet?.name || '—')}</h4>
                     <p className="up-request-type">{requestTypeLabel}</p>
                     <p className="up-request-date">{t('userProfile.submitted', { date: submittedDate })}</p>
                   </div>

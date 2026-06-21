@@ -16,7 +16,7 @@ function PetCard({ pet, onSelect, matchPercent }) {
         <div className="pet-card-content">
           <p className="pet-type">{displayType}</p>
           <h3>{displayName}</h3>
-          <p className="pet-meta">{translateAge(pet.age, isHe)} · {pet.location}</p>
+          <p className="pet-meta">{translateAge(pet.age, isHe)} · {isHe && pet.location_he ? pet.location_he : pet.location}</p>
           <p className="pet-description">{displayDescription}</p>
         </div>
         <div className="pet-footer">

@@ -4249,8 +4249,16 @@ h3 {
 [dir="rtl"] h4 {
   text-align: right;
   direction: rtl;
-  width: 100%;
+  /* No width: 100% here — headings appear as flex siblings in some row contexts (e.g. hm-name-row) */
 }
+
+/* Pet name headings that are standalone in their container — force full width for correct alignment */
+[dir="rtl"] .landing-pet-name,
+[dir="rtl"] .pp-hero-name,
+[dir="rtl"] .pp-similar-name,
+[dir="rtl"] .up-pet-name,
+[dir="rtl"] .up-request-pet,
+[dir="rtl"] .hm-pet-name { text-align: right; direction: rtl; width: 100%; }
 
 /* Spans: direction only, no unicode-bidi: embed (causes multi-line shrink-wrapping issues) */
 [dir="rtl"] span {

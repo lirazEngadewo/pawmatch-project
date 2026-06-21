@@ -111,7 +111,7 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
               </div>
               <div className="pp-info-item pp-info-item--wide">
                 <span className="pp-info-label">{t('petProfile.labelLocation')}</span>
-                <span className="pp-info-value">📍 {pet.location}</span>
+                <span className="pp-info-value">📍 {isHe && pet.location_he ? pet.location_he : pet.location}</span>
               </div>
             </div>
 
@@ -213,8 +213,8 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
               <div className="pp-similar-info">
                 <div className="pp-similar-top">
                   <div>
-                    <h4 className="pp-similar-name">{sp.name}</h4>
-                    <p className="pp-similar-meta">{sp.breed} &middot; {sp.age}</p>
+                    <h4 className="pp-similar-name">{isHe && sp.name_he ? sp.name_he : sp.name}</h4>
+                    <p className="pp-similar-meta">{isHe && sp.breed_he ? sp.breed_he : sp.breed} &middot; {translateAge(sp.age, isHe)}</p>
                   </div>
                   <button
                     className={`pp-similar-heart${favorites?.includes(sp.id) ? ' pp-similar-heart--active' : ''}`}

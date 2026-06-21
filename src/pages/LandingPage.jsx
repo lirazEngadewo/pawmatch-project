@@ -80,7 +80,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               </div>
               <div className="landing-meta-item">
                 <p className="meta-label">{t('landing.labelLocation')}</p>
-                <p className="meta-value">📍 {heroPet.location}</p>
+                <p className="meta-value">📍 {isHe && heroPet.location_he ? heroPet.location_he : heroPet.location}</p>
               </div>
             </div>
 

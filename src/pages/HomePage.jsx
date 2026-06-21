@@ -150,7 +150,7 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
                     </div>
                     <div className="hm-detail">
                       <span className="hm-detail-label">{t('home.labelLocation')}</span>
-                      <span className="hm-detail-value">📍 {pet.location}</span>
+                      <span className="hm-detail-value">📍 {isHe && pet.location_he ? pet.location_he : pet.location}</span>
                     </div>
                   </div>
 
