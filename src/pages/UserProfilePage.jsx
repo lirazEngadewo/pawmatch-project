@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import pets from '../data/pets.js';
 import Footer from '../components/Footer.jsx';
 import MatchingQuizModal from '../components/MatchingQuizModal.jsx';
@@ -7,34 +8,42 @@ import { supabase } from '../lib/supabaseClient.js';
 const SAMPLE_MESSAGES = [
   {
     id: 1,
-    shelterName: 'Austin Paws Rescue',
+    shelterName: 'Hadera Animal Shelter',
+    shelterName_he: 'מחסה חדרה לחיות',
     message: 'We received your meeting request for Luna. A shelter volunteer will contact you within 2 business days to confirm the date.',
+    message_he: 'קיבלנו את בקשת הפגישה שלכם עבור לונה. מתנדב מהמחסה ייצור איתכם קשר תוך יומיים עסקים לאישור התאריך.',
     date: 'May 12, 2026',
+    date_he: '12 במאי 2026',
     petName: 'Luna',
+    petName_he: 'לונה',
   },
   {
     id: 2,
-    shelterName: 'Seattle Animal Shelter',
+    shelterName: 'Tel Aviv Adoption Center',
+    shelterName_he: 'מחסה תל אביב לאימוץ',
     message: 'Your adoption application for Simba has been approved! Please contact us to arrange the next steps.',
+    message_he: 'בקשת האימוץ שלכם עבור סימבה אושרה! אנא צרו איתנו קשר לתיאום הצעדים הבאים.',
     date: 'May 11, 2026',
+    date_he: '11 במאי 2026',
     petName: 'Simba',
+    petName_he: 'סימבה',
   },
   {
     id: 3,
-    shelterName: 'Brooklyn Animal Rescue',
-    message: 'Happy Tails Rescue Center received your meeting request for Milo. We would love to introduce you -- he has been waiting for a loving home!',
+    shelterName: 'Beer Sheva Pet Rescue',
+    shelterName_he: 'מקלט באר שבע לחיות מחמד',
+    message: 'Beer Sheva Pet Rescue received your meeting request for Milo. We would love to introduce you — he has been waiting for a loving home!',
+    message_he: 'מקלט באר שבע לחיות מחמד קיבל את בקשת הפגישה שלכם עבור מילו. נשמח להכיר לכם אותו — הוא מחכה לבית אוהב!',
     date: 'May 8, 2026',
+    date_he: '8 במאי 2026',
     petName: 'Milo',
+    petName_he: 'מילו',
   },
 ];
 
-const STATUS_DISPLAY = {
-  pending: { label: 'Pending Approval', background: '#FEF3C7', color: '#92400E' },
-  approved: { label: 'Approved', background: '#D1FAE5', color: '#065F46' },
-  rejected: { label: 'Rejected', background: '#FEE2E2', color: '#991B1B' },
-};
-
 function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange }) {
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   const [profile, setProfile] = useState(null);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [avatarError, setAvatarError] = useState('');
@@ -105,11 +114,11 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
     setAvatarError('');
 
     if (!file.type.startsWith('image/')) {
-      setAvatarError('Please upload an image file.');
+      setAvatarError(t('userProfile.avatarErrorType'));
       return;
     }
     if (file.size > 2 * 1024 * 1024) {
-      setAvatarError('File too large. Maximum size is 2MB.');
+      setAvatarError(t('userProfile.avatarErrorSize'));
       return;
     }
 
@@ -120,7 +129,7 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
     if (uploadError) {
       setAvatarUploading(false);
-      setAvatarError('Upload failed. Please try again.');
+      setAvatarError(t('userProfile.avatarErrorUpload'));
       return;
     }
 
@@ -141,23 +150,34 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
   const displayName = profile?.full_name || `${currentUser?.user_metadata?.first_name ?? ''} ${currentUser?.user_metadata?.last_name ?? ''}`.trim();
   const initials = displayName.split(' ').map((w) => w[0] || '').slice(0, 2).join('').toUpperCase();
 
+  const statusColors = {
+    pending: { background: '#FEF3C7', color: '#92400E' },
+    approved: { background: '#D1FAE5', color: '#065F46' },
+    rejected: { background: '#FEE2E2', color: '#991B1B' },
+  };
+
+  const getStatusLabel = (status) => {
+    if (status === 'pending') return t('userProfile.statusPending');
+    if (status === 'approved') return t('userProfile.statusApproved');
+    if (status === 'rejected') return t('userProfile.statusRejected');
+    return status;
+  };
+
   return (
     <main className="page up-page">
 
       {/* ── Greeting ── */}
       <div className="up-greeting">
-        <h1 className="up-greeting-title">Hello, {displayName.split(' ')[0] || 'there'}</h1>
-        <p className="up-greeting-sub">Welcome back to your PawMatch dashboard.</p>
+        <h1 className="up-greeting-title">{t('userProfile.greetingTitle', { name: displayName.split(' ')[0] || 'there' })}</h1>
+        <p className="up-greeting-sub"><Trans i18nKey="userProfile.greetingSub" components={{ ltr: <span dir="ltr" /> }} /></p>
       </div>
 
       {/* ── Matching Quiz Banner ── */}
       {prefsLoaded && !hasCompletedQuiz && (
         <div className="up-quiz-banner card">
-          <p className="up-quiz-banner-text">
-            Complete your matching quiz for personalized recommendations.
-          </p>
+          <p className="up-quiz-banner-text">{t('userProfile.quizBannerText')}</p>
           <button className="button button-primary" onClick={() => setShowQuizModal(true)}>
-            Take the Quiz
+            {t('userProfile.takeQuiz')}
           </button>
         </div>
       )}
@@ -192,16 +212,16 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
             {avatarError && <p className="up-avatar-error">{avatarError}</p>}
             <div className="up-details-grid">
               <div className="up-detail-item">
-                <span className="up-detail-label">Email</span>
+                <span className="up-detail-label">{t('userProfile.labelEmail')}</span>
                 <span className="up-detail-value">{currentUser?.email}</span>
               </div>
               <div className="up-detail-item">
-                <span className="up-detail-label">Account Status</span>
-                <span className="up-detail-value up-status-active">Active</span>
+                <span className="up-detail-label">{t('userProfile.labelAccountStatus')}</span>
+                <span className="up-detail-value up-status-active">{t('userProfile.statusActive')}</span>
               </div>
               <div className="up-detail-item">
-                <span className="up-detail-label">Member Type</span>
-                <span className="up-detail-value">PawMatch Adopter</span>
+                <span className="up-detail-label">{t('userProfile.labelMemberType')}</span>
+                <span className="up-detail-value"><Trans i18nKey="userProfile.memberTypeValue" components={{ ltr: <span dir="ltr" /> }} /></span>
               </div>
             </div>
           </div>
@@ -211,13 +231,11 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
       {/* ── Matching Preferences ── */}
       {hasCompletedQuiz && (
         <section className="up-section">
-          <h2 className="up-section-title">Your Matching Preferences</h2>
+          <h2 className="up-section-title">{t('userProfile.prefsTitle')}</h2>
           <div className="up-prefs-card card">
-            <p className="up-quiz-banner-text">
-              You've completed the matching quiz. Update your answers anytime to refine your pet recommendations.
-            </p>
+            <p className="up-quiz-banner-text">{t('userProfile.prefsText')}</p>
             <button className="button button-primary" onClick={() => setShowQuizModal(true)}>
-              Edit Preferences
+              {t('userProfile.editPrefs')}
             </button>
           </div>
         </section>
@@ -225,12 +243,12 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
       {/* ── Favorite Pets ── */}
       <section className="up-section">
-        <h2 className="up-section-title">Your Favorite Pets</h2>
+        <h2 className="up-section-title">{t('userProfile.favoritesTitle')}</h2>
         {favoritePets.length === 0 ? (
           <div className="up-empty card">
-            <p className="up-empty-text">No favorite pets yet. Browse pets and save your favorites!</p>
+            <p className="up-empty-text">{t('userProfile.favEmptyText')}</p>
             <button className="button button-primary" onClick={() => onNavigate('home')}>
-              Browse Pets
+              {t('userProfile.browsePets')}
             </button>
           </div>
         ) : (
@@ -239,14 +257,14 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
               <div key={pet.id} className="up-pet-card card">
                 <img src={pet.image} alt={pet.name} className="up-pet-img" />
                 <div className="up-pet-body">
-                  <h3 className="up-pet-name">{pet.name}</h3>
-                  <p className="up-pet-meta">{pet.breed} &middot; {pet.age}</p>
-                  <p className="up-pet-location">📍 {pet.location}</p>
+                  <h3 className="up-pet-name">{isHe && pet.name_he ? pet.name_he : pet.name}</h3>
+                  <p className="up-pet-meta">{isHe && pet.breed_he ? pet.breed_he : pet.breed} &middot; {pet.age}</p>
+                  <p className="up-pet-location">📍 {isHe && pet.location_he ? pet.location_he : pet.location}</p>
                   <button
                     className="button button-primary up-pet-btn"
                     onClick={() => onNavigate('profile', pet.id)}
                   >
-                    View Profile
+                    {t('userProfile.viewProfile')}
                   </button>
                 </div>
               </div>
@@ -257,35 +275,39 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
       {/* ── Requests ── */}
       <section className="up-section">
-        <h2 className="up-section-title">Your Requests</h2>
+        <h2 className="up-section-title">{t('userProfile.requestsTitle')}</h2>
         {requests.length === 0 ? (
           <div className="up-empty card">
-            <p className="up-empty-text">No requests yet. Browse pets and reach out to get started!</p>
+            <p className="up-empty-text">{t('userProfile.reqEmptyText')}</p>
             <button className="button button-primary" onClick={() => onNavigate('home')}>
-              Browse Pets
+              {t('userProfile.browsePets')}
             </button>
           </div>
         ) : (
           <div className="up-requests-list">
             {requests.map((req) => {
               const reqPet = pets.find((p) => p.id === req.pet_id);
-              const requestTypeLabel = (req.message || '').split('\n')[0] || 'Request';
-              const submittedDate = new Date(req.created_at).toLocaleDateString('en-US', {
+              const firstLine = (req.message || '').split('\n')[0] || '';
+              let requestTypeLabel;
+              if (firstLine === 'Meeting Request') requestTypeLabel = t('userProfile.typeMeeting');
+              else if (firstLine === 'Adoption Application') requestTypeLabel = t('userProfile.typeAdoption');
+              else requestTypeLabel = firstLine || t('userProfile.typeRequest');
+              const submittedDate = new Date(req.created_at).toLocaleDateString(isHe ? 'he-IL' : 'en-US', {
                 month: 'long', day: 'numeric', year: 'numeric',
               });
-              const statusInfo = STATUS_DISPLAY[req.status] || { label: req.status, background: '#E5E7EB', color: '#374151' };
+              const colors = statusColors[req.status] || { background: '#E5E7EB', color: '#374151' };
               return (
                 <div key={req.id} className="up-request-card card">
                   {reqPet && (
                     <img src={reqPet.image} alt={reqPet.name} className="up-request-img" />
                   )}
                   <div className="up-request-info">
-                    <h4 className="up-request-pet">{reqPet?.name || 'Unknown pet'}</h4>
+                    <h4 className="up-request-pet">{isHe && reqPet?.name_he ? reqPet.name_he : (reqPet?.name || '—')}</h4>
                     <p className="up-request-type">{requestTypeLabel}</p>
-                    <p className="up-request-date">Submitted: {submittedDate}</p>
+                    <p className="up-request-date">{t('userProfile.submitted', { date: submittedDate })}</p>
                   </div>
-                  <span className="up-status-badge" style={{ background: statusInfo.background, color: statusInfo.color }}>
-                    {statusInfo.label}
+                  <span className="up-status-badge" style={{ background: colors.background, color: colors.color }}>
+                    {getStatusLabel(req.status)}
                   </span>
                 </div>
               );
@@ -296,21 +318,21 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
 
       {/* ── Shelter Messages ── */}
       <section className="up-section">
-        <h2 className="up-section-title">Messages from Shelters</h2>
+        <h2 className="up-section-title">{t('userProfile.messagesTitle')}</h2>
         <div className="up-messages-list">
           {SAMPLE_MESSAGES.map((msg) => (
             <div key={msg.id} className="up-message-card card">
               <div className="up-message-header">
                 <div className="up-message-icon">🏠</div>
                 <div className="up-message-meta">
-                  <p className="up-message-shelter">{msg.shelterName}</p>
-                  <p className="up-message-date">{msg.date}</p>
+                  <p className="up-message-shelter">{isHe ? msg.shelterName_he : msg.shelterName}</p>
+                  <p className="up-message-date">{isHe ? msg.date_he : msg.date}</p>
                 </div>
                 {msg.petName && (
-                  <span className="up-message-pet-tag">{msg.petName}</span>
+                  <span className="up-message-pet-tag">{isHe ? msg.petName_he : msg.petName}</span>
                 )}
               </div>
-              <p className="up-message-text">{msg.message}</p>
+              <p className="up-message-text">{isHe ? msg.message_he : msg.message}</p>
             </div>
           ))}
         </div>

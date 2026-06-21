@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 function RegistrationModal({ onClose, onNavigate }) {
+  const { t } = useTranslation();
+
   const handleRegister = () => {
     onClose();
     onNavigate('register');
@@ -7,16 +11,14 @@ function RegistrationModal({ onClose, onNavigate }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-        <h2 className="modal-title">Registration Required</h2>
-        <p className="modal-message">
-          To like pets, save favorites, or send adoption requests, you need to create an account first.
-        </p>
+        <h2 className="modal-title">{t('registrationModal.title')}</h2>
+        <p className="modal-message">{t('registrationModal.message')}</p>
         <div className="modal-actions">
           <button className="button button-primary" onClick={handleRegister}>
-            Click here to register
+            {t('registrationModal.register')}
           </button>
           <button className="modal-later-btn" onClick={onClose}>
-            Maybe later
+            {t('registrationModal.later')}
           </button>
         </div>
       </div>

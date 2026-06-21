@@ -1,15 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl, profileName, onLogout }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { t, i18n } = useTranslation();
 
   const navItems = [
-    { label: 'Home', page: 'home' },
-    { label: 'How It Works', page: 'landing' },
-    { label: 'About Us', page: 'about' },
-    { label: 'Contact', page: 'about' },
+    { id: 'home',       label: t('nav.home'),       page: 'home' },
+    { id: 'howItWorks', label: t('nav.howItWorks'), page: 'landing' },
+    { id: 'aboutUs',    label: t('nav.aboutUs'),    page: 'about' },
+    { id: 'contact',    label: t('nav.contact'),    page: 'about' },
   ];
 
   useEffect(() => {
@@ -32,7 +34,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
     event.preventDefault();
     closeAll();
 
-    if (item.label === 'How It Works') {
+    if (item.id === 'howItWorks') {
       if (currentPage === 'landing') {
         document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' });
       } else {
@@ -41,7 +43,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
           document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' });
         }, 100);
       }
-    } else if (item.label === 'Contact') {
+    } else if (item.id === 'contact') {
       if (currentPage === 'about') {
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
       } else {
@@ -53,6 +55,10 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
     } else {
       onNavigate(item.page);
     }
+  };
+
+  const handleLangToggle = (lng) => {
+    i18n.changeLanguage(lng);
   };
 
   const getInitials = () => {
@@ -77,6 +83,8 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
     onLogout();
   };
 
+  const isHebrew = i18n.language === 'he';
+
   return (
     <header className="app-header-bar">
       <div className="app-header">
@@ -91,7 +99,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
           <div className="nav-links">
             {navItems.map((item) => (
               <a
-                key={item.label}
+                key={item.id}
                 href="#!"
                 className="nav-link"
                 onClick={(event) => handleNavClick(event, item)}
@@ -105,7 +113,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
                 className={`nav-link${currentPage === 'requests' ? ' nav-link--active' : ''}`}
                 onClick={(e) => { e.preventDefault(); closeAll(); onNavigate('requests'); }}
               >
-                Requests
+                {t('nav.requests')}
               </a>
             )}
             {isLoggedIn && (
@@ -114,9 +122,26 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
                 className={`nav-link nav-link--donate${currentPage === 'donation' ? ' nav-link--active' : ''}`}
                 onClick={(e) => { e.preventDefault(); closeAll(); onNavigate('donation'); }}
               >
-                Donate ❤️
+                {t('nav.donate')}
               </a>
             )}
+          </div>
+
+          <div className="lang-toggle">
+            <button
+              className={`lang-btn${!isHebrew ? ' lang-btn--active' : ''}`}
+              onClick={() => handleLangToggle('en')}
+              aria-label="Switch to English"
+            >
+              EN
+            </button>
+            <button
+              className={`lang-btn${isHebrew ? ' lang-btn--active' : ''}`}
+              onClick={() => handleLangToggle('he')}
+              aria-label="Switch to Hebrew"
+            >
+              HE
+            </button>
           </div>
 
           {isLoggedIn ? (
@@ -139,10 +164,10 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
                     className="dropdown-item"
                     onClick={() => { closeAll(); onNavigate('userProfile'); }}
                   >
-                    My Profile
+                    {t('nav.myProfile')}
                   </button>
                   <button className="dropdown-item dropdown-logout" onClick={handleLogout}>
-                    Logout
+                    {t('nav.logout')}
                   </button>
                 </div>
               )}
@@ -152,7 +177,7 @@ function AppHeader({ currentPage, onNavigate, isLoggedIn, currentUser, avatarUrl
               className="button button-outline header-register-btn"
               onClick={() => { closeAll(); onNavigate('register'); }}
             >
-              Register
+              {t('nav.register')}
             </button>
           )}
         </nav>

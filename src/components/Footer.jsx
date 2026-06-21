@@ -1,4 +1,8 @@
+import { Trans, useTranslation } from 'react-i18next';
+
 function Footer({ onNavigate }) {
+  const { t } = useTranslation();
+
   const navigate = (page) => {
     onNavigate?.(page);
     window.scrollTo(0, 0);
@@ -38,32 +42,30 @@ function Footer({ onNavigate }) {
         <div className="footer-brand">
           <div className="brand-logo small">🐾</div>
           <h3>PawMatch</h3>
-          <p className="footer-description">
-            Connecting kind people with warm, friendly pets through an easy and caring adoption experience.
-          </p>
+          <p className="footer-description">{t('footer.description')}</p>
         </div>
 
         <div className="footer-column">
-          <p className="eyebrow">Quick Links</p>
+          <p className="eyebrow">{t('footer.quickLinks')}</p>
           <ul>
-            <li><button type="button" className="footer-link" onClick={() => navigate('landing')}>Home</button></li>
-            <li><button type="button" className="footer-link" onClick={() => navigate('home')}>Browse Pets</button></li>
-            <li><button type="button" className="footer-link" onClick={() => navigate('about')}>About Us</button></li>
-            <li><button type="button" className="footer-link" onClick={goToContact}>Contact</button></li>
+            <li><button type="button" className="footer-link" onClick={() => navigate('landing')}>{t('footer.linkHome')}</button></li>
+            <li><button type="button" className="footer-link" onClick={() => navigate('home')}>{t('footer.linkBrowsePets')}</button></li>
+            <li><button type="button" className="footer-link" onClick={() => navigate('about')}>{t('footer.linkAboutUs')}</button></li>
+            <li><button type="button" className="footer-link" onClick={goToContact}>{t('footer.linkContact')}</button></li>
           </ul>
         </div>
 
         <div className="footer-column">
-          <p className="eyebrow">Resources</p>
+          <p className="eyebrow">{t('footer.resourcesTitle')}</p>
           <ul>
-            <li><button type="button" className="footer-link" onClick={goToHowItWorks}>Adoption Guide</button></li>
-            <li><button type="button" className="footer-link" onClick={goToPetCareTips}>Pet Care Tips</button></li>
-            <li><button type="button" className="footer-link" onClick={goToFaq}>FAQ</button></li>
+            <li><button type="button" className="footer-link" onClick={goToHowItWorks}>{t('footer.linkAdoptionGuide')}</button></li>
+            <li><button type="button" className="footer-link" onClick={goToPetCareTips}>{t('footer.linkPetCareTips')}</button></li>
+            <li><button type="button" className="footer-link" onClick={goToFaq}>{t('footer.linkFaq')}</button></li>
           </ul>
         </div>
 
         <div className="footer-column">
-          <p className="eyebrow">Follow Us</p>
+          <p className="eyebrow">{t('footer.followUs')}</p>
           <div className="social-icons footer-social">
             <a href="#" className="footer-social-link" onClick={(e) => e.preventDefault()} aria-label="Instagram">IG</a>
             <a href="#" className="footer-social-link" onClick={(e) => e.preventDefault()} aria-label="Facebook">FB</a>
@@ -73,7 +75,7 @@ function Footer({ onNavigate }) {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2026 PawMatch. All rights reserved.</p>
+        <p><Trans i18nKey="footer.copyright" components={{ ltr: <span dir="ltr" /> }} /></p>
       </div>
     </footer>
   );

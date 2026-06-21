@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import pets from '../data/pets.js';
 import { supabase } from '../lib/supabaseClient.js';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
@@ -9,6 +10,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const REQUIRED = <span className="rq-required">*</span>;
 
 function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistration, favorites, currentUser }) {
+  const { t } = useTranslation();
+
   const favoritePets = (favorites || [])
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
@@ -20,11 +23,8 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
 
   const [requestType, setRequestType] = useState('meeting');
   const [form, setForm] = useState({
-    // shared
     fullName: '', email: '', phone: '',
-    // meeting
     date: '', message: '',
-    // adoption
     address: '', housingType: '', otherPets: '', whyAdopt: '', petExperience: '', additionalNotes: '',
   });
   const [errors, setErrors] = useState({});
@@ -51,20 +51,20 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
 
   const validate = () => {
     const e = {};
-    if (!form.fullName.trim()) e.fullName = 'Full name is required.';
-    if (!form.email.trim()) e.email = 'Email is required.';
-    else if (!EMAIL_RE.test(form.email)) e.email = 'Please enter a valid email address.';
-    if (!form.phone.trim()) e.phone = 'Phone number is required.';
+    if (!form.fullName.trim()) e.fullName = t('requests.errorFullName');
+    if (!form.email.trim()) e.email = t('requests.errorEmail');
+    else if (!EMAIL_RE.test(form.email)) e.email = t('requests.errorEmailInvalid');
+    if (!form.phone.trim()) e.phone = t('requests.errorPhone');
 
     if (requestType === 'meeting') {
-      if (!form.date) e.date = 'Preferred meeting date is required.';
-      if (!form.message.trim()) e.message = 'Message is required.';
+      if (!form.date) e.date = t('requests.errorDate');
+      if (!form.message.trim()) e.message = t('requests.errorMessage');
     } else {
-      if (!form.address.trim()) e.address = 'Address is required.';
-      if (!form.housingType) e.housingType = 'Please select a housing type.';
-      if (!form.otherPets) e.otherPets = 'Please answer this question.';
-      if (!form.whyAdopt.trim()) e.whyAdopt = 'Please tell us why you want to adopt.';
-      if (!form.petExperience.trim()) e.petExperience = 'Please describe your experience with pets.';
+      if (!form.address.trim()) e.address = t('requests.errorAddress');
+      if (!form.housingType) e.housingType = t('requests.errorHousingType');
+      if (!form.otherPets) e.otherPets = t('requests.errorOtherPets');
+      if (!form.whyAdopt.trim()) e.whyAdopt = t('requests.errorWhyAdopt');
+      if (!form.petExperience.trim()) e.petExperience = t('requests.errorExperience');
     }
     return e;
   };
@@ -114,13 +114,11 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
   return (
     <main className="page page-requests">
 
-      {/* Title */}
       <div className="rq-header">
-        <p className="eyebrow">Adoption request</p>
-        <h1 className="rq-title">Start Your Adoption Journey</h1>
+        <p className="eyebrow">{t('requests.eyebrow')}</p>
+        <h1 className="rq-title">{t('requests.pageTitle')}</h1>
       </div>
 
-      {/* Option selector */}
       <div className="rq-options">
         <button
           className={`rq-option-card${isMeeting ? ' rq-option-card--active' : ''}`}
@@ -128,8 +126,8 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
           type="button"
         >
           <span className="rq-option-icon">🐾</span>
-          <span className="rq-option-label">Request a Meeting</span>
-          <span className="rq-option-desc">Schedule a time to meet the pet at the shelter.</span>
+          <span className="rq-option-label">{t('requests.optionMeetingLabel')}</span>
+          <span className="rq-option-desc">{t('requests.optionMeetingDesc')}</span>
         </button>
         <button
           className={`rq-option-card${!isMeeting ? ' rq-option-card--active' : ''}`}
@@ -137,33 +135,29 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
           type="button"
         >
           <span className="rq-option-icon">🏠</span>
-          <span className="rq-option-label">Adoption Application</span>
-          <span className="rq-option-desc">Submit a formal adoption application.</span>
+          <span className="rq-option-label">{t('requests.optionAdoptionLabel')}</span>
+          <span className="rq-option-desc">{t('requests.optionAdoptionDesc')}</span>
         </button>
       </div>
 
-      {/* Form or success */}
       {!submitted ? (
         <div className="rq-form-card card">
           <h2 className="rq-form-title">
-            {isMeeting ? 'Meeting Request Details' : 'Adoption Application Details'}
+            {isMeeting ? t('requests.formTitleMeeting') : t('requests.formTitleAdoption')}
           </h2>
           <form className="rq-form" onSubmit={handleSubmit} noValidate>
 
-            {/* Select a pet (from favorites) */}
             <div className="rq-field">
-              <label className="rq-label">Select a pet {REQUIRED}</label>
+              <label className="rq-label">{t('requests.labelSelectPet')} {REQUIRED}</label>
               {favoritePets.length === 0 ? (
                 <div className="rq-no-favorites">
-                  <p className="rq-no-favorites-text">
-                    You haven't added any favorites yet. Browse pets and like some first!
-                  </p>
+                  <p className="rq-no-favorites-text">{t('requests.noFavorites')}</p>
                   <button
                     type="button"
                     className="button button-secondary"
                     onClick={() => onNavigate('home')}
                   >
-                    Browse Pets
+                    {t('requests.browsePets')}
                   </button>
                 </div>
               ) : (
@@ -187,23 +181,21 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
               )}
             </div>
 
-            {/* Shared: Full Name */}
             <div className="rq-field">
-              <label className="rq-label">Full Name {REQUIRED}</label>
+              <label className="rq-label">{t('requests.labelFullName')} {REQUIRED}</label>
               <input
                 type="text"
                 className={`rq-input${errors.fullName ? ' rq-input--error' : ''}`}
-                placeholder="Your full name"
+                placeholder={t('requests.labelFullName')}
                 value={form.fullName}
                 onChange={(e) => handleChange('fullName', e.target.value)}
               />
               {errors.fullName && <p className="rq-error-text">{errors.fullName}</p>}
             </div>
 
-            {/* Shared: Email + Phone */}
             <div className="rq-row">
               <div className="rq-field">
-                <label className="rq-label">Email {REQUIRED}</label>
+                <label className="rq-label">{t('requests.labelEmail')} {REQUIRED}</label>
                 <input
                   type="email"
                   className={`rq-input${errors.email ? ' rq-input--error' : ''}`}
@@ -214,7 +206,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
                 {errors.email && <p className="rq-error-text">{errors.email}</p>}
               </div>
               <div className="rq-field">
-                <label className="rq-label">Phone {REQUIRED}</label>
+                <label className="rq-label">{t('requests.labelPhone')} {REQUIRED}</label>
                 <input
                   type="tel"
                   className={`rq-input${errors.phone ? ' rq-input--error' : ''}`}
@@ -228,9 +220,8 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
 
             {isMeeting ? (
               <>
-                {/* Meeting: Date */}
                 <div className="rq-field">
-                  <label className="rq-label">Preferred Meeting Date {REQUIRED}</label>
+                  <label className="rq-label">{t('requests.labelDate')} {REQUIRED}</label>
                   <input
                     type="date"
                     className={`rq-input${errors.date ? ' rq-input--error' : ''}`}
@@ -240,12 +231,11 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
                   {errors.date && <p className="rq-error-text">{errors.date}</p>}
                 </div>
 
-                {/* Meeting: Message */}
                 <div className="rq-field">
-                  <label className="rq-label">Message / Notes {REQUIRED}</label>
+                  <label className="rq-label">{t('requests.labelMessage')} {REQUIRED}</label>
                   <textarea
                     className={`rq-input rq-textarea${errors.message ? ' rq-input--error' : ''}`}
-                    placeholder="Tell us why you'd like to meet this pet, any questions you have, or anything else we should know..."
+                    placeholder={t('requests.placeholderMessage')}
                     value={form.message}
                     onChange={(e) => handleChange('message', e.target.value)}
                     rows={5}
@@ -255,9 +245,8 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
               </>
             ) : (
               <>
-                {/* Adoption: Address */}
                 <div className="rq-field">
-                  <label className="rq-label">Address {REQUIRED}</label>
+                  <label className="rq-label">{t('requests.labelAddress')} {REQUIRED}</label>
                   <input
                     type="text"
                     className={`rq-input${errors.address ? ' rq-input--error' : ''}`}
@@ -268,44 +257,42 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
                   {errors.address && <p className="rq-error-text">{errors.address}</p>}
                 </div>
 
-                {/* Adoption: Housing + Other Pets */}
                 <div className="rq-row">
                   <div className="rq-field">
-                    <label className="rq-label">Housing Type {REQUIRED}</label>
+                    <label className="rq-label">{t('requests.labelHousingType')} {REQUIRED}</label>
                     <select
                       className={`rq-input${errors.housingType ? ' rq-input--error' : ''}`}
                       value={form.housingType}
                       onChange={(e) => handleChange('housingType', e.target.value)}
                     >
-                      <option value="">Select housing type</option>
-                      <option value="house">House with yard</option>
-                      <option value="apartment">Apartment</option>
-                      <option value="condo">Condo / Townhouse</option>
-                      <option value="other">Other</option>
+                      <option value="">{t('requests.selectHousingType')}</option>
+                      <option value="house">{t('requests.houseWithYard')}</option>
+                      <option value="apartment">{t('requests.apartment')}</option>
+                      <option value="condo">{t('requests.condoTownhouse')}</option>
+                      <option value="other">{t('requests.other')}</option>
                     </select>
                     {errors.housingType && <p className="rq-error-text">{errors.housingType}</p>}
                   </div>
                   <div className="rq-field">
-                    <label className="rq-label">Do you have other pets? {REQUIRED}</label>
+                    <label className="rq-label">{t('requests.labelOtherPets')} {REQUIRED}</label>
                     <select
                       className={`rq-input${errors.otherPets ? ' rq-input--error' : ''}`}
                       value={form.otherPets}
                       onChange={(e) => handleChange('otherPets', e.target.value)}
                     >
-                      <option value="">Select an option</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option value="">{t('requests.selectOption')}</option>
+                      <option value="yes">{t('requests.yes')}</option>
+                      <option value="no">{t('requests.no')}</option>
                     </select>
                     {errors.otherPets && <p className="rq-error-text">{errors.otherPets}</p>}
                   </div>
                 </div>
 
-                {/* Adoption: Why adopt */}
                 <div className="rq-field">
-                  <label className="rq-label">Why do you want to adopt this pet? {REQUIRED}</label>
+                  <label className="rq-label">{t('requests.labelWhyAdopt')} {REQUIRED}</label>
                   <textarea
                     className={`rq-input rq-textarea${errors.whyAdopt ? ' rq-input--error' : ''}`}
-                    placeholder="Tell us what makes you the right home for this pet..."
+                    placeholder={t('requests.placeholderWhyAdopt')}
                     value={form.whyAdopt}
                     onChange={(e) => handleChange('whyAdopt', e.target.value)}
                     rows={4}
@@ -313,12 +300,11 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
                   {errors.whyAdopt && <p className="rq-error-text">{errors.whyAdopt}</p>}
                 </div>
 
-                {/* Adoption: Experience */}
                 <div className="rq-field">
-                  <label className="rq-label">Experience with pets {REQUIRED}</label>
+                  <label className="rq-label">{t('requests.labelExperience')} {REQUIRED}</label>
                   <textarea
                     className={`rq-input rq-textarea${errors.petExperience ? ' rq-input--error' : ''}`}
-                    placeholder="Describe any previous experience owning or caring for pets..."
+                    placeholder={t('requests.placeholderExperience')}
                     value={form.petExperience}
                     onChange={(e) => handleChange('petExperience', e.target.value)}
                     rows={4}
@@ -326,12 +312,11 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
                   {errors.petExperience && <p className="rq-error-text">{errors.petExperience}</p>}
                 </div>
 
-                {/* Adoption: Additional Notes (optional) */}
                 <div className="rq-field">
-                  <label className="rq-label">Additional Notes</label>
+                  <label className="rq-label">{t('requests.labelAdditionalNotes')}</label>
                   <textarea
                     className="rq-input rq-textarea"
-                    placeholder="Anything else you'd like us to know? (optional)"
+                    placeholder={t('requests.placeholderAdditionalNotes')}
                     value={form.additionalNotes}
                     onChange={(e) => handleChange('additionalNotes', e.target.value)}
                     rows={3}
@@ -341,7 +326,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
             )}
 
             <button type="submit" className="button button-primary rq-submit-btn">
-              {isMeeting ? 'Request Meeting' : 'Submit Adoption Application'}
+              {isMeeting ? t('requests.submitMeeting') : t('requests.submitAdoption')}
             </button>
             {submitError && <p className="rq-submit-error">{submitError}</p>}
           </form>
@@ -350,25 +335,18 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
         <div className="rq-success-card card">
           <div className="rq-success-icon">✓</div>
           <h2 className="rq-success-heading">
-            {isMeeting
-              ? 'Your meeting request was submitted successfully!'
-              : 'Your adoption application was submitted successfully!'}
+            {isMeeting ? t('requests.successMeeting') : t('requests.successAdoption')}
           </h2>
-          <p className="rq-success-body">We'll be in touch soon to confirm the details with you.</p>
+          <p className="rq-success-body">{t('requests.successBody')}</p>
           <button className="button button-secondary rq-back-btn" onClick={() => onNavigate('home')}>
-            Back to browsing
+            {t('requests.backToBrowsing')}
           </button>
         </div>
       )}
 
-      {/* Important info box — updates with mode */}
       <div className="rq-info-box">
         <span className="rq-info-icon">ℹ️</span>
-        <p>
-          {isMeeting
-            ? 'You must meet the pet and receive approval before submitting an adoption request.'
-            : 'Applications are reviewed by the shelter before approval.'}
-        </p>
+        <p>{isMeeting ? t('requests.infoMeeting') : t('requests.infoAdoption')}</p>
       </div>
 
       <TrustFeaturesSection />

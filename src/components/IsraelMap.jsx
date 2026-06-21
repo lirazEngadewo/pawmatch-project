@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useTranslation } from 'react-i18next';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -30,12 +31,14 @@ const pawIcon = L.divIcon({
 });
 
 function IsraelMap({ height = '500px', compact = false }) {
+  const { t } = useTranslation();
+
   return (
     <section className={`israel-map-section${compact ? ' israel-map-section--compact' : ''}`}>
       <div className="israel-map-header">
-        <p className="eyebrow">Our Adoption Network</p>
-        <h2 className="israel-map-title">Adoption Organizations Across Israel</h2>
-        <p className="israel-map-subtitle">Click on a marker for more details</p>
+        <p className="eyebrow">{t('map.eyebrow')}</p>
+        <h2 className="israel-map-title">{t('map.title')}</h2>
+        <p className="israel-map-subtitle">{t('map.subtitle')}</p>
       </div>
 
       <div className="israel-map-container">
@@ -54,10 +57,10 @@ function IsraelMap({ height = '500px', compact = false }) {
               <Popup>
                 <div className="map-popup">
                   <h4 className="map-popup-name">{org.name}</h4>
-                  <p className="map-popup-row"><span>City:</span> {org.city}</p>
-                  <p className="map-popup-row"><span>Region:</span> {org.region}</p>
-                  <p className="map-popup-row"><span>Phone:</span> {org.phone}</p>
-                  <button type="button" className="map-popup-btn">Contact</button>
+                  <p className="map-popup-row"><span>{t('map.city')}:</span> {org.city}</p>
+                  <p className="map-popup-row"><span>{t('map.region')}:</span> {org.region}</p>
+                  <p className="map-popup-row"><span>{t('map.phone')}:</span> {org.phone}</p>
+                  <button type="button" className="map-popup-btn">{t('map.contact')}</button>
                 </div>
               </Popup>
             </Marker>

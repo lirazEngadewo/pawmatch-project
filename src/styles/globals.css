@@ -370,6 +370,33 @@ h3 {
   white-space: nowrap;
 }
 
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.lang-btn {
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+  transition: background 0.18s, color 0.18s;
+  line-height: 1;
+}
+
+.lang-btn--active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
 .grid-list {
   display: grid;
   gap: 24px;
@@ -898,7 +925,7 @@ h3 {
 
 /* ── Pet Profile Page ── */
 .pp-page {
-  padding-bottom: 80px;
+  padding-bottom: 0;
 }
 
 .pp-hero {
@@ -2296,6 +2323,10 @@ h3 {
 }
 
 /* AboutUsPage */
+.page-about {
+  padding-bottom: 0;
+}
+
 .about-intro {
   padding-top: 8px;
   max-width: 820px;
@@ -2708,6 +2739,9 @@ h3 {
 }
 
 /* ── Resources page ─────────────────────────────────────────────────────── */
+.resources-page {
+  padding-bottom: 0;
+}
 
 .resources-intro {
   padding-top: 8px;
@@ -2829,6 +2863,7 @@ h3 {
 .donation-page {
   display: flex;
   flex-direction: column;
+  padding-bottom: 0;
 }
 
 .donation-hero {
@@ -3249,7 +3284,7 @@ h3 {
 /* ── RequestsPage ── */
 .page-requests {
   max-width: 860px;
-  padding-bottom: 80px;
+  padding-bottom: 0;
 }
 
 .rq-header {
@@ -4196,4 +4231,453 @@ h3 {
 .pet-carousel-item .pet-card-body {
   padding: 18px 20px;
   flex: 1;
+}
+
+/* ── RTL Overrides ────────────────────────────────────────────────────────── */
+
+/* Blanket: right-align all text when RTL is active */
+[dir="rtl"] * {
+  text-align: right;
+}
+
+/* ── Global block elements: direction + alignment ── */
+[dir="rtl"] p,
+[dir="rtl"] li,
+[dir="rtl"] label,
+[dir="rtl"] .eyebrow,
+[dir="rtl"] .body-copy {
+  text-align: right;
+  direction: rtl;
+  width: 100%;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4 {
+  text-align: right;
+  direction: rtl;
+  /* No width: 100% here — headings appear as flex siblings in some row contexts (e.g. hm-name-row) */
+}
+
+/* Pet name headings that are standalone in their container — force full width for correct alignment */
+[dir="rtl"] .landing-pet-name,
+[dir="rtl"] .pp-hero-name,
+[dir="rtl"] .pp-similar-name,
+[dir="rtl"] .up-pet-name,
+[dir="rtl"] .up-request-pet,
+[dir="rtl"] .hm-pet-name { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .pp-similar-meta { text-align: right; direction: rtl; }
+
+/* Spans inherit direction: rtl from their parent. Do NOT set direction here —
+ * it would override <span dir="ltr"> HTML attributes used for mixed bidi (e.g. PawMatch). */
+
+/* All native form controls: RTL direction so typed text flows right */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ── Header & navigation ── */
+[dir="rtl"] .app-header { flex-direction: row-reverse; }
+[dir="rtl"] .page-nav { flex-direction: row-reverse; }
+/* direction:rtl naturally places Home (first in DOM) rightmost and Donate (last) leftmost — no row-reverse needed */
+[dir="rtl"] .hamburger-btn { margin-left: 0; margin-right: auto; }
+[dir="rtl"] .nav-link { text-align: right; }
+[dir="rtl"] .dropdown-item { text-align: right; }
+[dir="rtl"] .user-dropdown { left: auto; right: 0; }
+
+/* ── Landing page ── */
+/*
+ * landing-hero-info is a flex column. Default align-items: stretch keeps children
+ * filling the full container width — correct for multi-line text alignment.
+ * We only set text direction; no align-items override needed.
+ */
+[dir="rtl"] .landing-hero-info { text-align: right; direction: rtl; }
+[dir="rtl"] .landing-meta-grid { direction: rtl; }
+/*
+ * landing-meta-item children (spans) are flex items in a column. Setting display: block
+ * + width: 100% ensures every line of wrapped text aligns to the right edge.
+ */
+[dir="rtl"] .landing-meta-item { text-align: right; direction: rtl; }
+[dir="rtl"] .landing-meta-item span { display: block; width: 100%; text-align: right; }
+/* .tags-row: direction: rtl is inherited from parent; flex row naturally starts from RIGHT — no override needed */
+[dir="rtl"] .pet-footer { flex-direction: row-reverse; }
+[dir="rtl"] .landing-stats {
+  flex-direction: row-reverse;
+  left: auto;
+  right: 50%;
+  margin-left: 0;
+  margin-right: -50vw;
+}
+[dir="rtl"] .landing-stat-card { text-align: center; }
+[dir="rtl"] .landing-stat-card strong { text-align: center; }
+[dir="rtl"] .landing-stat-card span { text-align: center; }
+/* testimonial-grid (without 's') is the correct class in JSX */
+[dir="rtl"] .testimonial-grid .testimonial-card { text-align: right; direction: rtl; }
+/* In RTL, direction:rtl already makes flex row flow right→left (avatar right, name left) — no row-reverse needed */
+[dir="rtl"] .testimonial-header { direction: rtl; }
+[dir="rtl"] .testimonial-copy { text-align: right; }
+[dir="rtl"] .testimonial-copy h4,
+[dir="rtl"] .testimonial-copy p { text-align: right; direction: rtl; }
+[dir="rtl"] .testimonial-card .star-rating { text-align: left; }
+
+/* ── Pet card (shared component) ── */
+[dir="rtl"] .pet-card-body { text-align: right; direction: rtl; }
+[dir="rtl"] .pet-card-content { text-align: right; direction: rtl; }
+/* The bare h3 inside .pet-card-content has no class; target it directly */
+[dir="rtl"] .pet-card-content h3 { width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .pet-type,
+[dir="rtl"] .pet-meta,
+[dir="rtl"] .pet-description { width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .landing-pet-description { width: 100%; text-align: right; direction: rtl; }
+
+/* ── Quiz / matching modal ── */
+[dir="rtl"] .quiz-modal-card { text-align: right; direction: rtl; }
+[dir="rtl"] .quiz-question { text-align: right; direction: rtl; }
+[dir="rtl"] .quiz-question-label { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .quiz-options { justify-content: flex-end; }
+[dir="rtl"] .quiz-option { direction: rtl; }
+
+/* ── How it works & trust features ── */
+[dir="rtl"] .how-it-works-grid { flex-direction: row-reverse; }
+[dir="rtl"] .trust-grid { flex-direction: row-reverse; }
+/*
+ * trust-card is a flex column. Removing align-items keeps the default stretch,
+ * so h4/p children fill the full card width — all lines align to the right edge.
+ */
+[dir="rtl"] .trust-card { text-align: right; direction: rtl; }
+/* The icon is a small circle that should hug the right side, so align-self is fine here */
+[dir="rtl"] .trust-card-icon { align-self: flex-start; }
+/* Explicit width on text children ensures multi-line text fills the card */
+[dir="rtl"] .trust-card h4,
+[dir="rtl"] .trust-card p { width: 100%; display: block; text-align: right; direction: rtl; }
+
+/* ── Home page ── */
+[dir="rtl"] .hm-pet-card { flex-direction: row-reverse; }
+/* .hm-name-row: in RTL flex row (direction: rtl inherited), first child (name) is already at RIGHT — no row-reverse needed */
+/* .hm-tags: same — direction: rtl inheritance puts tags at RIGHT naturally */
+[dir="rtl"] .hm-actions { flex-direction: row-reverse; }
+[dir="rtl"] .hm-results-header { flex-direction: row-reverse; }
+[dir="rtl"] .hm-fav-row { flex-direction: row-reverse; }
+[dir="rtl"] .hm-filters-card { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-filters-card select { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-filter-actions { flex-direction: row-reverse; }
+[dir="rtl"] .favorites-header { flex-direction: row-reverse; }
+[dir="rtl"] .favorite-item { flex-direction: row-reverse; }
+/* Grid direction so detail columns flow right→left */
+[dir="rtl"] .hm-details-grid { direction: rtl; }
+/*
+ * hm-detail is a flex column. Default stretch keeps children at full width.
+ * Span children need display: block + width: 100% for multi-line correctness.
+ */
+[dir="rtl"] .hm-detail { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-detail-label,
+[dir="rtl"] .hm-detail-value { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .hm-info { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-fav-info { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-favorites-card { text-align: right; direction: rtl; }
+[dir="rtl"] .hm-fav-name,
+[dir="rtl"] .hm-fav-type { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── Pet profile page ── */
+/* direction:rtl on the flex container already reverses item order (name→right, match%→left).
+ * row-reverse would cancel that out and restore LTR order — so we don't add it here. */
+[dir="rtl"] .pp-thumbs { flex-direction: row-reverse; }
+[dir="rtl"] .pp-similar-top { flex-direction: row-reverse; direction: ltr; }
+[dir="rtl"] .pp-requirements-list { padding-left: 0; padding-right: 20px; }
+[dir="rtl"] .detail-list { flex-direction: row-reverse; }
+[dir="rtl"] .action-buttons { flex-direction: row-reverse; }
+/* Grid direction so columns flow right→left */
+[dir="rtl"] .pp-info-grid,
+[dir="rtl"] .pp-health-grid,
+[dir="rtl"] .pp-adoption-grid { direction: rtl; }
+/*
+ * Flex column items: removing align-items restores default stretch so children
+ * fill the cell width. Span children also get display: block + width: 100%.
+ */
+[dir="rtl"] .pp-info-item { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-health-item { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-adoption-item { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-info-label,
+[dir="rtl"] .pp-info-value,
+[dir="rtl"] .pp-health-label,
+[dir="rtl"] .pp-health-value { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .pp-about-text { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-section-title { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-similar-info { text-align: right; direction: rtl; }
+[dir="rtl"] .pp-quick-card { text-align: right; direction: rtl; }
+
+/* ── User profile page ── */
+[dir="rtl"] .up-details-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-avatar-camera { right: auto; left: 0; }
+[dir="rtl"] .up-quiz-banner { flex-direction: row-reverse; }
+[dir="rtl"] .up-prefs-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-request-card { flex-direction: row-reverse; }
+[dir="rtl"] .up-message-header { flex-direction: row-reverse; }
+[dir="rtl"] .up-message-meta { text-align: right; direction: rtl; }
+/* Grid direction for details grid */
+[dir="rtl"] .up-details-grid { direction: rtl; }
+[dir="rtl"] .up-details-label { text-align: right; direction: rtl; }
+[dir="rtl"] .up-details-value { text-align: right; direction: rtl; }
+[dir="rtl"] .up-section-header { flex-direction: row-reverse; }
+[dir="rtl"] .up-section-title { text-align: right; direction: rtl; }
+/* Flex column items: removing align-items restores default stretch */
+[dir="rtl"] .up-detail-item { text-align: right; direction: rtl; }
+[dir="rtl"] .up-detail-label,
+[dir="rtl"] .up-detail-value { display: block; width: 100%; text-align: right; direction: rtl; }
+/* Badge stays narrow; align-self: flex-start = right-anchored in RTL column */
+[dir="rtl"] .up-status-active { align-self: flex-start; display: inline-block; width: fit-content; }
+[dir="rtl"] .up-pet-body { text-align: right; direction: rtl; }
+[dir="rtl"] .up-pet-name,
+[dir="rtl"] .up-pet-meta,
+[dir="rtl"] .up-pet-location { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-request-info { text-align: right; direction: rtl; }
+[dir="rtl"] .up-request-pet,
+[dir="rtl"] .up-request-type,
+[dir="rtl"] .up-request-date { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-details-body { text-align: right; direction: rtl; }
+/* up-empty has align-items: flex-start in base; add stretch so text fills width */
+[dir="rtl"] .up-empty { text-align: right; direction: rtl; align-items: stretch; }
+[dir="rtl"] .up-empty-text { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-greeting { text-align: right; direction: rtl; }
+[dir="rtl"] .up-greeting-title,
+[dir="rtl"] .up-greeting-sub { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .up-message-shelter,
+[dir="rtl"] .up-message-date,
+[dir="rtl"] .up-message-text { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── Requests page ── */
+[dir="rtl"] .rq-header { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-form-title { text-align: right; direction: rtl; }
+/*
+ * rq-option-card has align-items: flex-start in base. Add display:block + width:100%
+ * to span children so multi-line text fills the full card width.
+ */
+[dir="rtl"] .rq-option-card { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-option-label,
+[dir="rtl"] .rq-option-desc { display: block; width: 100%; text-align: right; direction: rtl; }
+/*
+ * rq-no-favorites has align-items: flex-start in base. Override to stretch so the
+ * text paragraph fills the container width.
+ */
+[dir="rtl"] .rq-no-favorites { text-align: right; direction: rtl; align-items: stretch; }
+[dir="rtl"] .rq-no-favorites-text { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .rq-field { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-label { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .rq-input { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-row { direction: rtl; }
+[dir="rtl"] .rq-error-text { text-align: right; direction: rtl; }
+[dir="rtl"] .rq-info-box { flex-direction: row-reverse; }
+[dir="rtl"] .rq-pet-preview { flex-direction: row-reverse; }
+[dir="rtl"] .request-panel ul { padding-left: 0; padding-right: 20px; }
+[dir="rtl"] .rq-pet-preview-name { display: block; text-align: right; direction: rtl; }
+
+/* ── Forms (About, Register, Requests, Donation) ── */
+[dir="rtl"] .form-group { text-align: right; direction: rtl; }
+[dir="rtl"] .form-error { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .form-row-two { flex-direction: row-reverse; }
+[dir="rtl"] .contact-label { text-align: right; direction: rtl; }
+[dir="rtl"] .contact-field-error { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .contact-form-row { flex-direction: row-reverse; }
+[dir="rtl"] .form-input { text-align: right; direction: rtl; }
+[dir="rtl"] textarea.form-input { text-align: right; direction: rtl; }
+[dir="rtl"] .register-helpers { text-align: right; direction: rtl; }
+[dir="rtl"] .register-legal { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .form-session-banner { text-align: right; direction: rtl; width: 100%; }
+
+/* ── FAQ & resources ── */
+/* Resources page intro: center the heading block and its text in RTL */
+[dir="rtl"] .resources-intro { text-align: center; margin-left: auto; margin-right: auto; }
+[dir="rtl"] .resources-intro h1,
+[dir="rtl"] .resources-intro .eyebrow,
+[dir="rtl"] .resources-intro .body-copy { text-align: center; direction: rtl; }
+/* FAQ section: center the 760px-max block on the page */
+[dir="rtl"] .faq-section { margin-left: auto; margin-right: auto; }
+/* direction:rtl already puts question text on right, chevron on left — no row-reverse needed */
+[dir="rtl"] .faq-question { text-align: right; direction: rtl; }
+[dir="rtl"] .faq-answer { direction: rtl; }
+[dir="rtl"] .faq-answer p { text-align: right; direction: rtl; width: 100%; }
+[dir="rtl"] .section-header { text-align: right; direction: rtl; }
+[dir="rtl"] .tips-grid { direction: rtl; }
+/*
+ * tip-card is a flex column with default stretch — no align-items override needed.
+ * Explicit width on text children for belt-and-suspenders.
+ */
+[dir="rtl"] .tip-card { text-align: right; direction: rtl; }
+[dir="rtl"] .tip-title,
+[dir="rtl"] .tip-desc { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── Donation page ── */
+[dir="rtl"] .donation-success-quote {
+  border-left: none;
+  border-right: 3px solid var(--color-accent);
+  padding-left: 0;
+  padding-right: 16px;
+  text-align: right;
+  direction: rtl;
+}
+/*
+ * donation-success has align-items: center in base. Override to stretch so text
+ * elements fill the container width for correct multi-line alignment.
+ */
+[dir="rtl"] .donation-success { text-align: right; direction: rtl; align-items: stretch; }
+[dir="rtl"] .donation-success-message,
+[dir="rtl"] .donation-success-note { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .donation-field { text-align: right; direction: rtl; }
+[dir="rtl"] .donation-field-label { text-align: right; direction: rtl; width: 100%; }
+/* direction:rtl on the flex container already starts items from the right — no row-reverse needed */
+[dir="rtl"] .donation-form { direction: rtl; }
+[dir="rtl"] .donation-form .contact-label { text-align: right; direction: rtl; }
+
+/* ── Footer ──
+ * IMPORTANT: Footer uses .footer-column (singular) and .footer-brand, not
+ * .footer-col or .footer-columns. The grid is .footer-top.
+ */
+[dir="rtl"] .footer-link { text-align: right; }  /* overrides [dir="rtl"] button { text-align: center } */
+[dir="rtl"] .footer-top { direction: rtl; }       /* grid: columns flow right→left */
+[dir="rtl"] .footer-brand { text-align: right; direction: rtl; }
+[dir="rtl"] .footer-column { text-align: right; direction: rtl; }
+[dir="rtl"] .footer-description { display: block; width: 100%; text-align: right; direction: rtl; }
+/* direction:rtl makes flex items start from the right, aligning icons under the heading — no row-reverse needed */
+[dir="rtl"] .footer-social { direction: rtl; }
+[dir="rtl"] .footer-bottom { justify-content: center; }
+[dir="rtl"] .footer-bottom p { width: auto; text-align: center; }
+
+/* ── Israel map ── */
+[dir="rtl"] .israel-map-header { text-align: center; direction: rtl; }
+[dir="rtl"] .israel-map-title { text-align: center; direction: rtl; }
+[dir="rtl"] .israel-map-subtitle { text-align: center; direction: rtl; }
+/* map-popup already has text-align: right in base; add direction for multi-line correctness */
+[dir="rtl"] .map-popup { direction: rtl; }
+[dir="rtl"] .map-popup-name { display: block; width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .map-popup-row { display: block; width: 100%; text-align: right; direction: rtl; }
+
+/* ── About page ── */
+[dir="rtl"] .about-intro { text-align: right; direction: rtl; }
+[dir="rtl"] .about-story-grid { direction: rtl; }
+[dir="rtl"] .about-story-card { text-align: right; direction: rtl; }
+[dir="rtl"] .about-story-body { text-align: right; direction: rtl; }
+[dir="rtl"] .about-story-body p { width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .contact-inner { direction: rtl; }
+[dir="rtl"] .contact-header { text-align: right; direction: rtl; }
+
+/* ── Exceptions: keep these elements centered even in RTL ── */
+[dir="rtl"] button,
+[dir="rtl"] .button,
+[dir="rtl"] .donation-amount-btn,
+[dir="rtl"] .stat-card,
+[dir="rtl"] .stat-card h3,
+[dir="rtl"] .stat-card p,
+/* Landing hero header (centered) */
+[dir="rtl"] .landing-hero-header,
+[dir="rtl"] .landing-hero-title,
+[dir="rtl"] .landing-hero-subtitle,
+/* CTA section (centered) */
+[dir="rtl"] .cta-section .eyebrow,
+[dir="rtl"] .cta-section h2,
+[dir="rtl"] .cta-section h3,
+[dir="rtl"] .cta-section p,
+[dir="rtl"] .cta-section .body-copy,
+/* Donation hero (centered) */
+[dir="rtl"] .donation-hero,
+[dir="rtl"] .donation-hero-icon,
+[dir="rtl"] .donation-hero h1,
+[dir="rtl"] .donation-hero p,
+[dir="rtl"] .donation-hero .eyebrow,
+/* How it works — .how-header is the centered header div */
+[dir="rtl"] .how-header,
+[dir="rtl"] .how-header h2,
+[dir="rtl"] .how-header .eyebrow,
+[dir="rtl"] .how-header p,
+[dir="rtl"] .how-step h3,
+[dir="rtl"] .how-step p,
+/* Trust section — .trust-header is the centered header div */
+[dir="rtl"] .trust-header,
+[dir="rtl"] .trust-header h2,
+[dir="rtl"] .trust-header h3,
+[dir="rtl"] .trust-header .eyebrow,
+[dir="rtl"] .trust-header p,
+/* Testimonials section header (centered) */
+[dir="rtl"] .testimonial-section .section-header,
+[dir="rtl"] .testimonial-section .eyebrow,
+[dir="rtl"] .testimonial-section h2,
+/* Featured pets section header (centered) */
+[dir="rtl"] .featured-section .section-header,
+[dir="rtl"] .featured-section .section-header .eyebrow,
+[dir="rtl"] .featured-section .section-header h2,
+/* Israel map eyebrow (centered) */
+[dir="rtl"] .israel-map-header .eyebrow,
+[dir="rtl"] .israel-map-header p,
+/* Donation CTA (centered) */
+[dir="rtl"] .donation-cta-content,
+[dir="rtl"] .donation-cta-content h2,
+[dir="rtl"] .donation-cta-content p,
+/* Home page header (centered) */
+[dir="rtl"] .hm-header,
+[dir="rtl"] .hm-title,
+[dir="rtl"] .hm-subtitle,
+/* Israel map header (centered) */
+[dir="rtl"] .israel-map-title,
+[dir="rtl"] .israel-map-subtitle,
+/* Landing stats cards (centered) */
+[dir="rtl"] .landing-stat-card,
+[dir="rtl"] .landing-stat-card strong,
+[dir="rtl"] .landing-stat-card span,
+/* Dots and misc */
+[dir="rtl"] .hm-dots,
+[dir="rtl"] .pet-carousel-dots,
+[dir="rtl"] .app-toast { text-align: center; }
+
+/* Carousel track must stay LTR so item order and translateX math are consistent.
+ * RTL direction on a flex container reverses item order and breaks negative-translateX paging. */
+[dir="rtl"] .pet-carousel-viewport,
+[dir="rtl"] .pet-carousel-track { direction: ltr; }
+
+/* footer-link is a button but must stay right-aligned, not centered — re-apply after exception */
+[dir="rtl"] .footer-link { text-align: right; }
+
+/* Centered text blocks must ALSO have direction: rtl so punctuation (? . ) appears on the LEFT (end of RTL reading) */
+[dir="rtl"] .landing-hero-title,
+[dir="rtl"] .landing-hero-subtitle,
+[dir="rtl"] .cta-section p,
+[dir="rtl"] .cta-section h2,
+[dir="rtl"] .cta-section h3,
+[dir="rtl"] .how-header h2,
+[dir="rtl"] .how-header .eyebrow,
+[dir="rtl"] .how-header p,
+[dir="rtl"] .how-step h3,
+[dir="rtl"] .how-step p,
+[dir="rtl"] .trust-header h2,
+[dir="rtl"] .trust-header h3,
+[dir="rtl"] .trust-header .eyebrow,
+[dir="rtl"] .trust-header p,
+[dir="rtl"] .testimonial-section .eyebrow,
+[dir="rtl"] .testimonial-section h2,
+[dir="rtl"] .hm-title,
+[dir="rtl"] .hm-subtitle,
+[dir="rtl"] .israel-map-title,
+[dir="rtl"] .israel-map-subtitle,
+[dir="rtl"] .israel-map-header .eyebrow,
+[dir="rtl"] .featured-section .section-header .eyebrow,
+[dir="rtl"] .featured-section .section-header h2,
+[dir="rtl"] .donation-cta-content h2,
+[dir="rtl"] .donation-cta-content p { direction: rtl; }
+
+/* .body-copy has max-width: 760px with no margin:auto, so in RTL its block sits at the right edge.
+ * Center the block itself inside any centered container. */
+[dir="rtl"] .cta-section .body-copy {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Mobile RTL adjustments */
+@media (max-width: 768px) {
+  [dir="rtl"] .page-nav { flex-direction: column; align-items: flex-end; }
+  [dir="rtl"] .nav-links { flex-direction: column; }
+  [dir="rtl"] .hamburger-btn { margin-left: 0; margin-right: auto; }
+  [dir="rtl"] .user-dropdown { left: auto; right: 0; }
 }

@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import PetCard from './PetCard.jsx';
 import { calculateMatchPercent } from '../utils/matching.js';
 
 const TRACK_GAP = 24;
 
 function PetCarousel({ pets, onSelectPet, userPreferences }) {
+  const { i18n } = useTranslation();
+  const isRtl = i18n.language === 'he';
   const [page, setPage] = useState(0);
   const [cardsPerPage, setCardsPerPage] = useState(3);
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -51,7 +54,7 @@ function PetCarousel({ pets, onSelectPet, userPreferences }) {
           disabled={page === 0}
           aria-label="Previous page"
         >
-          ←
+          {isRtl ? '→' : '←'}
         </button>
 
         <div className="pet-carousel-viewport" ref={viewportRef}>
@@ -80,7 +83,7 @@ function PetCarousel({ pets, onSelectPet, userPreferences }) {
           disabled={page >= totalPages - 1}
           aria-label="Next page"
         >
-          →
+          {isRtl ? '←' : '→'}
         </button>
       </div>
 

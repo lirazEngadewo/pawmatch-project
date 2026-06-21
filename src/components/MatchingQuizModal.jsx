@@ -1,68 +1,70 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabaseClient.js';
 
-const OPTION_GROUPS = [
-  {
-    key: 'pet_type_preference',
-    label: 'Are you looking for a dog, cat, or both?',
-    options: [
-      { value: 'dog', label: 'Dog' },
-      { value: 'cat', label: 'Cat' },
-      { value: 'both', label: 'Both' },
-    ],
-  },
-  {
-    key: 'good_with_kids',
-    label: 'Do you have kids at home?',
-    options: [
-      { value: 'yes', label: 'Yes' },
-      { value: 'no', label: 'No' },
-    ],
-  },
-  {
-    key: 'home_type',
-    label: 'Do you live in an apartment or a house?',
-    options: [
-      { value: 'apartment', label: 'Apartment' },
-      { value: 'house', label: 'House' },
-    ],
-  },
-  {
-    key: 'availability',
-    label: 'How much time can you dedicate to a pet daily?',
-    options: [
-      { value: 'low', label: 'Low' },
-      { value: 'medium', label: 'Medium' },
-      { value: 'high', label: 'High' },
-    ],
-  },
-  {
-    key: 'preferred_size',
-    label: 'What size pet do you prefer?',
-    options: [
-      { value: 'small', label: 'Small' },
-      { value: 'medium', label: 'Medium' },
-      { value: 'large', label: 'Large' },
-    ],
-  },
-  {
-    key: 'preferred_location',
-    label: 'Where would you prefer to adopt from?',
-    options: [
-      { value: 'Upper Galilee',    label: 'Upper Galilee' },
-      { value: 'Lower Galilee',    label: 'Lower Galilee' },
-      { value: 'Haifa and Krayot', label: 'Haifa and Krayot' },
-      { value: 'Sharon',           label: 'Sharon' },
-      { value: 'Center',           label: 'Center' },
-      { value: 'Jerusalem',        label: 'Jerusalem' },
-      { value: 'Shephelah',        label: 'Shephelah' },
-      { value: 'South',            label: 'South' },
-    ],
-  },
-];
-
 function MatchingQuizModal({ currentUser, onClose, onComplete, initialPreferences }) {
+  const { t } = useTranslation();
   const isEditing = Boolean(initialPreferences);
+
+  const OPTION_GROUPS = [
+    {
+      key: 'pet_type_preference',
+      label: t('quiz.petTypeLabel'),
+      options: [
+        { value: 'dog',  label: t('quiz.optDog') },
+        { value: 'cat',  label: t('quiz.optCat') },
+        { value: 'both', label: t('quiz.optBoth') },
+      ],
+    },
+    {
+      key: 'good_with_kids',
+      label: t('quiz.kidsLabel'),
+      options: [
+        { value: 'yes', label: t('quiz.optYes') },
+        { value: 'no',  label: t('quiz.optNo') },
+      ],
+    },
+    {
+      key: 'home_type',
+      label: t('quiz.homeTypeLabel'),
+      options: [
+        { value: 'apartment', label: t('quiz.optApartment') },
+        { value: 'house',     label: t('quiz.optHouse') },
+      ],
+    },
+    {
+      key: 'availability',
+      label: t('quiz.availabilityLabel'),
+      options: [
+        { value: 'low',    label: t('quiz.optLow') },
+        { value: 'medium', label: t('quiz.optMedium') },
+        { value: 'high',   label: t('quiz.optHigh') },
+      ],
+    },
+    {
+      key: 'preferred_size',
+      label: t('quiz.sizeLabel'),
+      options: [
+        { value: 'small',  label: t('quiz.optSmall') },
+        { value: 'medium', label: t('quiz.optMedium') },
+        { value: 'large',  label: t('quiz.optLarge') },
+      ],
+    },
+    {
+      key: 'preferred_location',
+      label: t('quiz.locationLabel'),
+      options: [
+        { value: 'Upper Galilee',    label: t('quiz.loc_upperGalilee') },
+        { value: 'Lower Galilee',    label: t('quiz.loc_lowerGalilee') },
+        { value: 'Haifa and Krayot', label: t('quiz.loc_haifa') },
+        { value: 'Sharon',           label: t('quiz.loc_sharon') },
+        { value: 'Center',           label: t('quiz.loc_center') },
+        { value: 'Jerusalem',        label: t('quiz.loc_jerusalem') },
+        { value: 'Shephelah',        label: t('quiz.loc_shephelah') },
+        { value: 'South',            label: t('quiz.loc_south') },
+      ],
+    },
+  ];
 
   const [answers, setAnswers] = useState({
     pet_type_preference: initialPreferences?.pet_type_preference ?? '',
@@ -84,7 +86,7 @@ function MatchingQuizModal({ currentUser, onClose, onComplete, initialPreference
 
     const allAnswered = OPTION_GROUPS.every((q) => answers[q.key]);
     if (!allAnswered) {
-      setError('Please answer all questions so we can personalize your matches.');
+      setError(t('quiz.errorAll'));
       return;
     }
 
@@ -118,11 +120,11 @@ function MatchingQuizModal({ currentUser, onClose, onComplete, initialPreference
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card quiz-modal-card" onClick={(e) => e.stopPropagation()}>
-        <h2 className="modal-title">{isEditing ? 'Update Your Preferences' : 'Find Your Perfect Match'}</h2>
+        <h2 className="modal-title">
+          {isEditing ? t('quiz.editTitle') : t('quiz.title')}
+        </h2>
         <p className="modal-message">
-          {isEditing
-            ? 'Update your answers to refine your personalized pet recommendations.'
-            : 'Answer a few quick questions so we can personalize your pet recommendations.'}
+          {isEditing ? t('quiz.editSubtitle') : t('quiz.subtitle')}
         </p>
 
         <form className="quiz-form" onSubmit={handleSubmit}>
@@ -148,10 +150,10 @@ function MatchingQuizModal({ currentUser, onClose, onComplete, initialPreference
 
           <div className="quiz-actions">
             <button type="submit" className="button button-primary" disabled={submitting}>
-              {submitting ? 'Saving…' : (isEditing ? 'Save changes' : 'Save my preferences')}
+              {submitting ? t('quiz.saving') : (isEditing ? t('quiz.saveChanges') : t('quiz.save'))}
             </button>
             <button type="button" className="modal-later-btn" onClick={onClose}>
-              {isEditing ? 'Cancel' : 'Skip for now'}
+              {isEditing ? t('quiz.cancel') : t('quiz.skipForNow')}
             </button>
           </div>
         </form>

@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import pets from '../data/pets.js';
+import { translateGender, translateSize, translateAge } from '../utils/petLocale.js';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
 import Footer from '../components/Footer.jsx';
 import useUserPreferences from '../hooks/useUserPreferences.js';
 import { calculateMatchPercent } from '../utils/matching.js';
 
 function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, toggleFavorite, requireRegistration, currentUser }) {
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   const pet = pets.find((p) => p.id === selectedPetId) || pets[0];
   const [activeImage, setActiveImage] = useState(pet.image);
   const userPreferences = useUserPreferences(currentUser);
@@ -13,6 +17,11 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
 
   const allImages = [pet.image, ...pet.galleryImages];
   const isFavorite = favorites?.includes(pet.id);
+  const aboutText = isHe && pet.about_he ? pet.about_he : pet.about;
+  const hc = isHe && pet.healthCare_he ? pet.healthCare_he : pet.healthCare;
+  const requirements = isHe && pet.adoptionInfo.requirements_he
+    ? pet.adoptionInfo.requirements_he
+    : pet.adoptionInfo.requirements;
   const similarPets = pet.similarPetIds
     .map((id) => pets.find((p) => p.id === id))
     .filter(Boolean);
@@ -38,7 +47,6 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
     toggleFavorite(petId);
   };
 
-  // Reset active image when pet changes
   const displayImage = allImages.includes(activeImage) ? activeImage : pet.image;
 
   return (
@@ -48,9 +56,9 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
       <div className="pp-hero">
         <div className="pp-hero-top">
           <div>
-            <h1 className="pp-hero-name">{pet.name}</h1>
+            <h1 className="pp-hero-name">{isHe && pet.name_he ? pet.name_he : pet.name}</h1>
             <p className="pp-hero-subtitle">
-              {pet.age} &middot; {pet.gender} &middot; {pet.breed}
+              {translateAge(pet.age, isHe)} &middot; {translateGender(pet.gender, isHe)} &middot; {isHe && pet.breed_he ? pet.breed_he : pet.breed}
             </p>
           </div>
           {matchPercent !== null && (
@@ -86,45 +94,45 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
 
             <div className="pp-info-grid">
               <div className="pp-info-item">
-                <span className="pp-info-label">Age</span>
-                <span className="pp-info-value">{pet.age}</span>
+                <span className="pp-info-label">{t('petProfile.labelAge')}</span>
+                <span className="pp-info-value">{translateAge(pet.age, isHe)}</span>
               </div>
               <div className="pp-info-item">
-                <span className="pp-info-label">Gender</span>
-                <span className="pp-info-value">{pet.gender}</span>
+                <span className="pp-info-label">{t('petProfile.labelGender')}</span>
+                <span className="pp-info-value">{translateGender(pet.gender, isHe)}</span>
               </div>
               <div className="pp-info-item">
-                <span className="pp-info-label">Breed</span>
-                <span className="pp-info-value">{pet.breed}</span>
+                <span className="pp-info-label">{t('petProfile.labelBreed')}</span>
+                <span className="pp-info-value">{isHe && pet.breed_he ? pet.breed_he : pet.breed}</span>
               </div>
               <div className="pp-info-item">
-                <span className="pp-info-label">Size</span>
-                <span className="pp-info-value">{pet.size}</span>
+                <span className="pp-info-label">{t('petProfile.labelSize')}</span>
+                <span className="pp-info-value">{translateSize(pet.size, isHe)}</span>
               </div>
               <div className="pp-info-item pp-info-item--wide">
-                <span className="pp-info-label">Location</span>
-                <span className="pp-info-value">📍 {pet.location}</span>
+                <span className="pp-info-label">{t('petProfile.labelLocation')}</span>
+                <span className="pp-info-value">📍 {isHe && pet.location_he ? pet.location_he : pet.location}</span>
               </div>
             </div>
 
             <div className="tags-row">
-              {pet.details.map((tag) => (
+              {(isHe && pet.tags_he ? pet.tags_he : pet.details).map((tag) => (
                 <span key={tag} className="tag">{tag}</span>
               ))}
             </div>
 
             <div className="pp-action-stack">
               <button className="button button-primary" onClick={handleAdopt}>
-                Start Adoption Process
+                {t('petProfile.startAdoption')}
               </button>
               <button
                 className={`button ${isFavorite ? 'button-primary' : 'button-secondary'} pp-fav-btn`}
                 onClick={handleFavorite}
               >
-                {isFavorite ? '♥ Saved to Favorites' : '♡ Save to Favorites'}
+                {isFavorite ? t('petProfile.savedToFavorites') : t('petProfile.saveToFavorites')}
               </button>
               <button className="button button-secondary" onClick={handleContact}>
-                Contact Shelter
+                {t('petProfile.contactShelter')}
               </button>
             </div>
           </div>
@@ -133,58 +141,58 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
 
       {/* ── About ── */}
       <section className="pp-section card">
-        <h2 className="pp-section-title">About {pet.name}</h2>
-        <p className="pp-about-text">{pet.about}</p>
+        <h2 className="pp-section-title">{t('petProfile.aboutTitle', { name: pet.name })}</h2>
+        <p className="pp-about-text">{aboutText}</p>
       </section>
 
       {/* ── Health & Care ── */}
       <section className="pp-section card">
-        <h2 className="pp-section-title">Health &amp; Care</h2>
+        <h2 className="pp-section-title">{t('petProfile.healthTitle')}</h2>
         <div className="pp-health-grid">
           <div className="pp-health-item">
-            <span className="pp-health-label">Vaccination Status</span>
-            <span className="pp-health-value">{pet.healthCare.vaccinationStatus}</span>
+            <span className="pp-health-label">{t('petProfile.labelVaccination')}</span>
+            <span className="pp-health-value">{hc.vaccinationStatus}</span>
           </div>
           <div className="pp-health-item">
-            <span className="pp-health-label">Energy Level</span>
-            <span className="pp-health-value">{pet.healthCare.energyLevel}</span>
+            <span className="pp-health-label">{t('petProfile.labelEnergy')}</span>
+            <span className="pp-health-value">{hc.energyLevel}</span>
           </div>
           <div className="pp-health-item">
-            <span className="pp-health-label">Medical History</span>
-            <span className="pp-health-value">{pet.healthCare.medicalHistory}</span>
+            <span className="pp-health-label">{t('petProfile.labelMedicalHistory')}</span>
+            <span className="pp-health-value">{hc.medicalHistory}</span>
           </div>
           <div className="pp-health-item">
-            <span className="pp-health-label">Special Needs</span>
-            <span className="pp-health-value">{pet.healthCare.specialNeeds}</span>
+            <span className="pp-health-label">{t('petProfile.labelSpecialNeeds')}</span>
+            <span className="pp-health-value">{hc.specialNeeds}</span>
           </div>
         </div>
       </section>
 
       {/* ── Adoption Information ── */}
       <section className="pp-section card">
-        <h2 className="pp-section-title">Adoption Information</h2>
+        <h2 className="pp-section-title">{t('petProfile.adoptionTitle')}</h2>
         <div className="pp-adoption-grid">
           <div className="pp-adoption-item">
-            <span className="pp-health-label">Shelter</span>
+            <span className="pp-health-label">{t('petProfile.labelShelter')}</span>
             <span className="pp-health-value">{pet.adoptionInfo.shelterName}</span>
           </div>
           <div className="pp-adoption-item">
-            <span className="pp-health-label">Address</span>
+            <span className="pp-health-label">{t('petProfile.labelAddress')}</span>
             <span className="pp-health-value">{pet.adoptionInfo.address}</span>
           </div>
           <div className="pp-adoption-item">
-            <span className="pp-health-label">Phone</span>
+            <span className="pp-health-label">{t('petProfile.labelPhone')}</span>
             <span className="pp-health-value">{pet.adoptionInfo.phone}</span>
           </div>
           <div className="pp-adoption-item">
-            <span className="pp-health-label">Adoption Fee</span>
+            <span className="pp-health-label">{t('petProfile.labelFee')}</span>
             <span className="pp-health-value">{pet.adoptionInfo.adoptionFee}</span>
           </div>
         </div>
         <div className="pp-requirements">
-          <h4 className="pp-requirements-title">Requirements</h4>
+          <h4 className="pp-requirements-title">{t('petProfile.requirementsTitle')}</h4>
           <ul className="pp-requirements-list">
-            {pet.adoptionInfo.requirements.map((req) => (
+            {requirements.map((req) => (
               <li key={req}>{req}</li>
             ))}
           </ul>
@@ -193,7 +201,7 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
 
       {/* ── Similar Pets ── */}
       <section className="pp-section">
-        <h2 className="pp-section-title">Similar Pets You Might Like</h2>
+        <h2 className="pp-section-title">{t('petProfile.similarTitle')}</h2>
         <div className="pp-similar-grid">
           {similarPets.map((sp) => (
             <div
@@ -205,8 +213,8 @@ function PetProfilePage({ selectedPetId, onNavigate, isLoggedIn, favorites, togg
               <div className="pp-similar-info">
                 <div className="pp-similar-top">
                   <div>
-                    <h4 className="pp-similar-name">{sp.name}</h4>
-                    <p className="pp-similar-meta">{sp.breed} &middot; {sp.age}</p>
+                    <h4 className="pp-similar-name">{isHe && sp.name_he ? sp.name_he : sp.name}</h4>
+                    <p className="pp-similar-meta">{isHe && sp.breed_he ? sp.breed_he : sp.breed} &middot; {translateAge(sp.age, isHe)}</p>
                   </div>
                   <button
                     className={`pp-similar-heart${favorites?.includes(sp.id) ? ' pp-similar-heart--active' : ''}`}

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { translateGender, translateAge } from '../utils/petLocale.js';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import IsraelMap from '../components/IsraelMap.jsx';
 import TrustFeaturesSection from '../components/TrustFeaturesSection.jsx';
@@ -11,6 +13,8 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
   const [heroIndex, setHeroIndex] = useState(0);
   const heroPet = pets[heroIndex];
   const userPreferences = useUserPreferences(currentUser);
+  const { t, i18n } = useTranslation();
+  const isHe = i18n.language === 'he';
   console.log('LandingPage debug:', { currentUser, userPreferences });
 
   const handleHeroNext = () => setHeroIndex((prev) => (prev + 1) % pets.length);
@@ -23,10 +27,8 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       <section className="landing-hero-section">
 
         <div className="landing-hero-header">
-          <h1 className="landing-hero-title">Meet Your Future Best Friend</h1>
-          <p className="landing-hero-subtitle">
-            Swipe through our featured pets ready for adoption
-          </p>
+          <h1 className="landing-hero-title">{t('landing.heroTitle')}</h1>
+          <p className="landing-hero-subtitle">{t('landing.heroSubtitle')}</p>
         </div>
 
         <div className="landing-hero-card">
@@ -35,7 +37,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               className="landing-carousel-arrow landing-arrow-left"
               onClick={handleHeroPrev}
             >
-              ‹
+              {isHe ? '›' : '‹'}
             </button>
             <img
               src={heroPet.image}
@@ -46,7 +48,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               className="landing-carousel-arrow landing-arrow-right"
               onClick={handleHeroNext}
             >
-              ›
+              {isHe ? '‹' : '›'}
             </button>
             <div className="landing-carousel-dots">
               {pets.map((_, i) => (
@@ -59,31 +61,35 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
           </div>
 
           <div className="landing-hero-info">
-            <h2 className="landing-pet-name">{heroPet.name}</h2>
+            <h2 className="landing-pet-name">
+              {isHe && heroPet.name_he ? heroPet.name_he : heroPet.name}
+            </h2>
 
             <div className="landing-meta-grid">
               <div className="landing-meta-item">
-                <p className="meta-label">Age</p>
-                <p className="meta-value">{heroPet.age}</p>
+                <p className="meta-label">{t('landing.labelAge')}</p>
+                <p className="meta-value">{translateAge(heroPet.age, isHe)}</p>
               </div>
               <div className="landing-meta-item">
-                <p className="meta-label">Gender</p>
-                <p className="meta-value">{heroPet.gender}</p>
+                <p className="meta-label">{t('landing.labelGender')}</p>
+                <p className="meta-value">{translateGender(heroPet.gender, isHe)}</p>
               </div>
               <div className="landing-meta-item">
-                <p className="meta-label">Breed</p>
-                <p className="meta-value">{heroPet.type}</p>
+                <p className="meta-label">{t('landing.labelBreed')}</p>
+                <p className="meta-value">{isHe && heroPet.type_he ? heroPet.type_he : heroPet.type}</p>
               </div>
               <div className="landing-meta-item">
-                <p className="meta-label">Location</p>
-                <p className="meta-value">📍 {heroPet.location}</p>
+                <p className="meta-label">{t('landing.labelLocation')}</p>
+                <p className="meta-value">📍 {isHe && heroPet.location_he ? heroPet.location_he : heroPet.location}</p>
               </div>
             </div>
 
-            <p className="landing-pet-description">{heroPet.description}</p>
+            <p className="landing-pet-description">
+              {isHe && heroPet.short_description_he ? heroPet.short_description_he : heroPet.description}
+            </p>
 
             <div className="tags-row">
-              {heroPet.details.map((tag, i) => (
+              {(isHe && heroPet.tags_he ? heroPet.tags_he : heroPet.details).map((tag, i) => (
                 <span key={i} className="tag">{tag}</span>
               ))}
             </div>
@@ -92,7 +98,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               className="button button-primary landing-cta"
               onClick={() => onSelectPet(heroPet.id)}
             >
-              View Full Profile →
+              {t('landing.viewFullProfile')}
             </button>
           </div>
         </div>
@@ -102,13 +108,11 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       {/* ── CTA ── */}
       <section className="section cta-section">
         <div className="cta-content">
-          <p className="eyebrow">Ready to find your perfect match?</p>
-          <h3>Start your adoption journey with PawMatch.</h3>
-          <p className="body-copy">
-            Discover warm profiles, trusted partners, and a simple adoption experience designed for families.
-          </p>
+          <p className="eyebrow">{t('landing.ctaEyebrow')}</p>
+          <h3><Trans i18nKey="landing.ctaTitle" components={{ ltr: <span dir="ltr" /> }} /></h3>
+          <p className="body-copy">{t('landing.ctaBody')}</p>
           <button className="button button-primary" onClick={() => onNavigate('home')}>
-            Start Your Journey Today
+            {t('landing.ctaButton')}
           </button>
         </div>
       </section>
@@ -117,72 +121,72 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       <div className="landing-stats">
         <div className="landing-stat-card">
           <strong>2,500+</strong>
-          <span>Successful Adoptions</span>
+          <span>{t('landing.statAdoptions')}</span>
         </div>
         <div className="landing-stat-card">
           <strong>150+</strong>
-          <span>Shelter Partners</span>
+          <span>{t('landing.statShelters')}</span>
         </div>
         <div className="landing-stat-card">
           <strong>5,000+</strong>
-          <span>Happy Families</span>
+          <span>{t('landing.statFamilies')}</span>
         </div>
         <div className="landing-stat-card">
           <strong>98%</strong>
-          <span>Satisfaction Rate</span>
+          <span>{t('landing.statSatisfaction')}</span>
         </div>
       </div>
 
       {/* ── TESTIMONIALS ── */}
       <section className="section testimonial-section">
         <div className="section-header">
-          <p className="eyebrow">What Adopters Love</p>
-          <h2>Kind stories from families who found their pet.</h2>
+          <p className="eyebrow">{t('landing.testimonialsEyebrow')}</p>
+          <h2>{t('landing.testimonialsTitle')}</h2>
         </div>
         <div className="testimonial-grid">
           <article className="testimonial-card">
             <div className="testimonial-header">
               <img
                 src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa?auto=format&fit=crop&w=120&q=80"
-                alt="Sara"
+                alt={t('landing.testimonial1Name')}
                 className="testimonial-avatar"
               />
               <div className="testimonial-copy">
-                <h4>Sara</h4>
-                <p>New dog mom</p>
+                <h4>{t('landing.testimonial1Name')}</h4>
+                <p>{t('landing.testimonial1Role')}</p>
               </div>
             </div>
-            <p>"PawMatch made adoption feel calm and personal. We found our perfect dog in just a few clicks."</p>
+            <p><Trans i18nKey="landing.testimonial1Text" components={{ ltr: <span dir="ltr" /> }} /></p>
             <div className="star-rating">★★★★★</div>
           </article>
           <article className="testimonial-card">
             <div className="testimonial-header">
               <img
                 src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=120&q=80"
-                alt="Daniel"
+                alt={t('landing.testimonial2Name')}
                 className="testimonial-avatar"
               />
               <div className="testimonial-copy">
-                <h4>Daniel</h4>
-                <p>Cat dad</p>
+                <h4>{t('landing.testimonial2Name')}</h4>
+                <p>{t('landing.testimonial2Role')}</p>
               </div>
             </div>
-            <p>"The pet previews helped me understand every animal's personality. Milo fits right in."</p>
+            <p><Trans i18nKey="landing.testimonial2Text" components={{ ltr: <span dir="ltr" /> }} /></p>
             <div className="star-rating">★★★★★</div>
           </article>
           <article className="testimonial-card">
             <div className="testimonial-header">
               <img
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"
-                alt="Mia"
+                alt={t('landing.testimonial3Name')}
                 className="testimonial-avatar"
               />
               <div className="testimonial-copy">
-                <h4>Mia</h4>
-                <p>Family adopter</p>
+                <h4>{t('landing.testimonial3Name')}</h4>
+                <p>{t('landing.testimonial3Role')}</p>
               </div>
             </div>
-            <p>"Every step felt warm and thoughtful. We love our new family member and the support team was great."</p>
+            <p>{t('landing.testimonial3Text')}</p>
             <div className="star-rating">★★★★★</div>
           </article>
         </div>
@@ -191,8 +195,8 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
       {/* ── FEATURED PETS ── */}
       <section className="section featured-section">
         <div className="section-header">
-          <p className="eyebrow">Featured Friends</p>
-          <h2>Pets who are ready to meet you.</h2>
+          <p className="eyebrow">{t('landing.featuredEyebrow')}</p>
+          <h2>{t('landing.featuredTitle')}</h2>
         </div>
         <PetCarousel
           pets={pets.filter((pet) => pet.id !== 'bella')}
@@ -207,17 +211,15 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
 
       <section className="donation-cta-section">
         <div className="donation-cta-content">
-          <h2>Want to make a difference?</h2>
-          <p className="donation-cta-text">Support the animals waiting for a home</p>
+          <h2>{t('landing.donationCtaTitle')}</h2>
+          <p className="donation-cta-text">{t('landing.donationCtaText')}</p>
           <button
             className="button button-primary"
             onClick={() => onNavigate('donation')}
           >
-            Donate to PawMatch ❤️
+            <Trans i18nKey="landing.donationCtaButton" components={{ ltr: <span dir="ltr" /> }} />
           </button>
-          <p className="donation-cta-note">
-            All donations go directly to the adoption organizations participating in PawMatch
-          </p>
+          <p className="donation-cta-note"><Trans i18nKey="landing.donationCtaNote" components={{ ltr: <span dir="ltr" /> }} /></p>
         </div>
       </section>
 
