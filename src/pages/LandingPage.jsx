@@ -37,7 +37,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               className="landing-carousel-arrow landing-arrow-left"
               onClick={handleHeroPrev}
             >
-              ‹
+              {isHe ? '›' : '‹'}
             </button>
             <img
               src={heroPet.image}
@@ -48,7 +48,7 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
               className="landing-carousel-arrow landing-arrow-right"
               onClick={handleHeroNext}
             >
-              ›
+              {isHe ? '‹' : '›'}
             </button>
             <div className="landing-carousel-dots">
               {pets.map((_, i) => (

@@ -37,6 +37,8 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotSent, setForgotSent] = useState(false);
 
   const validate = () => {
     if (authMode === 'signup') {
@@ -111,6 +113,27 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
     e.preventDefault();
     setAuthMode(next);
     setError('');
+    setForgotSent(false);
+    setForgotEmail('');
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!EMAIL_RE.test(forgotEmail)) {
+      setError(t('register.forgotErrorEmail'));
+      return;
+    }
+    setError('');
+    setLoading(true);
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(forgotEmail, {
+      redirectTo: window.location.origin,
+    });
+    setLoading(false);
+    if (resetError) {
+      setError(t('register.forgotErrorGeneral'));
+      return;
+    }
+    setForgotSent(true);
   };
 
   return (
@@ -127,93 +150,131 @@ function RegisterPage({ onNavigate, onSignUpSuccess, sessionExpiredMessage }) {
           </div>
 
           <div className="register-content">
-            <h1>
-              {authMode === 'signin'
-                ? t('register.signInTitle')
-                : <Trans i18nKey="register.signUpTitle" components={{ ltr: <span dir="ltr" /> }} />}
-            </h1>
-            <p className="body-copy">
-              {authMode === 'signin'
-                ? <Trans i18nKey="register.signInSubtitle" components={{ ltr: <span dir="ltr" /> }} />
-                : <Trans i18nKey="register.signUpSubtitle" components={{ ltr: <span dir="ltr" /> }} />}
-            </p>
-
-            {sessionExpiredMessage && (
-              <p className="form-session-banner">{sessionExpiredMessage}</p>
-            )}
-
-            <form
-              className="register-form"
-              onSubmit={authMode === 'signin' ? handleSignIn : handleSignUp}
-            >
-              {authMode === 'signup' && (
-                <div className="form-row-two">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      placeholder={t('register.placeholderFirstName')}
-                      className="form-input"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      placeholder={t('register.placeholderLastName')}
-                      className="form-input"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="form-group">
-                <input
-                  type="email"
-                  placeholder={t('register.placeholderEmail')}
-                  className="form-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="form-group">
-                <input
-                  type="password"
-                  placeholder={t('register.placeholderPassword')}
-                  className="form-input"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-
-              {error && <p className="form-error">{error}</p>}
-
-              <button type="submit" className="button button-primary register-submit" disabled={loading}>
-                {loading
-                  ? (authMode === 'signin' ? t('register.signingIn') : t('register.creatingAccount'))
-                  : (authMode === 'signin' ? t('register.signIn') : t('register.createAccount'))}
-              </button>
-            </form>
-
-            <div className="register-helpers">
-              {authMode === 'signin' ? (
+            {authMode === 'forgot' ? (
+              forgotSent ? (
                 <>
-                  <p>{t('register.noAccount')}{' '}
-                    <a href="#!" onClick={(e) => switchMode(e, 'signup')}>{t('register.createNow')}</a>
-                  </p>
-                  <p><a href="#!" onClick={(e) => e.preventDefault()}>{t('register.forgotPassword')}</a></p>
+                  <h1>{t('register.forgotSentTitle')}</h1>
+                  <p className="body-copy">{t('register.forgotSentSubtitle', { email: forgotEmail })}</p>
+                  <div className="register-helpers">
+                    <p><a href="#!" onClick={(e) => switchMode(e, 'signin')}>{t('register.forgotBackToLogin')}</a></p>
+                  </div>
                 </>
               ) : (
-                <p>{t('register.haveAccount')}{' '}
-                  <a href="#!" onClick={(e) => switchMode(e, 'signin')}>{t('register.signInLink')}</a>
+                <>
+                  <h1>{t('register.forgotTitle')}</h1>
+                  <p className="body-copy">{t('register.forgotSubtitle')}</p>
+                  <form className="register-form" onSubmit={handleForgotPassword}>
+                    <div className="form-group">
+                      <input
+                        type="email"
+                        placeholder={t('register.placeholderEmail')}
+                        className="form-input"
+                        value={forgotEmail}
+                        onChange={(e) => setForgotEmail(e.target.value)}
+                        autoFocus
+                      />
+                    </div>
+                    {error && <p className="form-error">{error}</p>}
+                    <button type="submit" className="button button-primary register-submit" disabled={loading}>
+                      {loading ? t('register.forgotSending') : t('register.forgotSend')}
+                    </button>
+                  </form>
+                  <div className="register-helpers">
+                    <p><a href="#!" onClick={(e) => switchMode(e, 'signin')}>{t('register.forgotBackToLogin')}</a></p>
+                  </div>
+                </>
+              )
+            ) : (
+              <>
+                <h1>
+                  {authMode === 'signin'
+                    ? t('register.signInTitle')
+                    : <Trans i18nKey="register.signUpTitle" components={{ ltr: <span dir="ltr" /> }} />}
+                </h1>
+                <p className="body-copy">
+                  {authMode === 'signin'
+                    ? <Trans i18nKey="register.signInSubtitle" components={{ ltr: <span dir="ltr" /> }} />
+                    : <Trans i18nKey="register.signUpSubtitle" components={{ ltr: <span dir="ltr" /> }} />}
                 </p>
-              )}
-            </div>
 
-            <p className="register-legal"><Trans i18nKey="register.legal" components={{ ltr: <span dir="ltr" /> }} /></p>
+                {sessionExpiredMessage && (
+                  <p className="form-session-banner">{sessionExpiredMessage}</p>
+                )}
+
+                <form
+                  className="register-form"
+                  onSubmit={authMode === 'signin' ? handleSignIn : handleSignUp}
+                >
+                  {authMode === 'signup' && (
+                    <div className="form-row-two">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          placeholder={t('register.placeholderFirstName')}
+                          className="form-input"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          placeholder={t('register.placeholderLastName')}
+                          className="form-input"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="form-group">
+                    <input
+                      type="email"
+                      placeholder={t('register.placeholderEmail')}
+                      className="form-input"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <input
+                      type="password"
+                      placeholder={t('register.placeholderPassword')}
+                      className="form-input"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+
+                  {error && <p className="form-error">{error}</p>}
+
+                  <button type="submit" className="button button-primary register-submit" disabled={loading}>
+                    {loading
+                      ? (authMode === 'signin' ? t('register.signingIn') : t('register.creatingAccount'))
+                      : (authMode === 'signin' ? t('register.signIn') : t('register.createAccount'))}
+                  </button>
+                </form>
+
+                <div className="register-helpers">
+                  {authMode === 'signin' ? (
+                    <>
+                      <p>{t('register.noAccount')}{' '}
+                        <a href="#!" onClick={(e) => switchMode(e, 'signup')}>{t('register.createNow')}</a>
+                      </p>
+                      <p><a href="#!" onClick={(e) => switchMode(e, 'forgot')}>{t('register.forgotPassword')}</a></p>
+                    </>
+                  ) : (
+                    <p>{t('register.haveAccount')}{' '}
+                      <a href="#!" onClick={(e) => switchMode(e, 'signin')}>{t('register.signInLink')}</a>
+                    </p>
+                  )}
+                </div>
+
+                <p className="register-legal"><Trans i18nKey="register.legal" components={{ ltr: <span dir="ltr" /> }} /></p>
+              </>
+            )}
           </div>
         </div>
       </div>

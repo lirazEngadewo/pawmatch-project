@@ -122,9 +122,9 @@ function HomePage({ onSelectPet, onNavigate, isLoggedIn, favorites, toggleFavori
             <>
               <div className="hm-pet-card">
                 <div className="hm-image-area">
-                  <button className="hm-arrow hm-arrow-left" onClick={handlePrev}>‹</button>
-                  <img src={pet.image} alt={pet.name} className="hm-pet-img" />
-                  <button className="hm-arrow hm-arrow-right" onClick={handleNext}>›</button>
+                  <button className="hm-arrow hm-arrow-left" onClick={handlePrev}>{isHe ? '›' : '‹'}</button>
+<img src={pet.image} alt={pet.name} className="hm-pet-img" />
+                  <button className="hm-arrow hm-arrow-right" onClick={handleNext}>{isHe ? '‹' : '›'}</button>
                 </div>
 
                 <div className="hm-info">

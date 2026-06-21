@@ -8,24 +8,36 @@ import { supabase } from '../lib/supabaseClient.js';
 const SAMPLE_MESSAGES = [
   {
     id: 1,
-    shelterName: 'Austin Paws Rescue',
+    shelterName: 'Hadera Animal Shelter',
+    shelterName_he: 'מחסה חדרה לחיות',
     message: 'We received your meeting request for Luna. A shelter volunteer will contact you within 2 business days to confirm the date.',
+    message_he: 'קיבלנו את בקשת הפגישה שלכם עבור לונה. מתנדב מהמחסה ייצור איתכם קשר תוך יומיים עסקים לאישור התאריך.',
     date: 'May 12, 2026',
+    date_he: '12 במאי 2026',
     petName: 'Luna',
+    petName_he: 'לונה',
   },
   {
     id: 2,
-    shelterName: 'Seattle Animal Shelter',
+    shelterName: 'Tel Aviv Adoption Center',
+    shelterName_he: 'מחסה תל אביב לאימוץ',
     message: 'Your adoption application for Simba has been approved! Please contact us to arrange the next steps.',
+    message_he: 'בקשת האימוץ שלכם עבור סימבה אושרה! אנא צרו איתנו קשר לתיאום הצעדים הבאים.',
     date: 'May 11, 2026',
+    date_he: '11 במאי 2026',
     petName: 'Simba',
+    petName_he: 'סימבה',
   },
   {
     id: 3,
-    shelterName: 'Brooklyn Animal Rescue',
-    message: 'Happy Tails Rescue Center received your meeting request for Milo. We would love to introduce you -- he has been waiting for a loving home!',
+    shelterName: 'Beer Sheva Pet Rescue',
+    shelterName_he: 'מקלט באר שבע לחיות מחמד',
+    message: 'Beer Sheva Pet Rescue received your meeting request for Milo. We would love to introduce you — he has been waiting for a loving home!',
+    message_he: 'מקלט באר שבע לחיות מחמד קיבל את בקשת הפגישה שלכם עבור מילו. נשמח להכיר לכם אותו — הוא מחכה לבית אוהב!',
     date: 'May 8, 2026',
+    date_he: '8 במאי 2026',
     petName: 'Milo',
+    petName_he: 'מילו',
   },
 ];
 
@@ -275,8 +287,12 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
           <div className="up-requests-list">
             {requests.map((req) => {
               const reqPet = pets.find((p) => p.id === req.pet_id);
-              const requestTypeLabel = (req.message || '').split('\n')[0] || 'Request';
-              const submittedDate = new Date(req.created_at).toLocaleDateString('en-US', {
+              const firstLine = (req.message || '').split('\n')[0] || '';
+              let requestTypeLabel;
+              if (firstLine === 'Meeting Request') requestTypeLabel = t('userProfile.typeMeeting');
+              else if (firstLine === 'Adoption Application') requestTypeLabel = t('userProfile.typeAdoption');
+              else requestTypeLabel = firstLine || t('userProfile.typeRequest');
+              const submittedDate = new Date(req.created_at).toLocaleDateString(isHe ? 'he-IL' : 'en-US', {
                 month: 'long', day: 'numeric', year: 'numeric',
               });
               const colors = statusColors[req.status] || { background: '#E5E7EB', color: '#374151' };
@@ -309,14 +325,14 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
               <div className="up-message-header">
                 <div className="up-message-icon">🏠</div>
                 <div className="up-message-meta">
-                  <p className="up-message-shelter">{msg.shelterName}</p>
-                  <p className="up-message-date">{msg.date}</p>
+                  <p className="up-message-shelter">{isHe ? msg.shelterName_he : msg.shelterName}</p>
+                  <p className="up-message-date">{isHe ? msg.date_he : msg.date}</p>
                 </div>
                 {msg.petName && (
-                  <span className="up-message-pet-tag">{msg.petName}</span>
+                  <span className="up-message-pet-tag">{isHe ? msg.petName_he : msg.petName}</span>
                 )}
               </div>
-              <p className="up-message-text">{msg.message}</p>
+              <p className="up-message-text">{isHe ? msg.message_he : msg.message}</p>
             </div>
           ))}
         </div>

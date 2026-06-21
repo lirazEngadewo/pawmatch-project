@@ -1,7 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      try {
+        var lng = localStorage.getItem('i18nextLng') || navigator.language || 'en';
+        var isHe = lng === 'he' || lng.startsWith('he-');
+        document.documentElement.dir  = isHe ? 'rtl' : 'ltr';
+        document.documentElement.lang = isHe ? 'he'  : 'en';
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pawmatch-project</title>

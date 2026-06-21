@@ -11,6 +11,8 @@ function DonationPage({ onNavigate }) {
   const [donorName, setDonorName] = useState('');
   const [message, setMessage] = useState('');
   const [amountError, setAmountError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [messageError, setMessageError] = useState('');
   const [donated, setDonated] = useState(false);
   const [finalAmount, setFinalAmount] = useState(null);
 
@@ -23,22 +25,40 @@ function DonationPage({ onNavigate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let valid = true;
+
     if (!selectedAmount) {
       setAmountError(t('donation.errorNoAmount'));
-      return;
-    }
-    if (selectedAmount === 'custom') {
+      valid = false;
+    } else if (selectedAmount === 'custom') {
       const val = parseFloat(customAmount);
       if (!customAmount || isNaN(val) || val <= 0) {
         setAmountError(t('donation.errorInvalidAmount'));
-        return;
+        valid = false;
+      } else {
+        setAmountError('');
       }
-      setFinalAmount(val);
     } else {
-      setFinalAmount(selectedAmount);
+      setAmountError('');
     }
 
-    setAmountError('');
+    if (!donorName.trim()) {
+      setNameError(t('donation.errorNoName'));
+      valid = false;
+    } else {
+      setNameError('');
+    }
+
+    if (!message.trim()) {
+      setMessageError(t('donation.errorNoMessage'));
+      valid = false;
+    } else {
+      setMessageError('');
+    }
+
+    if (!valid) return;
+
+    setFinalAmount(selectedAmount === 'custom' ? parseFloat(customAmount) : selectedAmount);
     setDonated(true);
     window.scrollTo(0, 0);
   };
@@ -110,26 +130,32 @@ function DonationPage({ onNavigate }) {
                 {amountError && <span className="contact-field-error">{amountError}</span>}
               </div>
 
-              <label className="contact-label">
-                {t('donation.labelName')}
-                <input
-                  type="text"
-                  className="form-input"
-                  value={donorName}
-                  onChange={(e) => setDonorName(e.target.value)}
-                  placeholder={t('donation.placeholderName')}
-                />
-              </label>
+              <div className="donation-field">
+                <label className="contact-label">
+                  {t('donation.labelName')}
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={donorName}
+                    onChange={(e) => { setDonorName(e.target.value); setNameError(''); }}
+                    placeholder={t('donation.placeholderName')}
+                  />
+                </label>
+                {nameError && <span className="contact-field-error">{nameError}</span>}
+              </div>
 
-              <label className="contact-label">
-                {t('donation.labelMessage')}
-                <textarea
-                  className="form-input contact-textarea"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder={t('donation.placeholderMessage')}
-                />
-              </label>
+              <div className="donation-field">
+                <label className="contact-label">
+                  {t('donation.labelMessage')}
+                  <textarea
+                    className="form-input contact-textarea"
+                    value={message}
+                    onChange={(e) => { setMessage(e.target.value); setMessageError(''); }}
+                    placeholder={t('donation.placeholderMessage')}
+                  />
+                </label>
+                {messageError && <span className="contact-field-error">{messageError}</span>}
+              </div>
 
               <button type="submit" className="button button-primary donation-submit-btn">
                 {t('donation.donateNow')}
