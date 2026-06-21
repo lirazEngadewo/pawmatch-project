@@ -4260,10 +4260,8 @@ h3 {
 [dir="rtl"] .up-request-pet,
 [dir="rtl"] .hm-pet-name { text-align: right; direction: rtl; width: 100%; }
 
-/* Spans: direction only, no unicode-bidi: embed (causes multi-line shrink-wrapping issues) */
-[dir="rtl"] span {
-  direction: rtl;
-}
+/* Spans inherit direction: rtl from their parent. Do NOT set direction here —
+ * it would override <span dir="ltr"> HTML attributes used for mixed bidi (e.g. PawMatch). */
 
 /* All native form controls: RTL direction so typed text flows right */
 [dir="rtl"] input,
@@ -4296,7 +4294,7 @@ h3 {
  */
 [dir="rtl"] .landing-meta-item { text-align: right; direction: rtl; }
 [dir="rtl"] .landing-meta-item span { display: block; width: 100%; text-align: right; }
-[dir="rtl"] .tags-row { flex-direction: row-reverse; }
+/* .tags-row: direction: rtl is inherited from parent; flex row naturally starts from RIGHT — no override needed */
 [dir="rtl"] .pet-footer { flex-direction: row-reverse; }
 [dir="rtl"] .landing-stats { flex-direction: row-reverse; }
 [dir="rtl"] .testimonials-grid .testimonial-card { text-align: right; direction: rtl; }
@@ -4305,6 +4303,12 @@ h3 {
 /* ── Pet card (shared component) ── */
 [dir="rtl"] .pet-card-body { text-align: right; direction: rtl; }
 [dir="rtl"] .pet-card-content { text-align: right; direction: rtl; }
+/* The bare h3 inside .pet-card-content has no class; target it directly */
+[dir="rtl"] .pet-card-content h3 { width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .pet-type,
+[dir="rtl"] .pet-meta,
+[dir="rtl"] .pet-description { width: 100%; text-align: right; direction: rtl; }
+[dir="rtl"] .landing-pet-description { width: 100%; text-align: right; direction: rtl; }
 
 /* ── Quiz / matching modal ── */
 [dir="rtl"] .quiz-modal-card { text-align: right; direction: rtl; }
@@ -4329,8 +4333,8 @@ h3 {
 
 /* ── Home page ── */
 [dir="rtl"] .hm-pet-card { flex-direction: row-reverse; }
-[dir="rtl"] .hm-name-row { flex-direction: row-reverse; }
-[dir="rtl"] .hm-tags { flex-direction: row-reverse; }
+/* .hm-name-row: in RTL flex row (direction: rtl inherited), first child (name) is already at RIGHT — no row-reverse needed */
+/* .hm-tags: same — direction: rtl inheritance puts tags at RIGHT naturally */
 [dir="rtl"] .hm-actions { flex-direction: row-reverse; }
 [dir="rtl"] .hm-results-header { flex-direction: row-reverse; }
 [dir="rtl"] .hm-fav-row { flex-direction: row-reverse; }
@@ -4561,6 +4565,25 @@ h3 {
 
 /* footer-link is a button but must stay right-aligned, not centered — re-apply after exception */
 [dir="rtl"] .footer-link { text-align: right; }
+
+/* Centered text blocks must ALSO have direction: rtl so punctuation (? . ) appears on the LEFT (end of RTL reading) */
+[dir="rtl"] .cta-section p,
+[dir="rtl"] .cta-section h2,
+[dir="rtl"] .cta-section h3,
+[dir="rtl"] .how-it-works-step h3,
+[dir="rtl"] .how-it-works-step p,
+[dir="rtl"] .how-step h3,
+[dir="rtl"] .how-step p,
+[dir="rtl"] .how-it-works .eyebrow,
+[dir="rtl"] .how-it-works h2,
+[dir="rtl"] .trust-section .eyebrow,
+[dir="rtl"] .trust-section h2,
+[dir="rtl"] .testimonials-section .eyebrow,
+[dir="rtl"] .testimonials-section h2,
+[dir="rtl"] .faq-section .eyebrow,
+[dir="rtl"] .faq-section h2,
+[dir="rtl"] .tips-section .eyebrow,
+[dir="rtl"] .tips-section h2 { direction: rtl; }
 
 /* Mobile RTL adjustments */
 @media (max-width: 768px) {
