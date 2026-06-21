@@ -39,6 +39,7 @@ A web platform that combines smart matching, an easy browsing experience, and a 
 | Vercel | Hosting | Frontend deployment |
 | React + Vite | Frontend Framework | UI and app logic |
 | React Leaflet | Maps Library | Interactive Israel map with adoption organizations |
+| react-i18next | Internationalization | Hebrew / English language switching with full RTL support |
 | Unsplash | Image API | Pet profile images |
 | Vitest | Testing | Unit and integration tests (14/14 passing) |
 
@@ -56,6 +57,7 @@ A web platform that combines smart matching, an easy browsing experience, and a 
 - 💝 Donation page to support adoption organizations
 - 📚 Resources page with Pet Care Tips and FAQ
 - 🔐 Secure authentication with RLS policies
+- 🌐 Full Hebrew / English support — language switcher with complete RTL layout and translated content for all 22 pets
 
 ## Running Locally
 ```bash
