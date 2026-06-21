@@ -70,7 +70,6 @@ function locationScore(preferredRegion, city) {
 
 export function calculateMatchPercent(pet, userPreferences) {
   if (!userPreferences?.completed) {
-    console.log('calculateMatchPercent:', pet.name, '-> null (userPreferences.completed is', userPreferences?.completed, ')');
     return null;
   }
 
@@ -87,7 +86,6 @@ export function calculateMatchPercent(pet, userPreferences) {
 
   const score = Object.values(breakdown).reduce((sum, v) => sum + v, 0);
   const result = Math.min(100, Math.max(0, score));
-  console.log('calculateMatchPercent:', pet.name, '-> ', result, breakdown);
 
   return result;
 }

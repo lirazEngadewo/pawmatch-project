@@ -96,11 +96,7 @@ function RequestsPage({ selectedPetId, onNavigate, isLoggedIn, requireRegistrati
       pet_id: formPetId || null,
       message: messageLines.join('\n'),
     };
-    console.log('RequestsPage: inserting adoption request', insertPayload);
-
-    const { data, error } = await supabase.from('adoption_requests').insert(insertPayload).select();
-
-    console.log('RequestsPage: insert result', { data, error });
+    const { error } = await supabase.from('adoption_requests').insert(insertPayload).select();
 
     if (error) {
       console.error('RequestsPage: failed to submit adoption request', error);

@@ -83,8 +83,6 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    console.log('UserProfilePage: fetching adoption requests for user_id =', currentUser?.id);
-
     const query = currentUser
       ? supabase
           .from('adoption_requests')
@@ -94,7 +92,6 @@ function UserProfilePage({ currentUser, favorites, onNavigate, onAvatarChange })
       : Promise.resolve({ data: [], error: null });
 
     query.then(({ data, error }) => {
-      console.log('UserProfilePage: adoption requests query result', { data, error });
       if (error) {
         console.error('UserProfilePage: failed to load adoption requests', error);
       }

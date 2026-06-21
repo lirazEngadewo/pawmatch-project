@@ -19,7 +19,6 @@ function useUserPreferences(currentUser) {
       if (error) {
         console.error('useUserPreferences: failed to load preferences', error);
       }
-      console.log('useUserPreferences: loaded preferences for', currentUser?.id, data);
       setPreferences(data ?? null);
     });
   }, [currentUser]);

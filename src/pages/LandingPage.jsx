@@ -15,7 +15,6 @@ function LandingPage({ onSelectPet, onNavigate, currentUser }) {
   const userPreferences = useUserPreferences(currentUser);
   const { t, i18n } = useTranslation();
   const isHe = i18n.language === 'he';
-  console.log('LandingPage debug:', { currentUser, userPreferences });
 
   const handleHeroNext = () => setHeroIndex((prev) => (prev + 1) % pets.length);
   const handleHeroPrev = () => setHeroIndex((prev) => (prev - 1 + pets.length) % pets.length);
